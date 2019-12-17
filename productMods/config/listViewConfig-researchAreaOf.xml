@@ -3,11 +3,10 @@
 
 <!-- VIVO-specific default list view config file for object properties 
     
-     See guidelines in vitro/doc/list_view_configuration_guidelines.txt -->
+     See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
 
 <list-view-config>
     <query-select>    
-        PREFIX afn:  &lt;http://jena.hpl.hp.com/ARQ/function#&gt;
         PREFIX core: &lt;http://vivoweb.org/ontology/core#&gt;
         PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; 
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt; 
@@ -18,7 +17,7 @@
 
         SELECT DISTINCT
                        ?person 
-                       ?personName
+                       (str(?p) as ?personName)
                        ?posnLabel
                        ?org
                        ?orgLabel
@@ -32,7 +31,7 @@
                             ?position a core:Position .
                             ?position rdfs:label ?posnLabel 
                  }
-                 OPTIONAL { ?person rdfs:label ?personName } 
+                 OPTIONAL { ?person rdfs:label ?p } 
                  OPTIONAL { ?person obo:ARG_2000028 ?vcard .
                             ?vcard vcard:hasTitle ?titleObj .
                             ?titleObj vcard:title ?title 

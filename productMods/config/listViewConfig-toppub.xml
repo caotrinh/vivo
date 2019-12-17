@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
+
+<!-- See guidelines in vitro/doc/list_view_configuration_guidelines.txt -->
+
+<list-view-config>
+    <query-select>
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+        PREFIX vivo: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX uowvivo: &lt;http://uowvivo.uow.edu.au/ontology/uowvivo#&gt;
+
+        SELECT DISTINCT ?object ?infoResource ?infoResourceName ?hideThis ?dateTime ?journalTitle
+        WHERE {
+            ?subject ?property ?object .
+            ?object vivo:relates ?infoResource .
+            ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
+            ?infoResource rdfs:label ?infoResourceName
+            OPTIONAL { ?object uowvivo:publicationRank ?pubrank }
+            OPTIONAL { ?object vivo:hideFromDisplay ?hideThis }
+            OPTIONAL { ?infoResource vivo:dateTimeValue ?dateTimeValue .
+                       ?dateTimeValue vivo:dateTime ?dateTime
+                     }
+            OPTIONAL { ?infoResource a &lt;http://purl.org/ontology/bibo/Document&gt; .
+                        ?infoResource vivo:hasPublicationVenue ?journal .
+                        ?journal a &lt;http://purl.org/ontology/bibo/Journal&gt; .
+                        ?journal rdfs:label ?journalTitle
+            }
+        } ORDER BY ?pubrank
+    </query-select>
+    <template>propStatement-toppub.ftl</template>
+</list-view-config>

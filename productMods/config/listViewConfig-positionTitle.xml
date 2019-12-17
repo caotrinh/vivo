@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
 
-<!-- See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+<!-- See guidelines in vitro/doc/list_view_configuration_guidelines.txt -->
 
 <list-view-config>
     <query-select>    
         PREFIX vcard: &lt;http://www.w3.org/2006/vcard/ns#&gt;
         
         SELECT DISTINCT ?vcard 
-                        ?email
-                        ?emailAddress
+                        ?role
+                        ?positionTitle
         WHERE {
             ?subject ?property ?vcard .
-            ?vcard vcard:hasEmail ?email .
-            ?email vcard:email ?emailAddress 
-            MINUS {?email a vcard:Work}
+            ?vcard vcard:hasRole ?role .
+            ?role vcard:role ?positionTitle
+            
         } 
     </query-select>
        
@@ -22,15 +22,22 @@
         PREFIX vcard: &lt;http://www.w3.org/2006/vcard/ns#&gt;
         CONSTRUCT { 
             ?subject ?property ?vcard .
-            ?vcard vcard:hasEmail ?email .
-            ?email ?emailProperty ?emailValue 
+            ?vcard vcard:hasRole ?role .
+            ?role ?titleProperty ?titleValue 
         } WHERE {
+            {
+               ?subject ?property ?vcard
+            } UNION {
                ?subject ?property ?vcard .
-               ?vcard vcard:hasEmail ?email .
-               ?email ?emailProperty ?emailValue 
+               ?vcard vcard:hasRole ?role
+            } UNION {
+               ?subject ?property ?vcard .
+               ?vcard vcard:hasRole ?role .
+               ?role ?titleProperty ?titleValue
+            } 
         } 
     </query-construct>
               
-    <template>propStatement-emailAddress.ftl</template>
+    <template>propStatement-positionTitle.ftl</template>
     <postprocessor>edu.cornell.mannlib.vitro.webapp.web.templatemodels.individual.MaintainDuplicatesObjectPropertyDataPostProcessor</postprocessor>
 </list-view-config>

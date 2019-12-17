@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
+
+<!-- VIVO-specific default list view config file for object properties 
+    
+     See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>
+        PREFIX core: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+        PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
+        PREFIX uowimpact: &lt;http://uowvivo.uow.edu.au/ontology/uowimpact#&gt;
+
+        SELECT 
+            ?subject
+            ?impactEngagement
+            ?type
+            ?objectType
+            ?title
+            ?description
+            ?detailOfImpact
+            ?hideThis
+        WHERE
+        {
+            ?subject ?property ?impactEngagement .
+            ?impactEngagement a ?objectType .
+            OPTIONAL { ?impactEngagement uowimpact:hideFromPublic ?hideThis}
+            OPTIONAL { ?impactEngagement uowimpact:title ?title}
+            OPTIONAL { ?impactEngagement uowimpact:description ?description}
+            OPTIONAL { ?impactEngagement uowimpact:detailOfImpact ?detailOfImpact}
+        }
+    </query-select>
+
+    <query-construct>
+        PREFIX core: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+        PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
+        PREFIX uowimpact: &lt;http://uowvivo.uow.edu.au/ontology/uowimpact#&gt;
+
+        CONSTRUCT
+        {
+            ?subject ?property ?object .
+            ?object a ?objectType .
+            ?object rdfs:label ?label .
+            ?object uowimpact:hideFromPublic ?hideThis .
+            ?object uowimpact:title ?title .
+            ?object uowimpact:description ?description .
+            ?object uowimpact:detailOfImpact ?detailOfImpact .
+        }
+        WHERE
+        {
+            {
+                ?subject ?property ?object .
+                ?object a ?objectType .
+            }
+            UNION
+            {
+                ?subject ?property ?object .
+                ?object rdfs:label ?label .
+            }
+            UNION
+            {
+                ?subject ?property ?object .
+                ?object uowimpact:hideFromPublic ?hideThis .
+            }
+            UNION
+            {
+                ?subject ?property ?object .
+                ?object uowimpact:title ?title .
+            }
+            UNION
+            {
+                ?subject ?property ?object .
+                ?object uowimpact:description ?description .
+            }
+            UNION
+            {
+                ?subject ?property ?object .
+                ?object uowimpact:detailOfImpact ?detailOfImpact .
+            }
+        }
+    </query-construct>
+
+    <template>propStatement-hasImpactEngagement.ftl</template>
+</list-view-config>

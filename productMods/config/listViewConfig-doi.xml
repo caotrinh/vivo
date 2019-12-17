@@ -7,10 +7,14 @@
 
 <list-view-config>
     <query-select>    
-        SELECT ?value
+          
+        SELECT ?value ?property
         WHERE {
-                ?subject ?property ?value 
-        }
+  
+                ?subject ?property ?value
+                FILTER isLiteral(?value) 
+            
+        } ORDER BY ?value
     </query-select>
 
     <query-construct>
@@ -22,5 +26,5 @@
         }
     </query-construct>
     
-    <template>propStatement-orcidId.ftl</template>
+    <template>propStatement-doi.ftl</template>
 </list-view-config>
