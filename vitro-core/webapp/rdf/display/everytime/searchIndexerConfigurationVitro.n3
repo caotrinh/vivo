@@ -1,0 +1,554 @@
+@prefix : <http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationSetup#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#
+# configure the SearchIndexer
+#
+
+# Individuals with these types will be excluded from the search index
+:searchExcluder_typeExcluder
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.ExcludeBasedOnType> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.SearchIndexExcluder> ;
+    :excludes
+        "http://www.w3.org/2002/07/owl#AnnotationProperty" ,
+        "http://www.w3.org/2002/07/owl#DatatypeProperty" ,
+        "http://www.w3.org/2002/07/owl#ObjectProperty" .
+
+# Individuals with types from these namespaces will be excluded from the search index.
+:searchExcluder_namespaceExcluder
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.ExcludeBasedOnNamespace> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.SearchIndexExcluder> ;
+    :excludes
+        "http://vitro.mannlib.cornell.edu/ns/vitro/0.7#" ,
+        "http://vitro.mannlib.cornell.edu/ns/vitro/public#" ,
+        "http://vitro.mannlib.cornell.edu/ns/bnode#" ,
+        "http://www.w3.org/2002/07/owl#" .
+
+# Individuals with URIs in these namespaces will be excluded from the search index.
+:searchExcluder_typeNamespaceExcluder
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.ExcludeBasedOnTypeNamespace> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.SearchIndexExcluder> ;
+    :excludes
+        "http://vitro.mannlib.cornell.edu/ns/vitro/role#public" .
+
+:searchExcluder_syncingTypeExcluder
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.SyncingExcludeBasedOnType> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.exclusions.SearchIndexExcluder> .
+
+# ------------------------------------
+
+:uriFinder_forDataProperties
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.IndexingUriFinder> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.AdditionalURIsForDataProperties> .
+
+:uriFinder_forObjectProperties
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.IndexingUriFinder> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.AdditionalURIsForObjectProperties> .
+
+:uriFinder_forTypeStatements
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.IndexingUriFinder> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.AdditionalURIsForTypeStatements> .
+
+:uriFinder_forClassGroupChange
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.IndexingUriFinder> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.indexing.URIsForClassGroupChange> .
+
+# ------------------------------------
+
+
+:documentModifier_hasOpenAccess
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_hasOpenAccess" ;
+    :hasTypeRestriction "http://purl.org/ontology/bibo/Document" ;
+    :hasSelectQuery """
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+      PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#> 
+      PREFIX bibo: <http://purl.org/ontology/bibo/>
+      SELECT (true as  ?dp_hasOpenAccess) WHERE { 
+          ?uri uowvivo:roFulltextUrl ?link .
+          ?uri a bibo:Document
+      }""" .
+
+:documentModifier_openAccessURL
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_roFulltextUrl" ;
+    :hasTypeRestriction "http://purl.org/ontology/bibo/Document" ;
+    :hasSelectQuery """
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+      PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#> 
+      PREFIX bibo: <http://purl.org/ontology/bibo/>
+      SELECT (?link as  ?dp_hasOpenAccess) WHERE { 
+          ?uri uowvivo:roFulltextUrl ?link .
+          ?uri a bibo:Document
+      }""" .
+
+# Disabled - conflicting with documentModifier_AllLabels, apparently 
+#:documentModifier_AllNames
+#    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+#        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+#    rdfs:label "All labels are added to name fields." ;
+#    :hasTargetField "nameRaw" ;
+#    :hasTargetField "label" ;
+#    :hasSelectQuery """
+#        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+#		SELECT ?label 
+#		WHERE {
+#			?uri rdfs:label ?label .
+#	    } LIMIT 1
+#        """ .
+
+:documentModifier_keyword
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_freetextSearch" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+          SELECT (LCASE(group_concat(distinct ?label ; separator = "|") )AS ?propset)
+                WHERE {
+                {
+                  ?uri a foaf:Person .
+                  ?uri vivo:overview ?label .
+                } UNION {
+                  ?uri a foaf:Person .
+                  ?uri vivo:freetextKeyword ?label
+                } UNION {
+                     ?uri a foaf:Person .
+                     ?uri a uowvivo:staff .
+                     ?uri rdfs:label ?label .
+                }
+
+            } group by ( ?uri )
+        """;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+          SELECT (LCASE(group_concat(distinct ?dp_name ) ) AS ?propset)
+                WHERE {
+                    {
+                        ?uri foaf:firstName ?dp_name .
+                        ?uri a foaf:Person .
+                        ?uri a uowvivo:staff .
+                    } UNION {
+                        ?uri foaf:lastName ?dp_name .
+                        ?uri a foaf:Person .
+                        ?uri a uowvivo:staff .
+                    }
+                } group by ( ?uri )
+        """;
+    :hasSelectQuery """
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+            PREFIX vivo: <http://vivoweb.org/ontology/core#>
+            PREFIX bibo: <http://purl.org/ontology/bibo/>
+              SELECT (LCASE(group_concat(distinct ?label ; separator = "|") )AS ?propset)
+                  WHERE {
+                  {
+                    ?uri a vivo:Grant .
+                    ?uri rdfs:label ?label .
+                  } UNION {
+                    ?uri a vivo:Grant .
+                    OPTIONAL {?uri bibo:abstract ?label }
+                  }
+              } group by ( ?uri )
+        """;
+    :hasSelectQuery """
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+            PREFIX vivo: <http://vivoweb.org/ontology/core#>
+            PREFIX bibo: <http://purl.org/ontology/bibo/>
+            PREFIX dc: <http://purl.org/dc/elements/1.1/>
+            PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+              SELECT (LCASE(group_concat(distinct ?label ; separator = "|") )AS ?propset)
+                  WHERE {
+                  {
+                    ?uri a vivo:InformationResource .
+                    ?uri rdfs:label ?label .
+                  } UNION {
+                    ?uri a vivo:InformationResource .
+                    OPTIONAL {?uri bibo:abstract ?label }
+                  } UNION {
+                    ?uri a vivo:InformationResource .
+                    OPTIONAL { ?uri dc:title ?label }
+                  } UNION {
+                    ?uri a vivo:InformationResource .
+                    OPTIONAL { ?uri uowvivo:quotedcitation ?label }
+                  }
+              } group by ( ?uri )
+        """ .
+
+:documentModifier_keywordDisplay
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_freetextKeyword" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+          SELECT (group_concat(distinct ?label ; separator = "|")AS ?propset)
+                WHERE {
+                {
+                  ?uri a foaf:Person .
+                  ?uri vivo:freetextKeyword ?label
+                }
+            } group by ( ?uri )
+        """ .
+                #} UNION {
+:documentModifier_AllLabels
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "label" ;
+    :hasTargetField "dp_label" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+		SELECT ?label 
+		WHERE {
+			?uri rdfs:label ?label .
+	    } LIMIT 1
+        """ .
+
+:documentModifier_PersonLastName
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_lastName" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		SELECT ?dp_lastName
+		WHERE {
+			?uri rdfs:label ?label .
+			?uri foaf:lastName ?dp_lastName .
+                        ?uri a foaf:Person
+	    } LIMIT 1
+        """ .
+
+:documentModifier_PersonFirstName
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_firstName" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		SELECT ?dp_firstName
+		WHERE {
+			?uri rdfs:label ?label .
+			?uri foaf:firstName ?dp_firstName .
+                        ?uri a foaf:Person
+	    } LIMIT 1
+        """ .
+
+:documentModifier_PersonResearchArea
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_hasResearchArea" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		SELECT DISTINCT ( LCASE(?fName) as ?forcodeName )
+		WHERE {
+			?uri vivo:hasResearchArea ?forcode .
+			?forcode skos:inScheme <http://purl.org/au-research/vocabulary/anzsrc-for/2008/>.
+                        ?forcode rdfs:label ?fName .
+                        FILTER regex( ?fName, '^[0-9]', 'i'  )
+	    }
+        """ .
+
+:documentModifier_associatedConcepts
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_hasAssociatedConcept" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        SELECT DISTINCT (UCASE(?forcodeName) as ?fName )
+            WHERE  { {
+                        ?uri vivo:hasAssociatedConcept ?forcode .
+?forcode skos:inScheme <http://purl.org/au-research/vocabulary/anzsrc-for/2008/>.
+                        ?forcode rdfs:label ?forcodeName .
+                        FILTER regex( ?forcodeName, '^[0-9]', 'i'  )
+            } UNION {
+                        ?uri vivo:hasResearchArea ?forcode .
+?forcode skos:inScheme <http://purl.org/au-research/vocabulary/anzsrc-for/2008/>.
+                        ?forcode rdfs:label ?forcodeName .
+                        FILTER regex( ?forcodeName, '^[0-9]', 'i'  )
+            }
+        }
+        """ .
+        
+:documentModifier_subjectAreas
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_hasSubjectArea" ;
+    :hasTypeRestriction "http://purl.org/ontology/bibo/Document" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        SELECT (STR(?forcodeName) as ?fcName )
+        WHERE {    
+          ?uri vivo:hasSubjectArea ?forcode .
+          ?forcode skos:inScheme <http://purl.org/au-research/vocabulary/anzsrc-for/2008/>.
+          ?forcode rdfs:label ?forcodeName
+        }
+        """ .
+
+:documentModifier_journalOutletName
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_hasPublicationVenue" ; 
+    :hasTypeRestriction "http://purl.obolibrary.org/obo/IAO_0000013" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?outletLabel
+    WHERE {
+      ?uri vivo:hasPublicationVenue ?outlet .
+      ?outlet rdfs:label ?outletLabel
+  }
+""".
+
+#http://uowvivo.uow.edu.au/individual/publication18642
+:documentModifier_dpScopusEid
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_scopusEid" ; 
+    :hasSelectQuery """
+PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+    SELECT ( STR(?eid) as ?eidString )
+    WHERE {
+      ?uri uowvivo:scopusEid ?eid .
+  }
+""".
+
+:documentModifier_dpDoi
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_doi" ; 
+    :hasTypeRestriction "http://purl.org/ontology/bibo/Document" ;
+    :hasSelectQuery """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+    SELECT ( STR(?doi) as ?doiString )
+    WHERE {
+      ?uri bibo:doi ?doi .
+  }
+""".
+
+:documentModifier_dpQuotedCitation
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_quotedcitation" ; 
+    :hasTypeRestriction "http://purl.org/ontology/bibo/Document" ;
+    :hasSelectQuery """
+PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+    SELECT ( STR(?cite) as ?citeString )
+    WHERE {
+      ?uri uowvivo:quotedcitation ?cite.
+  }
+""".
+
+:documentModifier_POSITION_TITLE
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "POSITION_TITLE" ; 
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+prefix vcard: <http://www.w3.org/2006/vcard/ns#>
+prefix obo: <http://purl.obolibrary.org/obo/>
+  SELECT ?role WHERE { 
+  ?uri obo:ARG_2000028 ?card . 
+  ?card a vcard:Individual .
+  ?card vcard:hasRole ?roleHolder .
+  ?roleHolder vcard:role ?role . 
+}
+""".
+
+:documentModifier_conferenceName
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_presentedAt" ; 
+    :hasTypeRestriction "http://vivoweb.org/ontology/core#ConferencePaper" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT (STR(?outlet) as ?outletLabel)
+    WHERE {
+      ?uri bibo:presentedAt  ?outlet 
+  }
+""".
+
+
+# GRANTS...
+:documentModifier_op_label_assignedBy
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_assignedBy" ; 
+    :hasTypeRestriction "http://vivoweb.org/ontology/core#Grant" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT DISTINCT (STR(?agencyNameLabel) as ?agencyName )
+    WHERE {
+      ?uri a core:Grant .
+      ?uri core:assignedBy ?agency .
+      ?agency rdfs:label ?agencyNameLabel
+  }
+""".
+
+:documentModifier_dp_scheme
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "dp_scheme" ; 
+    :hasTypeRestriction "http://vivoweb.org/ontology/core#Grant" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+    SELECT DISTINCT (STR(?scheme) as ?schemeName )
+    WHERE {
+      ?uri a core:Grant .
+      ?uri uowvivo:scheme ?scheme .
+  }
+""".
+
+:documentModifier_GrantResearchArea
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_label_hasResearchArea" ;
+    :hasTypeRestriction "http://vivoweb.org/ontology/core#Grant" ;
+    :hasSelectQuery """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX vivo: <http://vivoweb.org/ontology/core#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		SELECT ?forcodeName
+		WHERE {
+			?uri vivo:hasResearchArea ?forcode .
+			?forcode skos:inScheme <http://purl.org/au-research/vocabulary/anzsrc-for/2008/>.
+                        ?forcode rdfs:label ?forcodeName
+	    }
+        """ .
+
+:documentModifier_contributingRole
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_contributingRole" ; 
+    :hasTypeRestriction "http://vivoweb.org/ontology/core#Grant" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX uowvivo: <http://uowvivo.uow.edu.au/ontology/uowvivo#>
+    SELECT DISTINCT ?calcLabel WHERE {
+    SELECT DISTINCT ?role (str(?roleLabel) as ?rLabel) (str(?pName) as ?personName )
+    (STR(REPLACE(IF(?roleLabel = 'Chief Investigator', CONCAT(?personName, ' - ', ?rLabel), ?roleLabel),'  ', ' ')) as ?calcLabel)
+    WHERE {
+       ?uri a core:Grant .
+       ?uri core:contributingRole ?role .
+       ?role rdfs:label ?roleLabel .
+       OPTIONAL {
+         ?role core:relates ?person .
+         ?person rdfs:label ?pName . 
+         ?person a foaf:Person
+       } 
+    }
+  }
+""".
+
+:documentModifier_investigatorOfGrantsCount
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_context_investigatorOf" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT (str(count(distinct ?grants)) as ?investigatorOf)
+WHERE
+{
+		?uri rdf:type foaf:Person .
+		?uri obo:RO_0000053 ?allRelationShip .
+		?allRelationShip rdf:type core:InvestigatorRole .
+		?allRelationShip core:relatedBy ?grants .
+		?grants rdf:type core:Grant .
+}
+        """ .
+
+:documentModifier_authorOfPubsCount
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "op_context_authorOfPubsCount" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person" ;
+    :hasSelectQuery """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT (str(count(distinct ?pubs)) as ?authorOfPubsCount)
+                        WHERE
+                        {
+                          ?uri rdf:type foaf:Person .
+                          ?uri core:relatedBy ?allRelationShip .
+                          ?allRelationShip rdf:type core:Authorship .
+                          ?allRelationShip core:relates ?pubs .
+                          ?pubs rdf:type core:InformationResource
+                        }
+        """ .
+    
+:documentModifier_NameFieldBooster
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.FieldBooster> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    :hasTargetField "nameRaw" ;
+    :hasTargetField "nameLowercase" ;
+    :hasTargetField "nameUnstemmed" ;
+    :hasTargetField "nameStemmed" ;
+    :hasBoost "1.2"^^xsd:float .
+
+:documentModifier_thumbnailImageUrl
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.ThumbnailImageURL> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> .

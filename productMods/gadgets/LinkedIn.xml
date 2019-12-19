@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs
+            title="LinkedIn Profile"
+            author="Ben Cornwell"
+            author_email="ben_cornwell@uow.edu.au"
+            description="LinkedIn Profile">
+        <Require feature="opensocial-0.9" />
+        <Require feature="pubsub" />
+        <Require feature="views" />
+        <Require feature="dynamic-height" />
+        <Require feature="osapi" />
+    </ModulePrefs>
+    <Content type="html" view="default, home, profile" preferred_height="75" preferred_width="330"><![CDATA[<!--HTML-->
+    <!DOCTYPE html>
+    <base target="_blank"/>
+    
+    <link rel="stylesheet" href="css/gadget.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap.min.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap-uow.css" type="text/css" media="screen, projection">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>    
+    <script type="text/javascript" src="js/os.js" ></script>
+    <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+    
+    <style type="text/css">
+    	input.linkedin_username {
+    	    width:100%;
+    	    display:inline;
+    	}
+
+    	.save {
+    	    margin-top: 10px;
+    	    cursor:pointer;
+    	    margin-right:10px;
+        }
+
+	    #preview {
+	        width: 364px;
+	        margin: 0 auto;
+        }
+
+        #connect-linkedin-button {
+            display: block;
+            width: 90%;
+            height: 40px;
+            background: #0077B5;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: normal;
+        }
+    </style>
+    
+    <script type="text/javascript">
+
+	    function gadgetEventTrack(action, label, value) {
+    		var message = {'action' : action};
+    		if (label) {message.label = label;}
+    		if (value) {message.value = value;}
+    		gadgets.pubsub.publish("analytics", message);
+		}
+
+	    function getUserNameAndPreview(userId){
+			osapi.appdata.get({'userId': userId, 'groupId': '@self', 'appId':'@app', 'fields': ['username']})
+		    	.execute(function(response){
+		    		var viewer = os.osapi.getViewerFromResult(response);
+		    		var username = viewer.username;
+		    		$('input[name=username]').val(username);
+		    		if(username != null && username != "") {
+		    			gadgets.window.adjustHeight(250);
+		    			var viewName=gadgets.views.getCurrentView().getName();
+		    			if(viewName == 'home'){
+		    				gadgets.window.adjustHeight(455);
+		    			}
+		    			preview(username, "viewMode");
+		    		}
+		    });
+		}
+
+		function preview(username, mode){
+            $('#preview').html("");
+
+            if(username && username != "") {
+                if(username.indexOf('http://') === -1 && username.indexOf('https://') === -1) {
+                    username = "https://" + username
+                }
+
+                var link = $('<a/>').attr({
+                        href: username,
+                        id: 'connect-linkedin-button',
+                        text: 'Connect on LinkedIn'
+                    });
+                $('#preview').html(link);
+            }
+	    }
+
+   		gadgets.util.registerOnLoadHandler(function(){
+	    	var viewName=gadgets.views.getCurrentView().getName();
+	    	
+	    	if(viewName=='home'){
+	    		var innerDiv=$('#inner_home_settings').html();
+	    		$('#settings').html(innerDiv);
+	    		getUserNameAndPreview('@viewer');
+
+		    	$('span.save').click(function(){
+	    			var username = $('input[name=username]').val();
+	    			osapi.appdata.update({'userId': '@viewer', 'groupId': '@self', 'appId':'@app', 'data':{'username':username} })
+	    				.execute(function(response){
+                    });
+
+                    gadgets.window.adjustHeight(455);
+                    preview(username, "saveMode");
+		    	});
+	    	}
+	    	else{
+	    		gadgets.window.adjustHeight(250);
+	    		getUserNameAndPreview('@owner');
+	    	}
+
+    	});
+    	
+	</script>
+	    	
+	    	
+	
+	<div id="settings" style="clear:both; margin:0px 10px 0px 10px;"></div>
+    <div id="preview">
+        <script type="IN/MemberProfile" data-id="username" data-format="inline" data-related="false" data-width="330"></script>
+    </div>
+    <br><br>
+    ]]>
+    </Content>
+    <Content type="html" view="home" preferred_height="75" preferred_width="330"><![CDATA[<!--HTML-->
+		<div id="inner_home_settings" style="display:none;">
+			<div class="well">
+                <div class="question">
+                    <div>LinkedIn Profile URL:</div>
+                    <input type="text" name="username" class="linkedin_username">
+                    <span id="save-btn" class="save linkedin_body btn btn-primary" title="Save">Save</span>
+                </div>
+			</div>
+		</div>
+		]]>
+	</Content>
+</Module>

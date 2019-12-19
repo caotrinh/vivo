@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs
+            title="Scopus H-Index"
+            author="Ben Cornwell"
+            author_email="ben_cornwell@uow.edu.au"
+            description="Scopus H-Index">
+        <Require feature="opensocial-0.9" />
+        <Require feature="pubsub" />
+        <Require feature="views" />
+        <Require feature="dynamic-height" />
+        <Require feature="osapi" />
+    </ModulePrefs>
+    <Content type="html" view="default, home, profile" preferred_height="200" preferred_width="670"><![CDATA[<!--HTML-->
+    <!DOCTYPE html>
+    <base target="_blank"/>
+
+
+    <!-- #includes -->
+    <link rel="stylesheet" href="css/gadget.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap.min.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap-uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/font-awesome.min.css" type="text/css" media="screen, projection">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+    <script type="text/javascript" src="js/os.js" ></script>
+
+    <!-- Styles -->
+    <style type="text/css">
+    	.ss-link{ margin:10px 0px 10px 0px; }
+    	a, a:visited { color: #0088CC; text-decoration: none; }
+    	a:hover { color: #005580; text-decoration: underline; }
+	#preview { margin: 0; clear:both; overflow:hidden;}
+	.value {font-size:1.5em;}
+	#url {margin-bottom: 10px;}
+	input.scopusIndex_id { width:100%;display:inline; }
+	.save {margin-top: 10px;cursor:pointer;margin-right:10px;margin-left: -14px;}
+	.well {padding: 10px;}
+	.hindex {font-size: 30px; margin-top:0; margin-bottom: 0;}
+	ul.hindex_list { padding-left: 20px; }
+    </style>
+
+    <script type="text/javascript">
+
+	    function gadgetEventTrack(action, label, value) {
+    		var message = {'action' : action};
+    		if (label) {message.label = label;}
+    		if (value) {message.value = value;}
+    		gadgets.pubsub.publish("analytics", message);
+		}
+
+	    // ========================================
+	    function getUserNameAndPreview(userId){
+			osapi.appdata.get({'userId': userId, 'groupId': '@self', 'appId':'@app', 'fields': ['username']})
+		    	.execute(function(response){
+		    		var viewer = os.osapi.getViewerFromResult(response);
+		    		var username = viewer.username;
+		    		$('input[name=username]').val(username);
+		    		if(username != null && username != "") { // only render flash if there's a username
+		    			var viewName=gadgets.views.getCurrentView().getName();
+		    			if(viewName == 'home'){
+		    				gadgets.window.adjustHeight(300);
+		    			}
+		    			preview(username);
+		    		} else {
+		    			$('#preview').addClass('hidden');
+		    		}
+		    });
+		}
+	    // ========================================
+
+	    // ========================================
+		function preview(username){
+			if(username != null && username != ""){
+				$('#preview').removeClass('hidden');
+                $('#hindex-value').html('<i id="hindex-spin" class="fa fa-refresh" style="font-size: 20px"></i>');
+                $('#doccount-value').html('<i id="doccount-spin" class="fa fa-refresh" style="font-size: 20px"></i>');
+                $('#coauthors-value').html('<i id="coauthors-spin" class="fa fa-refresh" style="font-size: 20px"></i>');
+
+				var link = '/gadgets/scopus.jsp?authorId='+username;
+				var profileLink = 'http://www.scopus.com/authid/detail.url?authorId=' + username;
+				$('#url-link').attr( 'href', profileLink );
+
+				var doUpdate = function(data){
+				    var obj = JSON.parse(data);
+
+				    $('#hindex-spin').fadeOut('slow', function() {
+                        $('#hindex-value').append( obj.hIndex );
+                    });
+
+                    $('#doccount-spin').fadeOut('slow', function() {
+                        $('#doccount-value').append( obj.docCount );
+                    });
+
+                    $('#coauthors-spin').fadeOut('slow', function() {
+                        $('#coauthors-value').append( obj.coAuthors );
+                    });
+
+				};
+				$.ajax({type: 'GET', url: link, success: doUpdate});
+			} else {
+				$('#preview').addClass('hidden');
+			}
+	    }
+	    // ========================================
+
+	     // ========================================
+   		gadgets.util.registerOnLoadHandler(function(){
+	    	var viewName=gadgets.views.getCurrentView().getName();
+
+	    	if(viewName=='home'){
+	    		var innerDiv=$('#inner_home_settings').html();
+	    		$('#settings').html(innerDiv);
+	    		getUserNameAndPreview('@viewer');
+
+		    	$('span.save').click(function(){
+	    			var username = $('input[name=username]').val();
+	    			osapi.appdata.update({'userId': '@viewer', 'groupId': '@self', 'appId':'@app', 'data':{'username':username} })
+	    				.execute(function(response){
+	    				});
+
+	    				if(username != null && username != "") {
+	    					gadgets.window.adjustHeight(300);
+	    					preview(username);
+	    				} else {
+	    					gadgets.window.adjustHeight(125);
+	    					$('#hindex-value').empty();
+							$('#doccount-value').empty();
+							$('#coauthors-value').empty();
+			    			$('#preview').addClass('hidden');
+			    		}
+		    	}); //click
+	    	}
+	    	else{
+	    		getUserNameAndPreview('@owner');
+	    	}
+    	}); // registerOnLoadHandler
+    	// ========================================
+
+	</script>
+
+
+
+	<div id="settings" style="clear:both; margin:0px 10px 0px 10px;"></div>
+    <div id="preview" class="well">
+        <div>
+            <div class="pull-left">
+                <span class="badge badge-primary hindex">h-index: <span id="hindex-value"></span></span>
+            </div>
+            <div class="pull-right">
+                <div id="url"><a id="url-link" href="" target="_blank"><i class="fa fa-fw fa-external-link" ></i>&nbsp;Scopus</a></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <h4><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>&nbsp;<span id="doccount-value" class="value"></span> articles indexed by Scopus</h4>
+        <h4><i class="fa fa-fw fa-users" aria-hidden="true"></i>&nbsp;<span id="coauthors-value" class="value"></span> unique co-authors</h4>
+    </div>
+    <br><br>
+    ]]>
+    </Content>
+    <Content type="html" view="home" preferred_height="200" preferred_width="700"><![CDATA[<!--HTML-->
+		<div id="inner_home_settings" style="display:none;">
+			<div class="well">
+					<div class="question">
+				<span class="scopus_body">Author ID:&nbsp;</span><input type="text" name="username" class="scopusIndex_id">
+				&nbsp;&nbsp;&nbsp;</span>
+				<span class="save scopus_body btn btn-primary" title="Save author id and preview.">Save/Preview</span>
+				</div>
+			</div>
+		</div>
+		]]>
+    </Content>
+</Module>

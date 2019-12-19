@@ -1,0 +1,20 @@
+#first-time-login label {
+    float: left;
+    display: block;
+    width: 100px;
+    clear: left;
+    margin: 10px 0px;
+}
+#first-time-login input[type="text"] {
+    display: block;
+    float: left;
+    clear:right;
+    width: 250px;
+    margin: 10px 0px;
+}
+
+#first-time-login form p {
+    display:block;
+    clear: left;
+    margin: 20px 10px 10px 100px;
+}

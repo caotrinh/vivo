@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs
+            title="Featured Presentations"
+            author="Nels Johnson"
+            author_email="njohnson@downrecs.com"
+            description="Featured Presentations">
+        <Require feature="opensocial-0.9" />
+        <Require feature="pubsub" />
+        <Require feature="views" />
+        <Require feature="flash" />
+        <Require feature="dynamic-height" />
+        <Require feature="osapi" />
+    </ModulePrefs>
+    <Content type="html" view="default, home, profile" preferred_height="135" preferred_width="670"><![CDATA[<!--HTML-->
+    <!DOCTYPE html>
+    <base target="_blank"/>
+  
+    <!-- #includes -->
+    <link rel="stylesheet" href="css/gadget.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap.min.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap-uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/font-awesome.min.css" type="text/css" media="screen, projection">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>    
+    <script type="text/javascript" src="js/os.js" ></script>
+    
+    <!-- Styles -->
+    <style type="text/css">
+    	.slideshare_title {	font-family: Arial, helvetica; font-size: 14px;}
+    	.slideshare_body { font-family: Arial, helvetica; }
+    	.slideshare_credit { font-family: Arial, helvetica; font-size: 10px;}
+    	.ss-link{ margin:10px 0px 10px 0px; }
+    	a, a:visited { color: #0088CC; text-decoration: none; }
+    	a:hover { color: #005580; text-decoration: none; }
+    	input.slideshare_username{width:100%;display:inline;}
+    	.save {margin-top: 10px;cursor:pointer;margin-right:10px;margin-left: -14px;}
+		#preview{ margin: 0; background-color:#fff;color:#007BB6;padding:10px 0 10px 10px;}
+		.slideshareIcon {font-size: 45px;margin-right:10px;}
+		.slideshareLinkText {font-size: 20px;vertical-align:super;}
+    </style>
+    
+    <script type="text/javascript">
+	    
+	    function gotoSlideshare() {    		
+	        var action = 'go_to_slideshare';
+	        var href = $('div.ss-link a').attr('href');
+    		gadgets.pubsub.subscribe("analytics", function(sender, message){
+    			if(message.action = action) {
+    				window.top.location.href = href;
+    			}
+    		});
+    		gadgetEventTrack(action, href);
+	    }
+	    
+	    function gadgetEventTrack(action, label, value) {
+    		var message = {'action' : action};
+    		if (label) {message.label = label;}
+    		if (value) {message.value = value;}
+    		gadgets.pubsub.publish("analytics", message);
+		}
+	    
+	    // ========================================
+	    function getUserNameAndPreview(userId){
+			osapi.appdata.get({'userId': userId, 'groupId': '@self', 'appId':'@app', 'fields': ['username']})
+		    	.execute(function(response){
+		    		var viewer = os.osapi.getViewerFromResult(response);
+		    		var username = viewer.username;
+		    		$('input[name=username]').val(username);
+		    		if(username != null && username != "") { // only render flash if there's a username
+		    			gadgets.window.adjustHeight(75);
+		    			var viewName=gadgets.views.getCurrentView().getName();
+		    			if(viewName == 'home'){
+		    				gadgets.window.adjustHeight(230);
+		    			}
+		    			preview(username);
+		    		}	    				
+		    });
+		}
+	    // ========================================
+    
+	    // ========================================
+		function preview(username){
+    		if(username){
+    			$('#preview').removeClass('hidden');
+            	$('#preview a').attr('href', '//www.slideshare.net/'+username+'/slideshelf');
+            } else {
+            	$('#preview').addClass('hidden');
+            }
+            
+	 		
+	    	$('div.ss-link a').click(function(event){
+	    	    event.preventDefault();
+	    		gotoSlideshare();	    		
+	    	}); //click	 					
+	    }
+	    // ========================================
+	    
+	     // ========================================
+   		gadgets.util.registerOnLoadHandler(function(){
+	    	var viewName=gadgets.views.getCurrentView().getName();
+	    	
+	    	if(viewName=='home'){
+	    		var innerDiv=$('#inner_home_settings').html();
+	    		$('#settings').html(innerDiv);
+	    		
+	    		$('#secondHeader').show();
+	    		
+	    		getUserNameAndPreview('@viewer');
+
+		    	$('span.save').click(function(){
+	    			var username = $('input[name=username]').val();
+	    			osapi.appdata.update({'userId': '@viewer', 'groupId': '@self', 'appId':'@app', 'data':{'username':username} })
+	    				.execute(function(response){
+	    				});
+	    				
+	    				if(username != null && username != "") {
+	    					gadgets.window.adjustHeight(230);
+	    				}
+	    				preview(username);
+		    	}); //click
+	    	}
+	    	else{
+	    		getUserNameAndPreview('@owner');
+	    	}	    	
+    	}); // registerOnLoadHandler    	
+    	// ========================================
+    	
+	</script>
+	    	
+	    	
+	
+	<div id="settings" style="clear:both; margin:0px 10px 0px 10px;">	 
+    </div>
+    <div id="preview" class="hidden">
+    	<a href="#">
+	    	<i class="fa fa-slideshare slideshareIcon"></i>
+	    	<span class="slideshareLinkText">SlideShare Presentations</span>
+	    </a>
+    </div>
+    ]]>
+    </Content>
+    <Content type="html" view="home" preferred_height="135" preferred_width="700"><![CDATA[<!--HTML-->	
+		<div id="inner_home_settings" style="display:none;">
+			<div class="well">
+					<div class="question">
+				<span class="slideshare_body">SlideShare Username:&nbsp;</span><input type="text" name="username" class="slideshare_username">
+				&nbsp;&nbsp;&nbsp;</span>
+				<span class="save slideshare_body btn btn-primary" style="cursor:pointer;" title="Save this Username and preview the presentations.">Save</span>
+				<br>
+				</div>
+			</div>
+		</div>
+		]]>
+	</Content>
+</Module>

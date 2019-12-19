@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs
+            title="The Conversation"
+            author="Ben Cornwell"
+            author_email="ben_cornwell@uow.edu.au"
+            description="Integrates an RSS feed of articles from The Conversation">
+        <Require feature="opensocial-0.9" />
+        <Require feature="pubsub" />
+        <Require feature="views" />
+        <Require feature="dynamic-height" />
+        <Require feature="osapi" />
+    </ModulePrefs>
+    <Content type="html" view="default, home, profile" preferred_height="280" preferred_width="670"><![CDATA[<!--HTML-->
+    <!DOCTYPE html>
+    <base target="_blank"/>
+    
+    <!-- TODO: Fix height for OSDE. Should be removed --> 
+    <!--script type="text/javascript">
+    	gadgets.window.adjustHeight(700);
+    </script-->
+    
+    <!-- #includes -->
+    <link rel="stylesheet" href="css/gadget.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/uow.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap.min.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/themes/uow_2018_11/css/bootstrap-uow.css" type="text/css" media="screen, projection">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>    
+    <script type="text/javascript" src="js/os.js" ></script>
+    
+    <!-- Styles -->
+    <style type="text/css">
+    	.ss-link{ margin:10px 0px 10px 0px; }
+    	a, a:visited { color: #0088CC; text-decoration: none; }
+    	a:hover { color: #005580; text-decoration: underline; }
+	#preview { margin: 0; clear:both; overflow:hidden;}
+	#preview h4 {margin-left:10px; display:inline;}
+	#preview a {padding-left:5px; display:block;}
+	.value {font-size:1.5em;}
+	#url {margin-bottom: 15px;}
+	input.conversation_id { width:100%;display:inline; }
+	.save {margin-top: 10px;cursor:pointer;margin-right:10px;margin-left: -14px;}
+	.well {padding: 10px;}
+	ul#conv_articles {padding-left:20px;}
+	li { display: block; }
+	li:before {
+    		/*Using a Bootstrap glyphicon as the bullet point*/
+    		content: "\E022";
+		font-family: 'Glyphicons Halflings';
+		font-size: 14px;
+    		float: left;
+    		margin-top: 4px;
+    		margin-left: -17px;
+    		color: #cd201f;
+	}
+
+    </style>
+    
+    <script type="text/javascript">
+	    
+	    function gadgetEventTrack(action, label, value) {
+    		var message = {'action' : action};
+    		if (label) {message.label = label;}
+    		if (value) {message.value = value;}
+    		gadgets.pubsub.publish("analytics", message);
+		}
+	    
+	    // ========================================
+	    function getUserNameAndPreview(userId){
+			osapi.appdata.get({'userId': userId, 'groupId': '@self', 'appId':'@app', 'fields': ['username']})
+		    	.execute(function(response){
+		    		var viewer = os.osapi.getViewerFromResult(response);
+		    		var username = viewer.username;
+		    		$('input[name=username]').val(username);
+		    		gadgets.window.adjustHeight(300);
+		    		if(username != null && username != "") { // only render flash if there's a username
+		    			var viewName=gadgets.views.getCurrentView().getName();
+		    			if(viewName == 'home'){
+		    				gadgets.window.adjustHeight(510);
+		    			}
+		    			preview(username);
+		    		} else {
+		    			$('#preview').addClass('hidden');
+		    		}	    				
+		    });
+		}
+	    // ========================================
+    
+	    // ========================================
+		function preview(username){
+			if(username != null && username != ""){
+				$('#preview').removeClass('hidden');
+				//$('#preview script').attr('data-id', username );
+				var link = '/gadgets/conversation.jsp?authorId='+username;
+				var profileLink = '//theconversation.com/profiles/' + username;
+				$('#url_link a').attr( 'href', profileLink );
+				//$('#url_link a').html( profileLink );
+		            $('#conv_articles').empty();
+		 
+		        var doUpdate = function(data){ 
+		          var $XML= $(data);
+		          i=0;
+		          $XML.find("entry").each(function(i) {
+		            if(i == 5) {return false;} i++;
+		          var $this = $(this),
+		            item = {
+		                title:       $this.find("title").text(),
+		                link:        $this.find("link").attr('href'),
+		                description: $this.find("description").text(),
+		                pubDate:     $this.find("published").text(),
+		                author:      $this.find("author").text()
+		            }; 
+
+		            link = '<li><a href="'+item.link+'" target="_blank">'+item.title+'</a></li>';
+		            $('#conv_articles').append(link);
+				console.debug(item);
+		          });
+		        }; 
+				$.ajax({type: 'GET', url: link, success: doUpdate});
+			} else {
+				$('#preview').addClass('hidden');
+			}
+	    }
+	    // ========================================
+	    
+	     // ========================================
+   		gadgets.util.registerOnLoadHandler(function(){
+	    	var viewName=gadgets.views.getCurrentView().getName();
+	    	
+	    	if(viewName=='home'){
+	    		var innerDiv=$('#inner_home_settings').html();
+	    		$('#settings').html(innerDiv);
+	    		getUserNameAndPreview('@viewer');
+
+		    	$('span.save').click(function(){
+	    			var username = $('input[name=username]').val();
+	    			osapi.appdata.update({'userId': '@viewer', 'groupId': '@self', 'appId':'@app', 'data':{'username':username} })
+	    				.execute(function(response){
+	    				});
+	    				
+	    				//$('#preview').html('');
+	    				if(username != null && username != "") {
+	    					gadgets.window.adjustHeight(510);
+	    					preview(username);
+	    				} else {
+	    					gadgets.window.adjustHeight(300);
+			    			$('#preview').addClass('hidden');
+			    		}
+		    	}); //click
+	    	}
+	    	else{
+	    		getUserNameAndPreview('@owner');
+	    	}	    	
+    	}); // registerOnLoadHandler    	
+    	// ========================================
+    	
+	</script>
+	    	
+	    	
+	
+	<div id="settings" style="clear:both; margin:0px 10px 0px 10px;">
+    <div id="preview" class="well">
+		<ul id="conv_articles" />
+		<div id="url"><span id="url_link"><a href="" target="_blank">View More...</a></div>
+    </div>
+    </div>
+    <br>
+    ]]>
+    </Content>
+    <Content type="html" view="home" preferred_height="480" preferred_width="700"><![CDATA[<!--HTML-->	
+		<div id="inner_home_settings" style="display:none;">
+			<div class="well">
+					<div class="question">
+				<span class="conv_body">The Conversation author id:&nbsp;</span><input type="text" name="username" class="conversation_id">
+				&nbsp;&nbsp;&nbsp;</span>
+				<span class="save conv_body btn btn-primary" title="Save author id and preview.">Save/Preview</span>
+				</div>
+			</div>
+    <div id="preview" class="well">
+		<ul id="conv_articles" />
+		<div id="url"><span id="url_link"><a href="" target="_blank">View More...</a></div>
+    </div>
+		</div>
+		]]>
+	</Content>
+</Module>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?><rdf:RDF
+    xmlns:c4o="http://purl.org/spar/c4o/"
+    xmlns:vitropublic="http://vitro.mannlib.cornell.edu/ns/vitro/public#"
+    xmlns:ocrer="http://purl.org/net/OCRe/research.owl#"
+    xmlns:obo="http://purl.obolibrary.org/obo/"
+    xmlns:owl2="http://www.w3.org/2006/12/owl2-xml#"
+    xmlns:vivo="http://vivoweb.org/ontology/core#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:aka="http://vivoweb.org/ontology/aka#"
+    xmlns:far="http://vitro.mannlib.cornell.edu/ns/reporting#"
+    xmlns:ocresd="http://purl.org/net/OCRe/study_design.owl#"
+    xmlns:bibo="http://purl.org/ontology/bibo/"
+    xmlns:aktp="http://www.aktors.org/ontology/portal#"
+    xmlns:socsci="http://vivo.library.cornell.edu/ns/vivo/socsci/0.1#"
+    xmlns:event="http://purl.org/NET/c4dm/event.owl#"
+    xmlns:statistics="http://purl.org/net/OCRe/statistics.owl#"
+    xmlns:sce="http://vivoweb.org/ontology/SchoolOfContinuingEducation#"
+    xmlns:config="http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationConfiguration#"
+    xmlns:skos2="http://www.w3.org/2008/05/skos#"
+    xmlns:vivoc="http://vivo.library.cornell.edu/ns/0.1#"
+    xmlns:pubmed="http://vitro.mannlib.cornell.edu/ns/pubmed#"
+    xmlns:mann="http://vivo.cornell.edu/ns/mannadditions/0.1#"
+    xmlns:cce="http://vivoweb.org/ontology/cornell-cooperative-extension#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:uowvivo="http://uowvivo.uow.edu.au/ontology/uowvivo#"
+    xmlns:fabio="http://purl.org/spar/fabio/"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:hr="http://vivo.cornell.edu/ns/hr/0.9/hr.owl#"
+    xmlns:pvs="http://vivoweb.org/ontology/provenance-support#"
+    xmlns:wos="http://vivo.mannlib.cornell.edu/ns/ThomsonWOS/0.1#"
+    xmlns:scirr="http://vivoweb.org/ontology/scientific-research-resource#"
+    xmlns:for2="http://purl.org/asc/1297.0/2008/for/0.2#"
+    xmlns:cito="http://purl.org/spar/cito/"
+    xmlns:stars="http://vitro.mannlib.cornell.edu/ns/cornell/stars/classes#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:afn="http://jena.hpl.hp.com/ARQ/function#"
+    xmlns:for="http://purl.org/asc/1297.0/2008/for/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:local="http://vivo.cornell.edu/ontology/local#"
+    xmlns:study_protocol="http://purl.org/net/OCRe/study_protocol.owl#"
+    xmlns:ai="http://vivoweb.org/ontology/activity-insight#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:scires="http://vivoweb.org/ontology/scientific-research#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:wcmc="http://weill.cornell.edu/vivo/ontology/wcmc#"
+    xmlns:geo="http://aims.fao.org/aos/geopolitical.owl#"
+    xmlns:app="http://eagle-i.org/ont/app/1.0/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:display="http://vitro.mannlib.cornell.edu/ontologies/display/1.1#"
+    xmlns:ospcu="http://vivoweb.org/ontology/cu-vivo-osp#"
+    xmlns:vitro="http://vitro.mannlib.cornell.edu/ns/vitro/0.7#"
+    xmlns:vann="http://purl.org/vocab/vann/"
+    xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+    xmlns:swvs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" >
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#distributionMedium">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Distribution Medium</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#coursewareVersion">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Version</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dateOfExhibition">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Date of Exhibition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#ismn">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">ISMN</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dateOfAdvertisement">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Date of Advertisement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#placeOfAdvertisement">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Place of Advertisement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dateFirstPerformed">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Date First Performed</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#lengthOfPerformance">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Length of Performance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dateOfRecording">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Date of Recording</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#url">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">URL</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#venue">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Venue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#subCategory">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Type</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dateOfPresentation">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Date of Presentation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#countryPatentIn">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Country patent in</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#patentOwner">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Patent Owned by</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#patentGrantYear">
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:inPropertyGroupAnnot rdf:resource="http://vivoweb.org/ontology#vitroPropertyGroupbibobscure"/>
+    <rdfs:label xml:lang="en-US">Year Granted</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#courseware">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Courseware</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#crossDisciplineArtwork">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Cross-Disciplinary Artwork</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#curatorialWork">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Curatorial Work</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#publishedDesign">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Design - Published / Exhibited Work</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dramaturgy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Dramaturgy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#exhibitionCatalogueEssay">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Exhibition Catalogue Essay</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#literaryWork">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Literary Work (Novel, Novella, Short Story/Stories, Poem(s))</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#musicSoundComposition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/AudioDocument"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Music / Sound - Composition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#musicSoundPerformance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/AudioDocument"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Music / Sound - Performance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#playScriptWork">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Play, Script or Written Work of Theatre</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#theatreDesign">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Theatre - Design</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#theatreDirection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Theatre - Direction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#theatrePerformance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Theatre - Performance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#artWorkInGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Visual Arts - Artwork in a Group Exhibition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#bodyWorkInGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Visual Arts - Body of Work in a Group Exhibition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#soloExhibition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Visual Arts - Solo Exhibition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#danceChoregraphy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Dance - Choreography</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#dancePerformance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Dance - Performance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#conferenceOutputInJournal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Conference Publication Published in Journal</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#refereedDesign">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Refereed Design</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#otherPublication">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
+    <vitro:inClassGroup rdf:resource="http://vivoweb.org/ontology#vitroClassGrouppublications"/>
+    <vitro:prohibitedFromUpdateBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#dbAdmin"/>
+    <vitro:hiddenFromPublishBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <vitro:hiddenFromDisplayBelowRoleLevelAnnot rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/role#public"/>
+    <rdfs:label xml:lang="en-US">Other</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>

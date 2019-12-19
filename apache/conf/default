@@ -1,0 +1,65 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www
+	ServerAdmin webmaster@localhost
+
+	DocumentRoot /var/www
+	<Directory /var/www/>
+        RewriteEngine  on
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+
+        FallbackResource index.php
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+    ProxyPreserveHost On
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	# LogLevel warn
+	LogLevel debug
+
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+	
+    JkMount /* ajp13_worker
+
+    <LocationMatch "/monitoring">
+        Order deny,allow
+        Deny from all
+        Allow from 10.8.59.0/24
+        Allow from 10.25.25.0/24
+    </LocationMatch>
+
+    <LocationMatch "/manager/html">
+        Order deny,allow
+        Deny from all
+        Allow from 10.8.59.0/24
+        Allow from 10.25.25.0/24
+    </LocationMatch>
+
+    <LocationMatch "/loginExternalAuthReturn">
+
+        Satisfy any
+        AuthType Basic
+        AuthName "UOW Scholars Login"
+        AuthBasicProvider ldap
+        AuthLDAPURL "ldap://ldap-ids.its.uow.edu.au/dc=uow,dc=edu,dc=au" NONE
+        Require valid-user
+        order allow,deny
+        deny from all
+
+        RewriteEngine On
+        RewriteCond %{REMOTE_USER} ^(.*)$
+        RewriteRule ^(.*)$ - [E=R_U:%1]
+        RequestHeader add uow_userId %{R_U}e
+    </LocationMatch>
+
+	JkMount /* ajp13_worker
+    # add maintenance page to /var/www/
+    ErrorDocument 502 /maintenance.html
+    ErrorDocument 503 /maintenance.html
+    JkUnMount   /maintenance.html   ajp13_worker
+
+</VirtualHost>
