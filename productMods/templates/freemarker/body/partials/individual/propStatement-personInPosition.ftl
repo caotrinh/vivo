@@ -1,43 +1,36 @@
 <#-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
 
-<#-- Custom object property statement view for faux property "positions". See the PropertyConfig.3 file for details. 
-    
+<#-- Custom object property statement view for faux property "positions". See the PropertyConfig.3 file for details.
+
      This template must be self-contained and not rely on other variables set for the individual page, because it
-     is also used to generate the property statement during a deletion.  
+     is also used to generate the property statement during a deletion.
  -->
 
 <#import "lib-sequence.ftl" as s>
 <#import "lib-datetime.ftl" as dt>
-
 <@showPosition statement />
 
 <#-- Use a macro to keep variable assignments local; otherwise the values carry over to the
      next statement -->
 <#macro showPosition statement>
-    
-    <#local posTitle>
-        <span itemprop="jobTitle">${statement.positionTitle!statement.hrJobTitle!}</span>
-    </#local>
     <#local linkedIndividual>
         <#if statement.org??>
-            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization">
-               <a itemprop="name" href="${profileUrl(statement.uri("org"))}" title="${i18n().organization_name}">${statement.orgName}</a>
-            </span>
+            ${statement.orgName}
         <#else>
             <#-- This shouldn't happen, but we must provide for it -->
-            <a href="${profileUrl(statement.uri("position"))}" title="${i18n().missing_organization}">${i18n().missing_organization}</a>
+            ${i18n().missing_organization}
         </#if>
     </#local>
     <#-- The sparql query returns both the org's parent (middleOrg) and grandparent (outerOrg).
          For now, we are only displaying the parent in the list view. -->
     <#local middleOrganization>
         <#if statement.middleOrg??>
-            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization">
-                <a itemprop="name" href="${profileUrl(statement.uri("middleOrg"))}" title="${i18n().middle_organization}">${statement.middleOrgName!}</a>
-            </span>
+            ${statement.middleOrgName!}
         </#if>
     </#local>
-    
-    <@s.join [ posTitle, linkedIndividual, middleOrganization! ]/>  <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+
+    <div class="position">
+        <#if statement.positionTitle!?has_content || statement.hrJobTitle!?has_content>${statement.positionTitle!statement.hrJobTitle!} - </#if>
+        <@s.join [ linkedIndividual, middleOrganization! ]/>  <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" /></div>
 
 </#macro>

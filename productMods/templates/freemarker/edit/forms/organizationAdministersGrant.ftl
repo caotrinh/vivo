@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain edit configuration information-->
 <#if editConfiguration.objectUri?has_content>
     <#assign editMode = "edit">
@@ -49,8 +49,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 
-<h2>${titleVerb}&nbsp;${i18n().grant_administered_by} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().grant_administered_by} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if grantLabelDisplayValue?has_content >
@@ -93,7 +93,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
     <p class="submit">
-         <input type="submit" class="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" class="submit btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -101,8 +101,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
 
 </form>
-
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData  = {
     acUrl: '${urls.base}/autocomplete?tokenize=true&stem=true',
@@ -130,7 +130,8 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 
 

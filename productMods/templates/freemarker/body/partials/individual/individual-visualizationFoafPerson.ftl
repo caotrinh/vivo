@@ -20,31 +20,58 @@
         <#if isAuthor>
             <#assign coAuthorIcon = "${urls.images}/visualization/coauthorship/co_author_icon.png">
             <#assign mapOfScienceIcon = "${urls.images}/visualization/mapofscience/scimap_icon.png">
-            <#assign coAuthorVisUrl = individual.coAuthorVisUrl()>
             <#assign mapOfScienceVisUrl = individual.mapOfScienceUrl()>
+            <#assign coAuthorVisUrl = individual.coAuthorVisUrl()>
+            <#assign geomapVisUrl = "${urls.base}/vis/author-geomap/"+individual.getLocalName()>
             
             <#assign googleJSAPI = "https://www.google.com/jsapi?autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22visualization%22%2C%22version%22%3A%221%22%2C%22packages%22%3A%5B%22imagesparkline%22%5D%7D%5D%7D"> 
             
-            <span id="sparklineHeading">${i18n().publications_in_vivo}</span>   
             
-            <div id="vis_container_coauthor">&nbsp;</div>
+            <div id="vis_container_coauthor">
+                <span class="glyphicon glyphicon-stats"></span>&nbsp;
+                <span id="sparklineHeading">${i18n().publications_in_vivo}</span>
+                <div id="vis_container_coauthor_inner">&nbsp;</div>
+            </div>
             
             <div class="collaboratorship-link-separator"></div>
-            
             <div id="coauthorship_link_container" class="collaboratorship-link-container">
-				<div class="collaboratorship-icon">
-                    <a href="${coAuthorVisUrl}" title="${i18n().co_author}"><img src="${coAuthorIcon}" alt="${i18n().co_author}" width="25px" height="25px" /></a>
-                </div>
-                <div class="collaboratorship-link"><a href="${coAuthorVisUrl}" title="${i18n().co_author_network}">${i18n().co_author_network}</a></div>
+                <a href="${coAuthorVisUrl}" title="${i18n().co_author_network}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-book"></span>&nbsp;${i18n().co_author_network}
+                    </div>
+                </a>
+            </div>
+            
+            
+                <div class="collaboratorship-link-separator"></div>
+                <#assign coInvestigatorVisUrl = individual.coInvestigatorVisUrl()>
+                <#assign coInvestigatorIcon = "${urls.images}/visualization/coauthorship/co_investigator_icon.png">
+            
+            <div id="coinvestigator_link_container" class="collaboratorship-link-container">
+                <a href="${coInvestigatorVisUrl}" title="${i18n().co_investigator_network}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-usd"></span>&nbsp;${i18n().co_investigator_network}
+                    </div>
+                </a>
+            </div>
+            
+            <div class="collaboratorship-link-separator"></div>
+            <div id="coauthorship_link_container" class="collaboratorship-link-container">
+                <a href="${geomapVisUrl}" title="Collaborator Map">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-globe"></span>&nbsp;Collaborator Map
+                    </div>
+                </a>
             </div>
             
             <div class="collaboratorship-link-separator"></div>
             
   	      	<div id="mapofscience_link_container" class="collaboratorship-link-container">
-            	<div class="collaboratorship-icon">	
-                    <a href="${mapOfScienceVisUrl}" title="${i18n().map_of_science}"><img src="${mapOfScienceIcon}" alt="${i18n().map_of_science}" width="25px" height="25px" /></a>
-                </div>
-                <div class="collaboratorship-link"><a href="${mapOfScienceVisUrl}" title="${i18n().map_of_science}">${i18n().map_of_science_capitalized}</a></div>
+                <a href="${mapOfScienceVisUrl}" title="${i18n().map_of_science}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-search"></span>&nbsp;${i18n().map_of_science_capitalized}
+                    </div>
+                </a>
             </div>
             
             ${scripts.add('<script type="text/javascript" src="${googleJSAPI}"></script>',
@@ -56,20 +83,8 @@
                 var infoIconSrc = '${urls.images}/iconInfo.png';
             </script>
             
-            <#if isInvestigator>
-                <div class="collaboratorship-link-separator"></div>
-            </#if>
         </#if>
         
         <#if isInvestigator>
-            <#assign coInvestigatorVisUrl = individual.coInvestigatorVisUrl()>
-            <#assign coInvestigatorIcon = "${urls.images}/visualization/coauthorship/co_investigator_icon.png">
-            
-            <div id="coinvestigator_link_container" class="collaboratorship-link-container">
-                <div class="collaboratorship-icon">
-                    <a href="${coInvestigatorVisUrl}" title="${i18n().co_investigator_network}"><img src="${coInvestigatorIcon}" alt="${i18n().co_investigator_network}" width="25px" height="25px" /></a>
-                </div>
-                <div class="collaboratorship-link"><a href="${coInvestigatorVisUrl}" title="${i18n().co_investigator_network}">${i18n().co_investigator_network_capitalized}</a></div>
-            </div>
         </#if>
 </#if>

@@ -23,7 +23,7 @@ function setupLoadingScreen() {
             opacity: 1.0
         };
         
-    $.blockUI.defaults.css.width = '500px';
+    $.blockUI.defaults.css.width = '800px';
     $.blockUI.defaults.css.height = '100px';
     $.blockUI.defaults.css.border = '0px';
     
@@ -52,7 +52,7 @@ function initMap() {
 	
 	var mapOptions = {
 		center: centerLatLng,
-		zoom: 1,
+		zoom: 2,
 		streetViewControl: false,
 		mapTypeControlOptions: {
 		  mapTypeIds: []

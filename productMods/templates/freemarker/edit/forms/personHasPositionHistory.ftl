@@ -44,8 +44,10 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint="<span class='requiredHint'> *</span>"/> 
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
-<h2>${formAction} ${i18n().posn_entry_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel panel-default">
+<div class="panel-heading">
+${formAction} ${i18n().posn_entry_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if orgLabelDisplayValue?has_content >
@@ -95,64 +97,66 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <@lvf.unsupportedBrowser urls.base /> 
 
 <form class="customForm" action ="${submitUrl}" class="customForm noIE67" role="${formAction} position entry">
-  <p class="inline">    
+  <div class="form-group">    
     <label for="orgType">${i18n().org_type_capitalized}<#if editMode != "edit"> ${requiredHint}<#else>:</#if></label>
     <#assign orgTypeOpts = editConfiguration.pageData.orgType />
-<#--
-    <#if editMode == "edit">
-      <#list orgTypeOpts?keys as key>             
-          <#if orgTypeValue = key >
-            <span class="readOnly" id="typeSelectorSpan">${orgTypeOpts[key]}</span> 
-            <input type="hidden" id="typeSelectorInput" name="orgType" acGroupName="organization" value="${orgTypeValue}" >
-          </#if>           
-      </#list>
-    <#else>
-    </#if>
--->
-<select id="typeSelector" name="orgType" acGroupName="organization">
-    <option value="" selected="selected">${i18n().select_one}</option>                
-    <#list orgTypeOpts?keys as key>             
-        <option value="${key}"  <#if orgTypeValue = key>selected</#if>>${orgTypeOpts[key]}</option>            
-    </#list>
-</select>
-  </p>
-
+    <div class="input-group">
+      <select id="typeSelector" name="orgType" acGroupName="organization">
+          <option value="" selected="selected">${i18n().select_one}</option>                
+          <#list orgTypeOpts?keys as key>             
+              <option value="${key}"  <#if orgTypeValue = key>selected</#if>>${orgTypeOpts[key]}</option>            
+          </#list>
+      </select>
+    </div>
+  </div>
+  <hr/>
   <p>
     <label for="relatedIndLabel">${i18n().organization_capitalized} ${i18n().name_capitalized} ${requiredHint}</label>
-    <input type="text" name="orgLabel" id="orgLabel" acGroupName="organization" size="50" class="acSelector" value="${orgLabelValue}" >
+    <input type="text" name="orgLabel" id="orgLabel" acGroupName="organization" size="50" class="acSelector show" value="${orgLabelValue}" >
     <input class="display" type="hidden" id="orgDisplay" acGroupName="organization" name="orgLabelDisplay" value="${orgLabelDisplayValue}">
   </p>
     <div class="acSelection" acGroupName="organization">
         <p class="inline">
-            <label>${i18n().selected_organization}:</label>
-            <span class="acSelectionInfo"></span>
+            <label class="show">${i18n().selected_organization}:</label>
+            <span class="acSelectionInfo show"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="orgUri" name="existingOrg" value="${existingOrgValue}" ${flagClearLabelForExisting}="true" />
     </div>
-    
-    <label for="positionTitle">${i18n().position_title} ${requiredHint}</label>
-    <input  size="30"  type="text" id="positionTitle" name="positionTitle" value="${positionTitleValue}" role="input" />
-
+    <hr/>
+    <div class="form-group">
+      <label for="positionTitle">${i18n().position_title} ${requiredHint}</label>
+      <div class="input-group">
+        <input  size="30"  type="text" id="positionTitle" name="positionTitle" value="${positionTitleValue}" role="input" />
+      </div>
+    </div>
+    <hr/>
+    <div class="form-group">
       <label for="positionType">${i18n().position_type} ${requiredHint}</label>
       <#assign posnTypeOpts = editConfiguration.pageData.positionType />
-      <select name="positionType" style="margin-top:-2px" >
-          <option value="" <#if positionTypeValue == "">selected</#if>>${i18n().select_one}</option>                
-          <#list posnTypeOpts?keys as key>             
-              <option value="${key}"  <#if positionTypeValue == key>selected</#if>>${posnTypeOpts[key]}</option>         
-          </#list>
-      </select>
-      <p></p>
+      <div class="input-group">
+        <select name="positionType" style="margin-top:-2px" >
+            <option value="" <#if positionTypeValue == "">selected</#if>>${i18n().select_one}</option>                
+            <#list posnTypeOpts?keys as key>             
+                <option value="${key}"  <#if positionTypeValue == key>selected</#if>>${posnTypeOpts[key]}</option>         
+            </#list>
+        </select>
+      </div>
+     </div>
+     <hr/>
       <#--Need to draw edit elements for dates here-->
        <#if htmlForElements?keys?seq_contains("startField")>
-  			<label class="dateTime" for="startField">${i18n().start_capitalized}</label>
-  			${htmlForElements["startField"]} ${yearHint}
+        <div class="form-group">
+    			<label class="dateTime" for="startField">${i18n().start_capitalized}</label>
+    			${htmlForElements["startField"]} ${yearHint}
+        </div>
        </#if>
-       <p></p>
        <#if htmlForElements?keys?seq_contains("endField")>
-  			<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
-  		 	${htmlForElements["endField"]} ${yearHint}
+        <div class="form-group">
+    			<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+    		 	${htmlForElements["endField"]} ${yearHint}
+        </div>
        </#if>
 
     	<#--End draw elements-->
@@ -161,9 +165,9 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
       <p class="submit">
         <#if editMode == "edit">  
-            <input type="submit" id="submit" name="submit-${formAction}" value="${submitButtonText}" class="submit" /> 
+            <input type="submit" id="submit" name="submit-${formAction}" value="${submitButtonText}" class="btn btn-primary" /> 
         <#else>
-            <input type="submit" id="submit" name="submit-${formAction}" value="${submitButtonText}" class="submit" /> 
+            <input type="submit" id="submit" name="submit-${formAction}" value="${submitButtonText}" class="btn btn-primary" /> 
         </#if>
 
         <span class="or"> ${i18n().or} </span><a class="cancel" href="${editConfiguration.cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
@@ -188,7 +192,7 @@ var i18nStrings = {
     selectedString: '${i18n().selected}'
 };
 </script>
-
+</div></div>
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
@@ -199,4 +203,5 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

@@ -7,16 +7,17 @@
   <#assign ulClass="">
 </#if>
 
+<div id="manage-records-for" class="panel panel-default">
+  <div class="panel-heading">
 <#assign baseEditWebpageUrl=editConfiguration.pageData.baseEditWebpageUrl!"baseEditWebpageUrl is undefined">
 <#assign deleteWebpageUrl=editConfiguration.pageData.deleteWebpageUrl!"deleteWebpageUrl is undefined">
 <#assign showAddFormUrl=editConfiguration.pageData.showAddFormUrl!"showAddFormUrl is undefined">
 <#assign predicateUri=editConfiguration.predicateUri!"undefined">
-
+${i18n().manage_web_pages}
 <#if (editConfiguration.pageData.subjectName??) >
-<h2><em>${editConfiguration.pageData.subjectName}</em></h2>
+for ${editConfiguration.pageData.subjectName}
 </#if>
-
-<h3>${i18n().manage_web_pages}</h3>
+</div><div class="panel-body">
        
 <script type="text/javascript">
     var webpageData = [];
@@ -35,7 +36,7 @@
                 <#assign anchor=webpage.url >
             </#if>
             
-            <span class="itemName extra-wide">
+            <span class="webpageName extra-wide">
                 <a href="${webpage.url}" title="${i18n().webpage_url}">${anchor}</a> 
                 <#if webpage.typeLabel??>(<#if webpage.typeLabel == "URL">Standard Web Link<#else>${webpage.typeLabel}</#if></#if>)
             </span>
@@ -57,12 +58,13 @@
     <#-- There is no editConfig at this stage, so we don't need to go through postEditCleanup.jsp on cancel.
          These can just be ordinary links, rather than a v:input element, as in 
          addAuthorsToInformationResource.jsp. -->   
-    <a href="${showAddFormUrl}" id="showAddFormButton" title="${i18n().add_new_web_page}">${i18n().add_new_web_page}</a>
-     <span class="or"> ${i18n().or} </span>  
+    <a href="${showAddFormUrl}" id="showAddForm" class="button green" title="${i18n().add_new_web_page}">${i18n().add_new_web_page}</a>
+    <span class="or"> ${i18n().or} </span>
+       
     <a href="${cancelUrl}" id="returnToIndividual" class="return" title="${i18n().return_to_profile}">${i18n().return_to_profile}</a>
     <img id="indicator" class="indicator hidden" src="${urls.base}/images/indicatorWhite.gif" alt="${i18n().processing_indicator}"/>
 </section>
-
+</div></div>
 
 <script type="text/javascript">
 var customFormData = {
@@ -78,6 +80,7 @@ var i18nStrings = {
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />',
+                  '<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/manageWebpagesForIndividual.css" />',
                   '<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/manageDragDropList.css" />',
                   '<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 

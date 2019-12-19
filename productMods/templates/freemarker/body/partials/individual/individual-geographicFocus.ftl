@@ -8,7 +8,7 @@
         ${geographicFoci.name?capitalize} 
         <@p.addLink geographicFoci editable /> <@p.verboseDisplay geographicFoci />
     </h2>
-    <ul id="individual-hasResearchArea" role="list" >
+    <ul id="individual-hasGeographicFocus" role="list" >
         <@p.objectProperty geographicFoci editable />
     </ul> 
 </#if>   

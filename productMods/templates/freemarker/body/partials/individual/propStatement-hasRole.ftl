@@ -17,15 +17,19 @@
     <span class="hideThis">&nbsp;</span>
     <script type="text/javascript" >
         $('span.hideThis').parent().parent().addClass("hideThis");
-        if ( $('h3#RO_0000053-ResearcherRole').attr('class').length == 0 ) {
-            $('h3#RO_0000053-ResearcherRole').addClass('hiddenGrants');
+        if ( $('h3#RO_0000053-InvestigatorRole').length > 0 && $('h3#RO_0000053-InvestigatorRole').attr('class').length == 0 ) {
+            $('h3#RO_0000053-InvestigatorRole').addClass('hiddenGrants');
         }
         $('span.hideThis').parent().remove();
     </script>
 <#else>
     <#local linkedIndividual>
         <#if statement.activity??>
-            <a href="${profileUrl(statement.uri("activity"))}" title="${i18n().activity_name}">${statement.activityLabel!statement.activityName}</a>
+            <#if profileUrl(statement.uri("activity"))?contains("/group")>
+                ${statement.activityLabel!statement.activityName}
+            <#else>
+                <a href="${profileUrl(statement.uri("activity"))}" title="${i18n().activity_name}">${statement.activityLabel!statement.activityName}</a>
+            </#if>
         <#else>
             <#-- This shouldn't happen, but we must provide for it -->
             <a href="${profileUrl(statement.uri("role"))}" title="${i18n().missing_activity}">${i18n().missing_activity}</a>

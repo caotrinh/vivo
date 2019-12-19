@@ -58,9 +58,10 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
-
-<h2>${titleVerb}&nbsp;${i18n().educational_training_for} ${editConfiguration.subjectName}</h2>
-
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
+${titleVerb}&nbsp;${i18n().educational_training_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if orgLabelDisplayValue?has_content >
@@ -111,60 +112,71 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     <form id="personHasEducationalTraining" class="customForm noIE67" action="${submitUrl}"  role="add/edit educational training">
 
     
-    <p class="inline">    
+    <div class="form-group">    
         <label for="orgType">${i18n().org_type_capitalized} ${requiredHint}</label>
         <#assign orgTypeOpts = editConfiguration.pageData.orgType />
-        <select id="typeSelector" name="orgType" acGroupName="organization">
-            <option value="" selected="selected">${i18n().select_one}</option>                
-            <#list orgTypeOpts?keys as key>             
-                <#if orgTypeValue = key>
-                    <option value="${key}"  selected >${orgTypeOpts[key]}</option>     
-                <#else>
-                    <option value="${key}">${orgTypeOpts[key]}</option>
-                </#if>
-            </#list>
-        </select>
-    </p>     
-    
+        <div class="input-group">
+            <select id="typeSelector" name="orgType" acGroupName="organization">
+                <option value="" selected="selected">${i18n().select_one}</option>                
+                <#list orgTypeOpts?keys as key>             
+                    <#if orgTypeValue = key>
+                        <option value="${key}"  selected >${orgTypeOpts[key]}</option>     
+                    <#else>
+                        <option value="${key}">${orgTypeOpts[key]}</option>
+                    </#if>
+                </#list>
+            </select>
+        </div>
+    </div>     
+    <hr/>
     <p>
         <label for="relatedIndLabel">${i18n().organization_capitalized} ${i18n().name_capitalized} ${requiredHint}</label>
-        <input class="acSelector" size="50"  type="text" id="relatedIndLabel" name="orgLabel" acGroupName="organization" value="${orgLabelValue}"  />
+        <input class="acSelector show" size="50"  type="text" id="relatedIndLabel" name="orgLabel" acGroupName="organization" value="${orgLabelValue}"  />
         <input class="display" type="hidden" id="orgDisplay" acGroupName="organization" name="orgLabelDisplay" value="${orgLabelDisplayValue}">
     </p>
         
     <div class="acSelection" acGroupName="organization">
         <p class="inline">
-            <label>${i18n().selected_organization}:</label>
-            <span class="acSelectionInfo"></span>
+            <label class="show">${i18n().selected_organization}:</label>
+            <span class="acSelectionInfo show"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="orgUri" name="existingOrg" value="${existingOrgValue}" ${flagClearLabelForExisting}="true" />
     </div>
-    
-    <label for="positionType">${i18n().educational_training_type} ${requiredHint}</label>
-    <#assign trainingTypeOpts = editConfiguration.pageData.trainingType />
-    <select name="trainingType" style="margin-top:-2px" >
-        <option value="" <#if trainingTypeValue == "">selected</#if>>${i18n().select_one}</option>                
-        <#list trainingTypeOpts?keys as key>             
-            <option value="${key}"  <#if trainingTypeValue == key>selected</#if>><#if trainingTypeOpts[key] == "Other">${i18n().academic_studies_or_other}<#else>${trainingTypeOpts[key]}</#if></option>         
-        </#list>
-    </select>
-    <p>
+    <hr/>
+    <div class="form-group">
+        <label for="positionType">${i18n().educational_training_type} ${requiredHint}</label>
+        <#assign trainingTypeOpts = editConfiguration.pageData.trainingType />
+        <div class="input-group">    
+            <select name="trainingType" style="margin-top:-2px" >
+                <option value="" <#if trainingTypeValue == "">selected</#if>>${i18n().select_one}</option>                
+                <#list trainingTypeOpts?keys as key>             
+                    <option value="${key}"  <#if trainingTypeValue == key>selected</#if>><#if trainingTypeOpts[key] == "Other">${i18n().academic_studies_or_other}<#else>${trainingTypeOpts[key]}</#if></option>         
+                </#list>
+            </select>
+        </div>
+    </div>
+    <hr/>
+    <div class="form-group">
         <label for="dept">${i18n().dept_or_school_name} ${i18n().organization_capitalized}</label>
-        <input  size="50"  type="text" id="dept" name="dept" value="${deptValue}" />
-    </p>
-    
-    <div class="entry">
+        <div class="input-group">
+            <input  size="50"  type="text" id="dept" name="dept" value="${deptValue}" />
+        </div>
+    </div>
+    <hr/>
+    <div class="entry form-group">
       <label for="degreeUri">${i18n().degree}</label>      
     
       <#assign degreeOpts = editConfiguration.pageData.degreeType />  
-      <select name="degreeType" id="degreeUri" >
-        <option value="" <#if degreeValue = "">selected</#if>>${i18n().select_one}</option>        
-               <#list degreeOpts?keys as key>                 
-        <option value="${key}" <#if degreeValue = key>selected</#if>>${degreeOpts[key]}</option>                    
-        </#list>                                
-      </select>
+      <div class="input-group">
+          <select name="degreeType" id="degreeUri" class="mediumSelection">
+            <option value="" <#if degreeValue = "">selected</#if>>${i18n().select_one}</option>        
+                   <#list degreeOpts?keys as key>                 
+            <option value="${key}" <#if degreeValue = key>selected</#if>>${degreeOpts[key]}</option>                    
+            </#list>                                
+          </select>
+      </div>
 <#--
       <#if editMode == "edit" || editMode == "repair">
             <input type="hidden" id="newAwardedDegreeLabel" name="awardedDegreeLabel" value=""/> 
@@ -175,35 +187,42 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 -->
             <input type="hidden" id="awardedDegreeLabel" name="awardedDegreeLabel" value=""/>
     </div>
-    
-    <p>    
+    <hr/>
+    <div class="form-group">    
         <label for="majorField">${i18n().major_field}</label>
-        <input type="text" id="majorField" name="majorField" size="30" value="${majorFieldValue}"/>   
-    </p>   
-          
-    <p>    
+        <div class="input-group">
+            <input type="text" id="majorField" name="majorField" size="30" value="${majorFieldValue}"/>   
+        </div>
+    </div>   
+    <hr/>   
+    <div class="form-group">    
         <label for="info">${i18n().supplemental_information} 
             <span class="hint">&nbsp;${i18n().supplemental_information_hint}</span>
         </label>
-        <input  size="60"  type="text" id="info" name="info" value="${infoValue}" />
-        
-    </p>
-    <p></p>
+        <div class="input-group">
+            <input  size="60"  type="text" id="info" name="info" value="${infoValue}" />
+        </div>
+    </div>
+    <hr/>
     <#--Need to draw edit elements for dates here-->
      <#if htmlForElements?keys?seq_contains("startField")>
-			<label class="dateTime" for="startField">${i18n().start_capitalized}</label>
+		<div class="form-group">
+            <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
 			${htmlForElements["startField"]} ${yearHint}
+        </div>
      </#if>
-     <p></p>
+     
      <#if htmlForElements?keys?seq_contains("endField")>
-			<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+		<div class="form-group">
+        	<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
 		 	${htmlForElements["endField"]} ${yearHint}
+        </div>
      </#if>
                                     
   	<#--End draw elements-->
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
     <p class="submit">
-         <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" class="btn btn-primary" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -240,13 +259,13 @@ ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/sm
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
-
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/educationalTrainingUtils.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
-
+</div></div>

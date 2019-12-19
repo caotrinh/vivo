@@ -15,19 +15,22 @@ corresponding changes in the included Templates. -->
 </div>
 -->
         
-<h2 id="header-entity-label" class="hide-dom-on-init"><span><a id="entityMoniker" href="${entityVivoProfileURL}" title="${i18n().entity_label}">${entityLabel}</a></span></h2>
+${stylesheets.add('<link rel="stylesheet" type="text/css" href="${urls.base}/css/visualization/personlevel/page.css" />',
+                  '<link rel="stylesheet" type="text/css" href="${urls.base}/css/visualization/visualization.css" />')}
 
-<div id="map-of-science-info" class="hide-dom-on-init"> ${i18n().explore_activity} (<span id="mapped-publications" style="font-weight: bold"></span> ${i18n().publications}) ${i18n().across_subdisciplines} 
-	<img class="filterInfoIcon" id="imageIconOne"  src="${urls.images}/iconInfo.png" 
-		alt="${i18n().info_icon}" /> 
-</div>
+<div id="individual-sidebar">
+    <div id="sidebarStats" class="panel panel-primary">
+    <h4 id="profileTitle" class="panel-heading">Discipline Map</h4>
+    <div id="map-of-science-info" class="hide-dom-on-init"> ${i18n().explore_activity} (<span id="mapped-publications" style="font-weight: bold"></span> ${i18n().publications}) ${i18n().across_subdisciplines} 
+	<span class="glyphicon glyphicon-question-sign" id="imageIconOne" alt="${i18n().info_icon}" /> 
+    </div>
 
 <div id="left-column" class="hide-dom-on-init">
 	<div id="notification-container" style="display:none">
         <div id="error-notification" class="ui-state-error" style="padding:10px; -moz-box-shadow:0 0 6px #980000; -webkit-box-shadow:0 0 6px #980000; box-shadow:0 0 6px #980000;">
             <a class="ui-notify-close" href="#" title="${i18n().error_notification}"><span class="ui-icon ui-icon-close" style="float:right"></span></a>
             <span style="float:left; margin:0 5px 0 0;" class="ui-icon ui-icon-alert"></span>
-            <h1>&#035;{title!}</h1>
+            <h1>&#035;{title}</h1>
             <p>&#035;{text}</p>
             <p style="text-align:center"><a class="ui-notify-close" href="#">${i18n().close_me}</a></p>
         </div>
@@ -35,7 +38,7 @@ corresponding changes in the included Templates. -->
         <div id="warning-notification" class="ui-state-highlight ui-corner-all" >
 	        <a class="ui-notify-close ui-notify-cross" href="#" title="${i18n().error_notification}">x</a>
 	        <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-	        <h1>&#035;{title!}</h1>
+	        <h1>&#035;{title}</h1>
 	        <p>&#035;{text}</p>
         </div>
     </div>
@@ -43,29 +46,33 @@ corresponding changes in the included Templates. -->
     <#-- VIEW TYPE FILTER -->
     <div id="view-type-filter" style="display:${viewTypeFilterDisplay};">
     	<input type="radio" name="view-type" value="ENTITY"> ${i18n().explore_capitalized} ${entityLabel} </input>
-    	<img class="filterInfoIcon" id="exploreInfoIcon" src="${urls.images}/iconInfo.png" alt="${i18n().info_icon}" title="" /><br>
+    	<span class="glyphicon glyphicon-question-sign" id="exploreInfoIcon" src="${urls.images}/iconInfo.png" alt="${i18n().info_icon}" title="" /><br>
 		<input type="radio" name="view-type" value="COMPARISON"> ${i18n().compare_organizations} <#--/ people --></input>
 		<img class="filterInfoIcon" id="compareInfoIcon" src="${urls.images}/iconInfo.png" alt="${i18n().info_icon}" title="" /><br><br>
     </div>
     
     <!-- <h3>${i18n().what_to_compare}</h3> -->
-    
+    </div>
     <div id="main-science-areas-table-container"></div>
 
 </div>		
-
+</div>
+<div id="individual-intro-content">
+    <div id="individual-name" class="individual-details">
+        <h1 class="vcard foaf-person hide-dom-on-init" style="padding-top: 10px;">
+            <span class="fn"><span id="ego_label" title="${entityLabel}">${entityLabel}</span></span>
+        </h1>
+    </div>
 <div id="right-column">
 	<div id="map_area"></div>
 	<div id="percent-mapped-info">
 		${i18n().mapped} <span id="percent-mapped"></span>% ${i18n().of} <span id="total-publications"></span> ${i18n().publications}
 		<img class="filterInfoIcon" id="imageIconThree" src="${urls.images}/iconInfo.png" alt="${i18n().info_icon}"/>
 			
-		<div id="download-unlocated-journal-info">
-			<a href="${entityMapOfScienceUnlocatedJournalsCSVURL}" title="${i18n().save_unmapped_publications}">${i18n().save_unmapped_publications}</a>
-		</div>
 	</div>
 	<br />
 	<div id="subEntityTableArea"></div>
+</div>
 </div>
 
 

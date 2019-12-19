@@ -6,6 +6,7 @@ $(document).ready(function(){
     var countryMapBuilt = false;
     var localMapBuilt = false;
     var legendIsVisible = false;
+    var attributionControl = false;
     var researchAreas = { "type": "FeatureCollection", "features": []};
     var geoResearcherCount = "0";
     
@@ -199,13 +200,20 @@ $(document).ready(function(){
         if ( !globalMapBuilt ) {
         
             var mapGlobal = L.map('mapGlobal').setView([25.25, 23.20], 2);
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile\/{z}\/{y}\/{x}.png', {
+            var defaultLayer = L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(mapGlobal);
+            L.tileLayer('//a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     		    maxZoom: 12,
     		    minZoom: 1,
     		    boxZoom: false,
 			    doubleClickZoom: false,
-    		    attribution: 'Tiles &copy; <a href="http://www.esri.com/">Esri</a>'
+                attributionControl: false
             }).addTo(mapGlobal);
+
+
+            L.Util.setOptions( mapGlobal, { zoomControl: true, boxZoom:false, scrollWheelZoom: false, attributionControl: false} );
+            mapGlobal.touchZoom.disable( );
+            mapGlobal.doubleClickZoom.disable( );
+            mapGlobal.scrollWheelZoom.disable( );
 
 	        L.geoJson(researchAreas, {
     		
@@ -253,13 +261,13 @@ $(document).ready(function(){
             // CHANGE THE setView COORDINATES SO THAT THE COUNTRY YOU WANT TO 
             // DISPLAY IS CENTERED CORRECTLY.  THE COORDINATES BELOW CENTERS THE MAP ON THE U.S.
             var mapCountry = L.map('mapCountry').setView([46.0, -97.0], 3);
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile\/{z}\/{y}\/{x}.png', {
+            L.tileLayer('//server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile\/{z}\/{y}\/{x}.png', {
         		maxZoom: 30,
         		minZoom: 1,
         		boxZoom: false,
         		zIndex: 1,
     			doubleClickZoom: false,
-        		attribution: 'Tiles &copy; <a href="http://www.esri.com/">Esri</a>'
+                attributionControl: false,
             }).addTo(mapCountry);
 
         	L.geoJson(researchAreas, {
@@ -307,15 +315,15 @@ $(document).ready(function(){
             // CHANGE THE setView COORDINATES SO THAT THE LOCAL AREA (E.G. A STATE OR PROVINCE) YOU WANT TO 
             // DISPLAY IS CENTERED CORRECTLY.  THE COORDINATES BELOW CENTERS THE MAP ON NEW YORK STATE.
             var mapLocal = L.map('mapLocal').setView([42.83, -75.50], 7);
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile\/{z}\/{y}\/{x}.png', {
+            L.tileLayer('//server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile\/{z}\/{y}\/{x}.png', {
         		maxZoom: 12,
         		minZoom: 1,
         		boxZoom: false,
     			doubleClickZoom: false,
-        		attribution: 'Tiles &copy; <a href="http://www.esri.com/">Esri</a>'
+                attributionControl: false,
             }).addTo(mapLocal);
 
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile\/{z}\/{y}\/{x}.png', {
+            L.tileLayer('//server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile\/{z}\/{y}\/{x}.png', {
 		        maxZoom: 12,
 		        minZoom: 1,
 		        boxZoom: false,
@@ -458,11 +466,11 @@ $(document).ready(function(){
             
             displayCount = localResearcherCount;
         }
-
+        /*
         $('div#researcherTotal').html("<font style='font-size:1.05em;color:#167093'>" 
                                         + displayCount 
                                         + "</font> " + researcherText + " <font style='font-size:1.05em;color:#167093'>" 
-                                        + areaCount + "</font>" + text);
+                                        + areaCount + "</font>" + text);*/
     }
     function appendLegendToLeafletContainer() {
         if ( !this.legendIsVisible ) {

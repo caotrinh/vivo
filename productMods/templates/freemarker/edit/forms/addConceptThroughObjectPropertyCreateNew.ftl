@@ -27,7 +27,7 @@
 	    </#list>
 	    </select>
 	    
-	    <input type="submit" id="offerCreate" class="submit"  value="${i18n().add_new_of_type}" role="button" />  
+	    <input type="submit" id="offerCreate" class="btn btn-primary"  value="${i18n().add_new_of_type}" role="button" />  
 	    <#if rangeOptionsExist  = false >
 	        <span class="or"> ${i18n().or} </span>
 	        <a title="${i18n().cancel_title}" class="cancel" href="${cancelUrl}">${i18n().cancel_link}</a>

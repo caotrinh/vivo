@@ -35,27 +35,28 @@ public class GeoFocusMapLocations extends AbstractAjaxResponder {
         + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" 
         + "PREFIX core: <http://vivoweb.org/ontology/core#>  \n"
         + "PREFIX foaf: <http://xmlns.com/foaf/0.1/>  \n"
+        + "PREFIX bibo: <http://purl.org/ontology/bibo/>  \n"
         + "PREFIX vivoc: <http://vivo.library.cornell.edu/ns/0.1#>  \n"
         + "PREFIX afn:  <http://jena.hpl.hp.com/ARQ/function#> "
-        + "SELECT DISTINCT ?label ?location (afn:localname(?location) AS ?localName) (COUNT(DISTINCT ?person) AS ?count)  \n"
+        + "SELECT DISTINCT ?label ?location (afn:localname(?location) AS ?localName) (COUNT(DISTINCT ?publication) AS ?count)  \n"
         + "WHERE { { \n"
         + "    ?location rdf:type core:GeographicRegion .  \n"
         + "    ?location rdfs:label ?label .   \n"
-        + "    ?location core:geographicFocusOf ?person .  \n"
-        + "    ?person rdf:type foaf:Person . \n"
+        + "    ?location core:geographicFocusOf ?publication .  \n"
+        + "    ?publication rdf:type bibo:Article . \n"
         + "    FILTER (NOT EXISTS {?location a core:StateOrProvince}) \n"
         + "} UNION {   \n"
         + "    ?location rdf:type core:GeographicRegion .  \n"
         + "    ?location <http://purl.obolibrary.org/obo/BFO_0000051> ?sublocation  . \n"
         + "    ?location rdfs:label ?label .  \n"
-        + "    ?sublocation core:geographicFocusOf ?person .  \n"
-        + "    ?person rdf:type foaf:Person  \n"
+        + "    ?sublocation core:geographicFocusOf ?publication .  \n"
+        + "    ?publication rdf:type bibo:Article . \n"
         + "} UNION {   \n"
         + "    ?location rdf:type core:GeographicRegion .  \n"
         + "    ?location geo:hasMember ?sublocation  . \n"
         + "    ?location rdfs:label ?label .  \n"
-        + "    ?sublocation core:geographicFocusOf ?person .  \n"
-        + "    ?person rdf:type foaf:Person   \n"
+        + "    ?sublocation core:geographicFocusOf ?publication .  \n"
+        + "    ?publication rdf:type bibo:Article . \n"
         + "} }  \n"
         + "GROUP BY ?label ?location  \n";
     
@@ -120,9 +121,7 @@ public class GeoFocusMapLocations extends AbstractAjaxResponder {
 			    response = response.substring(0, response.lastIndexOf(","));
 			}
 			response += " ]";
-			if ( log.isDebugEnabled() ) {
-				log.debug(response);
-			}
+			log.debug(response);
 			return response;
 		} catch (Exception e) {
 			log.error("Failed geographic focus locations", e);

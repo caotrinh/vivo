@@ -16,10 +16,16 @@
   
     <#local linkedIndividual>
         <#if statement.indivInRole??>
-            <a href="${profileUrl(statement.uri("indivInRole"))}" title="${i18n().name}">${statement.indivLabel!statement.indivName}</a>
+            <#if statement.hideIndivInRole?? && statement.hideIndivInRole == "true">
+                ${statement.indivLabel!statement.indivName} -
+            <#elseif statement.isHonorary?? && statement.isHonorary == "true">
+                ${statement.indivLabel!statement.indivName} -
+            <#else>
+                <a href="${profileUrl(statement.uri("indivInRole"))}" title="${i18n().name}">${statement.indivLabel!statement.indivName}</a> - 
+            </#if>
         <#else>
             <#-- This shouldn't happen, but we must provide for it -->
-            <a href="${profileUrl(statement.uri("role"))}"  title="${i18n().missing_person_in_role}">${i18n().missing_person_in_role}</a>
+            <#-- <a href="${profileUrl(statement.uri("role"))}"  title="${i18n().missing_person_in_role}">${i18n().missing_person_in_role}</a> -->
         </#if>
     </#local>
 
@@ -28,11 +34,8 @@
          so use the type label instead if not collated by subclass.
     -->
     <#local roleLabel>
-       
         <#if statement.roleTypeLabel?has_content>
             <#assign roleTypeLabel = statement.roleTypeLabel!"" >
-		<#else>
-			<#assign roleTypeLabel = "" >
         </#if>
         <#if statement.roleLabel??>
             ${statement.roleLabel?replace(" Role", "")?replace(" role","")}
@@ -41,5 +44,5 @@
         </#if>
     </#local>
 
-    ${linkedIndividual}&nbsp;${roleLabel!}&nbsp;<@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    ${linkedIndividual}${roleLabel!}<@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
 </#macro>

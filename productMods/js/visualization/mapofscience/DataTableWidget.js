@@ -107,7 +107,7 @@ var DataTableWidget = Class.extend({
 		var filter = $('<div class="science-areas-filter">' +
 				'<span id="' + dom.firstFilterID + '" class="' + dom.filterOptionClass + ' ' + dom.activeFilterClass + '">' + dom.firstFilterLabel + '</span> | ' +
 		    	'<span id="' + dom.secondFilterID + '" class="' + dom.filterOptionClass + '">' + dom.secondFilterLabel + '</span>' +
-		    	'<img class="'+ dom.filterInfoIconClass +'" id="imageIconTwo" src="'+ infoIconUrl +'" alt="information icon" title="" /></div>');
+		    	'<span class="glyphicon glyphicon-question-sign" id="imageIconTwo" src="'+ infoIconUrl +'" alt="information icon" title="" /></div>');
 		me.tableDiv.append(filter);
 		createToolTip($("#imageIconTwo"), $('#toolTipTwo').html(), "topLeft");
 		initFilter(dom);
@@ -230,8 +230,7 @@ var DataTableWidget = Class.extend({
 		var searchInputBox = $("." + me.dom.searchBarParentContainerClass).find("input[type=text]");
 		searchInputBox.css("width", "140px");
 		searchInputBox.after("<span id='reset-search' title='" + i18nStrings.clearSearchQuery + "'>X</span>" 
-								+ "<img class='filterInfoIcon' id='searchInfoIcon' src='" + infoIconUrl 
-								+ "' alt='" + i18nStrings.infoIconString + "' title='' />");
+								+ "<span class='glyphicon glyphicon-question-sign' id='searchInfoIcon' alt='" + i18nStrings.infoIconString + "' title='' />");
 		$("#reset-search").live('click', function() {
 			me.widget.fnFilter("");
 		});
@@ -239,8 +238,8 @@ var DataTableWidget = Class.extend({
 		
 		var csvButton = '<hr class="subtle-hr"/><div id="main-science-areas-table-footer"><a id="csv" href="' +
 						entityMapOfScienceSubDisciplineCSVURL + 
-						'" class="map-of-science-links">' + i18nStrings.saveAllAsCSV + '</a></div>';
-		this.tableDiv.append(csvButton);
+						'" class="btn btn-primary btn-lg">' + i18nStrings.saveAllAsCSV + '</a></div>';
+		//this.tableDiv.append(csvButton);
 		
 		var totalPublications = me.pubsWithNoJournals + me.pubsWithInvalidJournals + me.pubsMapped;
 		$("#mapped-publications").text(addCommasToNumber(me.pubsMapped));

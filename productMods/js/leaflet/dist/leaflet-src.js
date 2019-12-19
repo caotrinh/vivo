@@ -2093,9 +2093,9 @@ L.TileLayer = L.Class.extend({
 		minZoom: 0,
 		maxZoom: 18,
 		tileSize: 256,
-		subdomains: 'abc',
+		subdomains: '123',
 		errorTileUrl: '',
-		attribution: '',
+		attribution: false,
 		zoomOffset: 0,
 		opacity: 1,
 		/* (undefined works too)
@@ -7371,7 +7371,7 @@ L.control.zoom = function (options) {
 L.Control.Attribution = L.Control.extend({
 	options: {
 		position: 'bottomright',
-		prefix: 'Powered by <a href="http://leafletjs.com">Leaflet</a>'
+		prefix: false
 	},
 
 	initialize: function (options) {
@@ -7465,12 +7465,12 @@ L.Control.Attribution = L.Control.extend({
 });
 
 L.Map.mergeOptions({
-	attributionControl: true
+	attributionControl: false,
 });
 
 L.Map.addInitHook(function () {
 	if (this.options.attributionControl) {
-		this.attributionControl = (new L.Control.Attribution()).addTo(this);
+		//this.attributionControl = (new L.Control.Attribution()).addTo(this);
 	}
 });
 

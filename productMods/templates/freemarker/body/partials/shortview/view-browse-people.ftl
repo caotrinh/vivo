@@ -5,17 +5,12 @@
 <#import "lib-properties.ftl" as p>
 
 <li class="individual" role="listitem" role="navigation">
-
+<div class="row">
 <#if (individual.thumbUrl)??>
     <img src="${individual.thumbUrl}" width="90" alt="${individual.name}" />
-    <h1 class="thumb">
-        <a href="${individual.profileUrl}" title="${i18n().view_profile_page_for} ${individual.name}">${individual.name}</a>
-    </h1>
-<#else>
-    <h1>
-        <a href="${individual.profileUrl}" title="${i18n().view_profile_page_for} ${individual.name}">${individual.name}</a>
-    </h1>
 </#if>
+    <div class="sideText">
+    <a href="${individual.profileUrl}" title="${i18n().view_profile_page_for} ${individual.name}}">${individual.name}</a>
 
 <#if (extra[0].pt)?? >
     <span class="title">${extra[0].pt}</span>
@@ -25,14 +20,14 @@
         <span class="title">${cleanTypes[0]}</span>
     <#elseif (cleanTypes?size > 1) >
         <span class="title">
-            <ul>
-                <#list cleanTypes as type>
-                <li>${type}</li>
-                </#list>
-            </ul>
+            <#list cleanTypes as type>
+            <span class="titleList">${type}</span>
+            <#if type_has_next> | </#if>
+            </#list>
         </span>
     </#if>
 </#if>
-
+</div>
+</div>
 </li>
 

@@ -53,8 +53,10 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
 <h2>${titleVerb}&nbsp;${i18n().credentials} ${i18n().for} ${editConfiguration.subjectName}</h2>
-
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if credentialLabelDisplayValue?has_content >
@@ -93,51 +95,54 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <section id="personHasIssuedCredential" role="region">        
     
     <form id="personHasIssuedCredential" class="customForm noIE67" action="${submitUrl}"  role="add/edit IssuedCredential">
-    <p class="inline">    
+    <div class="form-group">    
         <label for="credentialType">${i18n().type_of_credential} ${requiredHint}</label>
         <#assign credentialTypeOpts = editConfiguration.pageData.credentialType />
 
 
         <#if editMode == "add" >
-
-        <select id="typeSelector" name="credentialType" acGroupName="credential">
-            <option value="" selected="selected">${i18n().select_one}</option>                
-            <#list credentialTypeOpts?keys as key>             
-                <#if credentialTypeValue = key>
-                    <option value="${key}"  selected >${credentialTypeOpts[key]}</option>     
-                <#else>
-                    <option value="${key}">${credentialTypeOpts[key]}</option>
-                </#if>
-            </#list>
-        </select>
-        
+            <div class="input-group">
+                <select id="typeSelector" name="credentialType" acGroupName="credential">
+                    <option value="" selected="selected">${i18n().select_one}</option>                
+                    <#list credentialTypeOpts?keys as key>             
+                        <#if credentialTypeValue = key>
+                            <option value="${key}"  selected >${credentialTypeOpts[key]}</option>     
+                        <#else>
+                            <option value="${key}">${credentialTypeOpts[key]}</option>
+                        </#if>
+                    </#list>
+                </select>
+            </div>
         <#else>
-        <#list credentialTypeOpts?keys as key>             
-            <#if credentialTypeValue = key >
-              <span class="readOnly" id="typeSelectorSpan">${credentialTypeOpts[key]}</span> 
-              <input type="hidden" id="typeSelectorInput" name="credentialType" acGroupName="credential" value="${credentialTypeValue}" >
-            </#if>           
-        </#list>
-        
+            <div class="input-group">
+                <#list credentialTypeOpts?keys as key>             
+                    <#if credentialTypeValue = key >
+                      <span class="readOnly" id="typeSelectorSpan">${credentialTypeOpts[key]}</span> 
+                      <input type="hidden" id="typeSelectorInput" name="credentialType" acGroupName="credential" value="${credentialTypeValue}" >
+                    </#if>           
+                </#list>
+            </div>
         </#if>
         
         
-    </p>     
+    </div>
+    <hr/>     
     <p>
         <label for="relatedIndLabel">${i18n().credential_name} ${requiredHint}</label>
-            <input class="acSelector" size="50"  type="text" id="credential" acGroupName="credential" name="credentialLabel" value="${credentialLabelValue}">
+            <input class="acSelector" size="50" style="display:block;" type="text" id="credential" acGroupName="credential" name="credentialLabel" value="${credentialLabelValue}">
             <input class="display" type="hidden" id="credentialDisplay" acGroupName="credential" name="credentialLabelDisplay" value="${credentialLabelDisplayValue}">
     </p>
 
     <div class="acSelection" acGroupName="credential" id="credentialAcSelection">
         <p class="inline">
-            <label>${i18n().selected_credential}:</label>
-            <span class="acSelectionInfo"></span>
+            <label style="display:block;">${i18n().selected_credential}:</label>
+            <span style="display:block;" class="acSelectionInfo"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="credentialUri" name="existingCredential" value="${credentialValue}" ${flagClearLabelForExisting}="true" />
     </div>
+    <hr/>
     <#assign htmlForElements = editConfiguration.pageData.htmlForElements />
 
 
@@ -145,29 +150,36 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
         <input type="hidden" id="issuedCredentialType" name="issuedCredentialType" acGroupName="credential" value="${issuedCredentialTypeValue}">
     </p>     
 
-    <p>
+    <div class="form-group">
         <label for="yearCredentialedDisplay" id="yearCredentialed">${i18n().year_issued}</label>
-        <input  size="4"  type="text" id="yearCredentialedDisplay" name="yearCredentialedDisplay" value="${yearCredentialedDisplayValue}" /> ${yearHint}
-    </p>
+        <div class="input-group">
+            <input  size="4"  type="text" id="yearCredentialedDisplay" name="yearCredentialedDisplay" value="${yearCredentialedDisplayValue}" /> ${yearHint}
+        </div>
+    </div>
+    <hr/>
     <p>
         <h4>${i18n().years_inclusive}</h4>
     </p>
     <#--Need to draw edit elements for dates here-->
     <#if htmlForElements?keys?seq_contains("startField")>
-        <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
-		${htmlForElements["startField"]} ${yearHint}
+        <div class="form-group">
+            <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
+    		${htmlForElements["startField"]} ${yearHint}
+        </div>
     </#if>
-    <br/>
+    
     <#if htmlForElements?keys?seq_contains("endField")>
-		<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
-	 	${htmlForElements["endField"]} ${yearHint}
+		<div class="form-group">
+            <label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+    	 	${htmlForElements["endField"]} ${yearHint}
+        </div>
     </#if>
 	<#--End draw elements-->
 
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
     <p class="submit">
-         <input type="submit" class="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" class="btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -223,7 +235,8 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 
-
+</div></div>

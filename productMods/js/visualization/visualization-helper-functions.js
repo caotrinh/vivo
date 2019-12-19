@@ -24,6 +24,7 @@ function extendedEncodeDataForChartURL(arrVals, maxVal) {
     var EXTENDED_MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
     var EXTENDED_MAP_LENGTH = EXTENDED_MAP.length;
     var chartData = 'e:';
+    var numericVal = 0;
 
     for (i = 0, len = arrVals.length; i < len; i++) {
         // In case the array vals were translated to strings.
@@ -53,7 +54,7 @@ function extendedEncodeDataForChartURL(arrVals, maxVal) {
  * see http://code.google.com/apis/chart/docs/chart_params.html FOR chart parameters
  * see http://code.google.com/apis/chart/docs/data_formats.html FOR how to encode data
  * 
- * sample constructed URL - https://chart.googleapis.com/chart?cht=ls&chs=148x58&chdlp=r&chco=3399CC&chd=e%3AW2ttpJbb..ttgAbbNtAA
+ * sample constructed URL - https://chart.googleapis.com/chart?cht=ls&chs=148x58&chdlp=r&chco=EF4135&chd=e%3AW2ttpJbb..ttgAbbNtAA
  */
 function constructVisualizationURLForSparkline(dataString, visualizationOptions) {
 
@@ -69,14 +70,16 @@ function constructVisualizationURLForSparkline(dataString, visualizationOptions)
     /*
      * cht=ls indicates chart of type "line chart sparklines". 
      * see http://code.google.com/apis/chart/docs/gallery/chart_gall.html 
-	*/
     var chartType = "cht=" + visualizationOptions.chartType;
+	*/
+    var chartType = "cht=bvs"
 
     /*
      * It seems google reduces 2px from width & height before rendering the actual image.
      * We will do the same.
-	*/
     var chartSize = "chs=" + (visualizationOptions.width - 2) + "x" + (visualizationOptions.height - 2);
+	*/
+    var chartSize = "chs=290x60";
 
     /*
      * It means that legend, if present, is to be displayed to the right of the chart,
@@ -87,7 +90,7 @@ function constructVisualizationURLForSparkline(dataString, visualizationOptions)
     /*
      * Color of the sparkline.
 	*/
-    var chartColor = "chco=" + visualizationOptions.color;
+    var chartColor = "chco=EF4135";
 
     return rootGoogleChartAPI_URL + chartType + parameterDifferentiator 
     			+ chartSize + parameterDifferentiator 

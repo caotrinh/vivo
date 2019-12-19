@@ -25,8 +25,11 @@
 <#if editSubmission?has_content && editSubmission.submissionExists = true && editSubmission.validationErrors?has_content>
 	<#assign submissionErrors = editSubmission.validationErrors/>
 </#if>
-
-<h2>${formTitle}</h2>
+<div class="panel panel-default">
+<div class="panel-heading">
+${formTitle}
+</div>
+<div class="panel-body">
 
 <#if submissionErrors?has_content >
     <section id="error-alert" role="alert">
@@ -73,11 +76,12 @@
     <input type="hidden" name="editKey" id="editKey" value="${editKey}" role="input" />
     
     <p class="submit">
-        <input type="submit" id="submit" value="${submitLabel}" role="submit" />
+        <input type="submit" id="submit" value="${submitLabel}" role="submit" class="btn btn-primary"/>
         <span class="or"> or </span>
         <a class="cancel" title="${i18n().cancel_title}" href="${editConfiguration.cancelUrl}">${i18n().cancel_link}</a>
     </p>     
 </form>
+</div></div>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 ${scripts.add('<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/defaultAddMissingIndividualFormUtils.js"></script>')}

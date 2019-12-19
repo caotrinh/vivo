@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#assign subjectName=""/>
 <#assign orgLabel="mysteryOrgLabel"/>
 
@@ -50,8 +50,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
 
-<h2>${titleVerb}&nbsp;${i18n().editor_of_entry} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().editor_of_entry} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if orgLabelDisplayValue?has_content >
@@ -78,44 +78,45 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <section id="addEditorshipToPerson" role="region">        
     
     <form id="addEditorshipToPerson" class="customForm noIE67" action="${submitUrl}"  role="add/edit editorship">
-
     
-    <p class="inline">    
+    <div class="form-group">
         <label for="orgType">${i18n().document_type_capitalized} ${requiredHint}</label>
         <#assign docTypeOpts = editConfiguration.pageData.documentType />
-        <select id="typeSelector" name="documentType" acGroupName="document">
-            <option value="" selected="selected">${i18n().select_one}</option>                
-            <#list docTypeOpts?keys as key>             
-                <#if documentTypeValue = key>
-                    <option value="${key}"  selected >${docTypeOpts[key]}</option>     
-                <#else>
-                    <option value="${key}">${docTypeOpts[key]}</option>
-                </#if>
-            </#list>
-        </select>
-    </p>     
-    
+        <div class="input-group">
+            <select id="typeSelector" name="documentType" acGroupName="document">
+                <option value="" selected="selected">${i18n().select_one}</option>                
+                <#list docTypeOpts?keys as key>             
+                    <#if documentTypeValue = key>
+                        <option value="${key}"  selected >${docTypeOpts[key]}</option>     
+                    <#else>
+                        <option value="${key}">${docTypeOpts[key]}</option>
+                    </#if>
+                </#list>
+            </select>
+        </div>
+    </div>     
+    <hr />
     <p>
         <label for="relatedIndLabel">${i18n().document_name_capitalized} ${requiredHint}</label>
-        <input class="acSelector" size="50"  type="text" id="relatedIndLabel" name="documentLabel" acGroupName="document" value="${documentLabelValue}"  />
+        <input class="acSelector" size="50" style="display:block;" type="text" id="relatedIndLabel" name="documentLabel" acGroupName="document" value="${documentLabelValue}"  />
         <input class="display" type="hidden" id="documentDisplay" acGroupName="document" name="documentLabelDisplay" value="${documentLabelDisplayValue}">
     </p>
         
     <div class="acSelection" acGroupName="document">
         <p class="inline">
-            <label>${i18n().selected_document}:</label>
-            <span class="acSelectionInfo"></span>
+            <label style="display:block;">${i18n().selected_document}:</label>
+            <span style="display:block;" class="acSelectionInfo"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="documentUri" name="existingDocument" value="${existingDocumentValue}" ${flagClearLabelForExisting}="true" />
     </div>
-    
+    <hr/>
                                     
   	<#--End draw elements-->
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
     <p class="submit">
-         <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -144,7 +145,8 @@ var i18nStrings = {
 </script>
 
 </section>
- 
+</div>
+</div>
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
@@ -155,6 +157,7 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 

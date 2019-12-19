@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain edit configuration information-->
 <#if editConfiguration.objectUri?has_content>
     <#assign editMode = "edit">
@@ -25,7 +25,7 @@
 
 <#if editMode == "edit">    
         <#assign titleVerb="${i18n().edit_capitalized}">        
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${titleVerb}" + " ORCID iD">
         <#assign disabledVal="disabled">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
@@ -35,8 +35,8 @@
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 
-<h2>${titleVerb}&nbsp;ORCID iD&nbsp;${i18n().for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;ORCID iD&nbsp;${i18n().for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert">
@@ -60,12 +60,14 @@
             <label for="orcidId">ORCID iD ${requiredHint}</label>
             <input  size="35"  type="text" id="orcidIdDisplay" name="orcidIdDisplay" value="${orcidIdValue}" />
             <input  type="hidden" id="orcidId" name="orcidId" value="" />
+            <br>
+            <span class="small">Please enter the ORCID iD only - e.g. <i>0000-0002-1825-0097</i></span>
         </p>
 
         <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
         <p class="submit">
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+            <input type="submit" id="submit" value="${submitButtonText}" class="displaySubmit btn btn-primary"/><span class="or"> ${i18n().or} </span>
             <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
 
@@ -74,7 +76,8 @@
     </form>
 
 </section>
- 
+</div>
+</div> 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}

@@ -14,24 +14,25 @@ a.no_href_styles {
 }
 .vis_stats {
     background: #fff;
-    clear: right;
-    width: 67%;
-    margin-left: 33%;
 }
-.vis-tables {
-    padding: 10px;
-    background-color: #FFF;
-    border: 1px solid #ddebf1;
+
+#vis-container {
+min-height: 900px;
+}
+
+#geomap_div {
+    width: 600px;
+    height: 400px;
     float: left;
-    font-size: 0.8em;
-    width: 44%;
-    margin: 0 10px 10px 0;
+    border: 1px solid #ddd;
 }
-p.datatable {
-    font-size: 12px;
-    display: block;
-    margin: 2px;
-    padding: 0
+#publication_data_table {
+margin-bottom:0px;
+border:none;
+}
+
+.vis-tables {
+    background-color: #FFF;
 }
 .datatable table {
     text-align: left;
@@ -40,11 +41,21 @@ p.datatable {
     float: left;
     cursor: pointer;
 }
+#individual-sidebar {
+    float: left;
+    width: 240px;
+    margin: 20px 20px 0px 10px;
+}
 #sparkline-container {
-    clear: both;
-    margin-left: 33%;
-    width: 67%;
     float: right;
+    width:240px;
+    margin-top:30px;
+    margin-right:10px;
+}
+#profileImage img{
+width:240px;
+height:240px;
+
 }
 #body h1 {
     margin: 0;
@@ -57,7 +68,10 @@ p.datatable {
     vertical-align: bottom;
 }
 .investigator_name,
-.author_name,
+.author_name {
+    color: #2485AE;
+    font-weight: bold;
+}
 .neutral_investigator_name,
 .neutral_author_name {
     color: #2485AE;
@@ -79,15 +93,11 @@ p.datatable {
     display: none;
 	margin-top: -55PX;
 }
-#publication-count-sparkline-include,
-#grant-count-sparkline-include {
-    float: left;
-    width: 50%;
+#publication-count-sparkline-include {
+    clear:right;
 }
-#coauthor-count-sparkline-include,
-#coinvestigator-count-sparkline-include {
-    float: right;
-    width: 50%;
+#coauthor-count-sparkline-include {
+    clear: left;
 }
 .sub_headings a {
     font-size: .7em;
@@ -103,16 +113,11 @@ table.sparkline_wrapper_table td, th {
   float: left;
   max-width: 50%;
 }
-#ego_label {
-    color: inherit;
-	font-size: 1.375em;
-}
 #ego_profile_image {
   float: left;
   padding-right: 5px;
 }
-#ego_profile_image img,
-#profileImage img {
+#ego_profile_image img {
   width: 90px;
   height: auto;
 }
@@ -132,17 +137,6 @@ table.sparkline_wrapper_table td, th {
     padding-right: 10px;
     width: 50%;
 }
-#visPanel {
-    float: right; 
-    width: 600px;
-}
-.vis-tables table caption {
-    width: 100%;
-    padding-bottom: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: left;
-}
 .vis-tables table {
     width: 100%;
 }
@@ -150,11 +144,12 @@ table.sparkline_wrapper_table td, th {
     text-align: left;
 }
 .vis-tables table thead tr th { 
-    background-color: #eaeaea; 
+    background-color: #bbb; 
     font-size: 14px; 
     padding: 5px; 
     vertical-align: top; 
-    text-align: left;  
+    text-align: left; 
+    border: 1px solid #999;
 }
 .vis-tables table tbody { 
     font-size: 12px;  
@@ -162,6 +157,8 @@ table.sparkline_wrapper_table td, th {
 .vis-tables table tbody td { 
     text-align: left; 
     padding: 5px;  
+    background: #eee;
+    border: 1px solid #999;
 }
 .moniker {
     margin-top: 0;
@@ -173,10 +170,7 @@ table.sparkline_wrapper_table td, th {
 }
 /* <------ BODY START*/
 #body {
-    max-width: 900px;
-    min-width: 800px; 
     margin: 0 auto; 
-    position: relative;
     background: white;
 }
 #bodyPannel {
@@ -210,33 +204,16 @@ table.sparkline_wrapper_table td, th {
     width: 40px;
     float:left;
 }
-#data-panel-content h4 {
-    padding-bottom: 0;
-}
-#data-panel-content {
-    margin-left: 15px;
-    margin-top: 15px;
-}
 /* <------ CONTAINER OVERRIDE FROM LIQUID.CSS*/
 .container {
     width: inherit; 
 }
 #incomplete-data {
     line-height: 150%;
-    margin-right: 15px;
-}
-.graphml-file-link {
-    padding-top: 59px;
-    height: 20px;
-    font-size: .9em;
 }
 #profileTitle {
-    background-color: #2485AE;
     color: white;
-    font-weight: bold;
     line-height: 1em !important;
-    padding: 10px;
-    width: 54px;
 }
 #table_heading {
     width: 80%; 

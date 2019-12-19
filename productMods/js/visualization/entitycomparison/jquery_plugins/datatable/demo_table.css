@@ -27,7 +27,7 @@
 .paginatedtabs span {
     padding-right: 5px; 
     cursor: pointer;
-    color: #2485AE;
+    color: #EF4135;
 }
 
 .paginate-nav-text {
@@ -59,7 +59,6 @@
 
 .datatablewrapper th {
     border-top: 1px #3D454E solid;  
-    background:#F1F2ee; 
     font-weight:bold; 
     font-size:12px;
     padding-bottom: 3px;

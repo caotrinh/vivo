@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#assign subjectName=""/>
 <#assign roleActivityUri="mysteryRoleActivityURI"/>
 <#assign personLabel="mysteryPersonLabel"/>
@@ -58,8 +58,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
 
-<h2>${titleVerb}&nbsp;${i18n().educational_training_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().educational_training_for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if personLabelDisplayValue?has_content >
@@ -146,7 +146,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
       <label for="degreeUri">${i18n().degree}</label>      
     
       <#assign degreeOpts = editConfiguration.pageData.degreeType />  
-      <select name="degreeType" id="degreeUri" >
+      <select name="degreeType" id="degreeUri" class="mediumSelection">
         <option value="" <#if degreeValue = "">selected</#if>>${i18n().select_one}</option>        
                <#list degreeOpts?keys as key>                 
         <option value="${key}" <#if degreeValue = key>selected</#if>>${degreeOpts[key]}</option>                    
@@ -182,15 +182,15 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
   	<#--End draw elements-->
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
     <p class="submit">
-         <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
     <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
 
 </form>
-
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData  = {
     acUrl: '${urls.base}/autocomplete?tokenize=true&stem=true',
@@ -226,6 +226,7 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/organizationForTrainingUtils.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 

@@ -1,6 +1,6 @@
 <#-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#-- Template for adding a grant role, such as principal investigator, to a foaf:Persons -->
 <#--Retrieve certain edit configuration information-->
 <#assign editMode = editConfiguration.pageData.editMode />
@@ -70,8 +70,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
  <div>${i18n().unable_to_handle_position_editing}</div>      
 <#else>
 
-<h2>${formHeading} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${formHeading} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if grantLabelDisplayValue?has_content >
@@ -116,34 +116,38 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
         
         <p>
             <label for="grant">${i18n().grant_name} ${requiredHint}</label>
-            <input class="acSelector" size="50"  type="text" id="grant" acGroupName="grant" name="grantLabel"  value="${grantLabelValue}" />
+            <input class="acSelector" size="50" style="display:block;" type="text" id="grant" acGroupName="grant" name="grantLabel"  value="${grantLabelValue}" />
             <input class="display" type="hidden" id="grantDisplay" acGroupName="grant" name="grantLabelDisplay" value="${grantLabelDisplayValue}">
         </p>
 
         <div class="acSelection" acGroupName="grant" id="grantAcSelection">
             <p class="inline">
-                <label>${i18n().selected_grant}:</label>
-                <span class="acSelectionInfo"></span>
+                <label style="display:block;">${i18n().selected_grant}:</label>
+                <span style="display:block;" class="acSelectionInfo"></span>
                 <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
                 <a href="#" class="changeSelection" id="changeSelection" title="${i18n().change_selection}">${i18n().change_selection})</a>
             </p>
             <input class="acUriReceiver" type="hidden" id="grantUri" name="existingGrant" value="${existingGrantValue}" ${flagClearLabelForExisting}="true" />
         </div>
-
+        <hr/>
         <h4>${i18n().years_of_grant_participation}</h4>							 
-			 						<#if htmlForElements?keys?seq_contains("startField")>
-			 							 <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
-			 							${htmlForElements["startField"]} ${yearHint}
-			 					 </#if>
-			 					 <p></p>
-			 					 <#if htmlForElements?keys?seq_contains("endField")>
-			 							<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
-			 							${htmlForElements["endField"]} ${yearHint}
-					 	</#if>
+			<#if htmlForElements?keys?seq_contains("startField")>
+				 <div class="form-group">
+                     <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
+    				${htmlForElements["startField"]} ${yearHint}
+                </div>
+    		</#if>
+    		<p></p>
+    		<#if htmlForElements?keys?seq_contains("endField")>
+				<div class="form-group">
+                    <label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+    				${htmlForElements["endField"]} ${yearHint}
+                </div>
+		 	</#if>
 					 
             <p class="submit">
                 <input type="hidden" name = "editKey" value="${editKey}"/>
-                <input type="submit" id="submit" value="${submitButtonLabel}"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
+                <input type="submit" id="submit" value="${submitButtonLabel}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
             </p>
 
             <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
@@ -152,8 +156,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 </section>
 <#assign acUrl="/autocomplete?tokenize=true" />
 <#assign sparqlQueryUrl ="/ajax/sparqlQuery" />
-
-    
+</div>
+</div>
 <script type="text/javascript">
 var customFormData  = {
     sparqlForAcFilter: '${sparqlForAcFilter}',
@@ -179,5 +183,6 @@ ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarke
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>')}
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>')}
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>')}
-${scripts.add('<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+${scripts.add('<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 </#if>

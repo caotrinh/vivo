@@ -45,9 +45,10 @@
 </#if>
 <#--In order to fill out the subject-->
 <#assign acFilterForIndividuals =  "['" + editConfiguration.subjectUri + "']" />
-
-<h2>${formTitle}</h2>
-
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
+${formTitle}
+</div><div class="panel-body>
 <#if editConfiguration.propertySelectFromExisting = true>
     <#if rangeOptionsExist  = true >
         <form class="customForm" action = "${submitUrl}">
@@ -75,7 +76,7 @@
             <#--The above section should be autocomplete-->
             
             <p>
-                <input type="submit" id="submit" value="${submitButtonText}" role="button" disabled="disabled"/>
+                <input type="submit" id="submit" class="btn btn-primary" value="${submitButtonText}" role="button" disabled="disabled"/>
            
                 <span class="or"> or </span>
                 <a title="${i18n().cancel_title}" class="cancel" href="${cancelUrl}">${i18n().cancel_link}</a>
@@ -99,7 +100,7 @@
 <#if editConfiguration.includeDeletionForm = true>
 <#include "defaultDeletePropertyForm.ftl">
 </#if>
-
+</div></div>
 
 <#assign sparqlQueryUrl = "${urls.base}/ajax/sparqlQuery" >
 <#--Passing in object types only if there are any types returned, otherwise
@@ -136,10 +137,10 @@ Also multiple types parameter set to true only if more than one type returned-->
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
  ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
- ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
 
  ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',             
-              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

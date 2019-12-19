@@ -3,7 +3,7 @@
 <#-- this template is for adding a person's position to an organization -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#if editConfiguration.objectUri?has_content>
     <#assign editMode = "edit">
 <#else>
@@ -44,8 +44,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 	<#assign submissionErrors = editSubmission.validationErrors/>
 </#if>
 
-<h2>${titleVerb}&nbsp;${i18n().posn_history_entry_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().posn_history_entry_for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#if submissionErrors?has_content>
     <#if personLabelDisplayValue?has_content >
         <#assign personLabelValue = personLabelDisplayValue />
@@ -144,7 +144,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
         <p class="submit">
             <input type="hidden" id="editKey" name="editKey" value="${editKey}" />
-            <input type="submit" id="submit" value="${submitButtonText}"/>
+            <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/>
             <span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
 	
@@ -172,6 +172,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     </script>
 
 </section>
+</div>
+</div>
 <script type="text/javascript">
 $(document).ready(function(){
     orgHasPositionUtils.onLoad('${blankSentinel}');
@@ -189,4 +191,5 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/orgHasPositionUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

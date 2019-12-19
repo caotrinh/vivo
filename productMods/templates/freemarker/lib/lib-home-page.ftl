@@ -15,8 +15,8 @@
 <#-- Renders the html for the faculty member section on the home page. -->
 <#-- Works in conjunction with the homePageUtils.js file, which contains the ajax call. -->
 <#macro facultyMbrHtml>
-    <section id="home-faculty-mbrs" class="home-sections"  >
-        <h4>${i18n().faculty_capitalized}</h4>
+    <section id="home-faculty-mbrs" class="home-sections well"  >
+        <h4><a href="${urls.base}/people#http://vivoweb.org/ontology/core#FacultyMember">${i18n().faculty_capitalized}</a></h4>
         <div id="tempSpacing">
             <span>${i18n().loading_faculty}&nbsp;&nbsp;&nbsp;
                 <img  src="${urls.images}/indicatorWhite.gif">
@@ -39,7 +39,7 @@
                 <#if (class.uri?contains("FacultyMember")) >
                     <#assign foundClassGroup = true />
                     <#if (class.individualCount > 0) >
-                        <script>var facultyMemberCount = ${class.individualCount?string?replace(",","")?replace(".","")};</script>
+                        <script>var facultyMemberCount = ${class.individualCount?string?replace(",","")};</script>
                     <#else>
                         <script>var facultyMemberCount = 0;</script>
                     </#if>
@@ -117,8 +117,8 @@
 <#-- Works in conjunction with the homePageUtils.js file -->
 <#macro researchClasses classGroups=vClassGroups>
 <#assign foundClassGroup = false />
-<section id="home-research" class="home-sections">
-    <h4>${i18n().research_capitalized}</h4>
+<section id="home-research" class="home-sections well">
+    <h4><a href="${urls.base}/research" alt="${i18n().view_all_research}">${i18n().research_capitalized}</a></h4>
     <ul>
         <#list classGroups as group>
             <#if (group.individualCount > 0) && group.uri?contains("publications") >
@@ -137,7 +137,6 @@
                         </li>
                     </#if>
                 </#list>
-                <li><a href="${urls.base}/research" alt="${i18n().view_all_research}">${i18n().view_all}</a></li>
             </#if>
         </#list>
         <#if !foundClassGroup>
@@ -150,8 +149,8 @@
 <#-- Renders the html for the academic departments section on the home page. -->
 <#-- Works in conjunction with the homePageUtils.js file -->
 <#macro academicDeptsHtml>
-    <section id="home-academic-depts" class="home-sections">
-        <h4>${i18n().departments}</h4>
+    <section id="home-academic-depts" class="home-sections well">
+        <h4><a href="${urls.base}/organizations#http://vivoweb.org/ontology/core#AcademicDepartment">${i18n().departments}</a></h4>
         <div id="academic-depts">
         </div>
     </section>        
@@ -165,7 +164,8 @@ var academicDepartments = [
     <#list academicDeptDG as resultRow>
         <#assign uri = resultRow["theURI"] />
         <#assign label = resultRow["name"] />
-        {"uri": "${uri?url}", "name": "${label}"}<#if (resultRow_has_next)>,</#if>
+        <#assign localName = uri?substring(uri?last_index_of("/")) />
+            {"uri": "${localName}", "name": "${label}"}<#if (resultRow_has_next)>,</#if>
     </#list>        
 </#if>
 ];
@@ -178,7 +178,6 @@ var urlsBase = "${urls.base}";
 <#-- as the leaflet javascript library.                                     -->
 <#macro geographicFocusHtml>
     <section id="home-geo-focus" class="home-sections">
-        <h4>${i18n().geographic_focus}</h4>
         <#-- map controls allow toggling between multiple map types: e.g., global, country, state/province. -->
         <#-- VIVO default is for only a global display, though the javascript exists to support the other   -->
         <#-- types. See map documentation for additional information on how to implement additional types.  -->
@@ -187,7 +186,7 @@ var urlsBase = "${urls.base}";
                 <a id="globalLink" class="selected" href="javascript:">${i18n().global_research}</a>&nbsp;|&nbsp;
                 <a id="countryLink" href="javascript:">${i18n().country_wide_research}</a>&nbsp;|&nbsp;
                 <a id="localLink" href="javascript:">${i18n().local_research}</a>  
-            </div>  
+            </div>
         -->
         <div id="researcherTotal"></div>
         <div id="timeIndicatorGeo">
@@ -195,7 +194,9 @@ var urlsBase = "${urls.base}";
                 <img  src="${urls.images}/indicatorWhite.gif">
             </span>
         </div>
-        <div id="mapGlobal" class="mapArea"></div>
+        <div class="row map">
+            <div id="mapGlobal" class="mapArea"></div>
+        </div>
        <#--  
             <div id="mapCountry" class="mapArea"></div>
             <div id="mapLocal" class="mapArea"></div> 

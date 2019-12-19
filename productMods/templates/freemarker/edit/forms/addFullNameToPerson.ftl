@@ -30,7 +30,7 @@
 
 <#if editMode == "edit">    
         <#assign titleVerb="${i18n().edit_capitalized}">        
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${titleVerb}" + " ${i18n().full_name}">
         <#assign disabledVal="disabled">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
@@ -40,8 +40,10 @@
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 
-<h2>${titleVerb}&nbsp;${i18n().full_name_for} ${editConfiguration.subjectName}</h2>
-
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
+${titleVerb}&nbsp;${i18n().full_name_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert">
@@ -64,31 +66,43 @@
     
     <form id="addFullNameToPerson" class="customForm noIE67" action="${submitUrl}"  role="add/edit name">
 
-        <p>
-            <label for="firstName">${i18n().first_name} ${requiredHint}<span style="padding-left:300px">${i18n().name_prefix}</span></label>
-            <input  size="25"  type="text" id="firstName" name="firstName" value="${firstNameValue}" />
-            <input style="margin-left:138px" size="12"  type="text" id="prefix" name="prefix" value="${prefixValue}" />
-        </p>
-
-        <p>
-            <label for="middleName">${i18n().middle_name}<span style="padding-left:293px">${i18n().name_suffix}</span></label>
-            <input  size="25"  type="text" id="middleName" name="middleName" value="${middleNameValue}" />
-            <input style="margin-left:138px"  size="12"  type="text" id="suffix" name="suffix" value="${suffixValue}" />
-        </p>
-
-        <p>
+        <div class="form-group">
+            <label for="firstName">${i18n().first_name} ${requiredHint}</label>
+            <div class="input-group">
+                <input  size="25"  type="text" id="firstName" name="firstName" value="${firstNameValue}" />
+            </div>
+            <label>${i18n().name_prefix}</label>
+            <div class="input-group">
+                <input size="12"  type="text" id="prefix" name="prefix" value="${prefixValue}" />
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="middleName">${i18n().middle_name}</label>
+            <div class="input-group">
+                <input  size="25"  type="text" id="middleName" name="middleName" value="${middleNameValue}" />
+            </div>
+            <label>${i18n().name_suffix}</label>
+            <div class="input-group">
+                <input size="12"  type="text" id="suffix" name="suffix" value="${suffixValue}" />
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
             <label for="lastName">${i18n().last_name} ${requiredHint}</label>
-            <input  size="25"  type="text" id="lastName" name="lastName" value="${lastNameValue}" />
-        </p>
-
+            <div class="input-group">
+                <input  size="25"  type="text" id="lastName" name="lastName" value="${lastNameValue}" />
+            </div>
+        </div>
         <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
-        <p class="submit">
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+        <div class="submit form-group">
+            <input type="submit" id="submit" class="btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
             <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
-
-        <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
+        <div class="form-group">
+            <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
+        </div>
 
     </form>
 
@@ -96,11 +110,10 @@
  
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
-${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>')}
 
-
+</div></div>

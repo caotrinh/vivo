@@ -29,9 +29,9 @@
     added the imageFile parameter because a different icon is used for the wilma theme (qr_icon.png)
     than is used for the 2 column and quick views (qr-code-icon.png).
 -->
-<#macro renderCode imageFile display="icon" width="125">
+<#macro renderCode imageFile display="icon" width="200">
     <#if hasValidVCard()>
-        <#local qrData = qrData>
+        <#local qrData = individual.qrData()>
         <#local qrCodeLinkedImage><a title="${i18n().export_qr_codes}" href="${qrData.exportQrCodeUrl}"><@qrCodeVCard qrCodeWidth=width /></a></#local>
         
         <#if (display == "full")>
@@ -39,7 +39,7 @@
             ${qrCodeLinkedImage}
         <#elseif (display == "icon")>
                 <a id="qrIcon" title="${i18n().vcard_qr_code}" href="${qrData.exportQrCodeUrl}"><img  src="${urls.images}/individual/${imageFile!}" alt="${i18n().qr_icon}" /></a>
-                <span id="qrCodeImage" class="hidden">${qrCodeLinkedImage} <a class="qrCloseLink" href="#"  title="${i18n().qr_code}">${i18n().close_capitalized}</a></span>
+                <span id="qrCodeImage" style="display:none;">${qrCodeLinkedImage} <a class="qrCloseLink" href="#"  title="${i18n().qr_code}">${i18n().close_capitalized}</a></span>
         <#else>
             <p class="notice">${i18n().invalid_qr_code_parameter}</p>
         </#if>
@@ -51,7 +51,7 @@
 
 <#function getQrCodeUrlForVCard qrCodeWidth>
 
-    <#local qrData = qrData>
+    <#local qrData = individual.qrData()>
 
     <#local core = "http://vivoweb.org/ontology/core#">
     <#local foaf = "http://xmlns.com/foaf/0.1/">
@@ -63,7 +63,7 @@
     <#local title = qrData.preferredTitle! >
     <#local phoneNumber = qrData.phoneNumber! >
     <#local email = qrData.email! >
-    <#local url = individual.uri! >
+    <#local url = qrData.externalUrl! >
     <#local photo = individual.thumbUrl! >
     <#local rev = "" >
     
@@ -95,15 +95,14 @@
 
 <#function getQrCodeUrlForLink qrCodeWidth>
 
-    <#local qrData = qrData>
+    <#local qrData = individual.qrData()>
 
-    <#local externalUrl = qrData.externalUrl! >
+    <#local url = qrData.externalUrl! >
 
     <#local qrCodeUrl = "">
-    <#if externalUrl != "">
-    	<#local fullExternalUrl = externalUrl + individual.profileUrl> 
-    	<#local qrCodeContent = fullExternalUrl?url> 
-        <#local qrCodeUrl = "https://chart.googleapis.com/chart?cht=qr&amp;chs=${qrCodeWidth}x${qrCodeWidth}&amp;chl=${qrCodeContent}&amp;choe=UTF-8" >
+    <#if url != "">
+        <#local qrCodeContent = url?url> 
+        <#local qrCodeUrl = "https://chart.googleapis.com/chart?cht=qr&amp;chs=200x200&amp;chl=${qrCodeContent}&amp;choe=UTF-8" >
     </#if>
 
     <#return qrCodeUrl>
@@ -132,7 +131,7 @@
 
 <#function hasValidVCard>
 
-    <#local qrData = qrData>
+    <#local qrData = individual.qrData()>
 
     <#local firstName = qrData.firstName! >
     <#local lastName = qrData.lastName! >

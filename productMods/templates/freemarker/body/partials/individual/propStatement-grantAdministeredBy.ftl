@@ -15,7 +15,11 @@
  
     <#local linkedIndividual>
         <#if statement.organization??>
-            <a href="${profileUrl(statement.uri("organization"))}" title="${i18n().organization_name}">${statement.organizationLabel!""}</a>
+            <#if profileUrl(statement.uri("organization"))?contains("/group")>
+                ${statement.organizationLabel!""}
+            <#else>
+                <a href="${profileUrl(statement.uri("organization"))}" title="${i18n().organization_name}">${statement.organizationLabel!""}</a>
+            </#if>
         <#else>
             <a href="${profileUrl(statement.uri("administratorRole"))}" title="${i18n().administering_organization_for}">${i18n().missing_organization}</a>
         </#if>

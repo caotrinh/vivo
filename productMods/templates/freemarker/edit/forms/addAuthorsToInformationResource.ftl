@@ -3,7 +3,7 @@
 <#-- Custom form for adding authors to information resources -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain page specific information information-->
 <#assign newRank = editConfiguration.pageData.newRank />
 <#assign existingAuthorInfo = editConfiguration.pageData.existingAuthorInfo />
@@ -34,8 +34,8 @@
 
 <@lvf.unsupportedBrowser urls.base/>
 
-<h2>${title}</h2>
-
+<div class="panel-heading">${title}</div>
+<div class="panel-body">
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert" class="validationError">
         <img src="${urls.images}/iconAlert.png" width="24" height="24" alert="${i18n().error_alert_icon}" />
@@ -51,7 +51,7 @@
 
 <h3>${i18n().manage_authors}</h3>
 
-<ul id="dragDropList" ${ulClass}>
+<ul id="authorships" ${ulClass}>
 
 <script type="text/javascript">
     var authorshipData = [];
@@ -67,10 +67,10 @@
 	<li class="authorship">
 			<#-- span.author will be used in the next phase, when we display a message that the author has been
 			removed. That text will replace the a.authorName, which will be removed. -->    
-			<span class="authorship">
+			<span class="author">
 					<#-- This span is here to assign a width to. We can't assign directly to the a.authorName,
 					for the case when it's followed by an em tag - we want the width to apply to the whole thing. -->
-					<span class="itemName">
+					<span class="authorNameWrapper">
 							<#if (authorUri?length > 0)>
 									<span class="authorName">${authorName}</span>
 								<#else>      
@@ -97,7 +97,7 @@
 
 <section id="showAddForm" role="region">
     <input type="hidden" name = "editKey" value="${editKey}" />
-    <input type="submit" id="showAddFormButton" value="${i18n().add_author}" role="button" />
+    <input type="submit" id="showAddFormButton" value="${i18n().add_author}" role="button" class="btn btn-primary"/>
 
     <span class="or"> ${i18n().or} </span>
     <a id="returnLink" class="cancel" href="${cancelUrl}&url=/individual" title="${i18n().cancel_title}">${i18n().return_to_publication}</a>
@@ -107,50 +107,54 @@
 <form id="addAuthorForm" action ="${submitUrl}" class="customForm noIE67">
     <h3>${i18n().add_an_author}</h3>
 
-    <div style="display:inline">
-        <input type="radio" name="authorType" class="person-radio" value="" role="radio" checked />
-        <label class="inline" for="Person" >${i18n().person_capitalized}</label>
-        <input type="radio" name="authorType" class="org-radio" value="http://xmlns.com/foaf/0.1/Organization" role="radio" style="display:inline;margin-left:18px" />
-        <label class="inline" for="Organization">${i18n().organization_capitalized}</label>
+    <div class="radio">
+        <label for="Person"><input type="radio" name="authorType" class="person-radio" value="" role="radio" checked />${i18n().person_capitalized}</label>
+    </div>
+    <div class="radio">
+        <label for="Organization"><input type="radio" name="authorType" class="org-radio" value="http://xmlns.com/foaf/0.1/Organization" role="radio" />${i18n().organization_capitalized}</label>
     </div>
 
     <section id="personFields" role="personContainer">
     		<#--These wrapper paragraph elements are important because javascript hides parent of these fields, since last name
     		should be visible even when first name/middle name are not, the parents should be separate for each field-->
-    		<p class="inline">
-        <label for="lastName">${i18n().last_name} <span class='requiredHint'> *</span></label>
-        <input class="acSelector" size="35"  type="text" id="lastName" name="lastName" value="${lastNameValue}" role="input" />
+    	<p>
+            <label for="lastName">${i18n().last_name} <span class='requiredHint'> *</span></label>
+            <input class="acSelector show" size="35"  type="text" id="lastName" name="lastName" value="${lastNameValue}" role="input" />
         </p>
 				
-				<p class="inline">
-        <label for="firstName">${i18n().first_name} ${requiredHint} ${initialHint}</label>
-        <input  size="20"  type="text" id="firstName" name="firstName" value="${firstNameValue}"  role="input" />
-        </p>
+		<div class="form-group">
+            <label for="firstName">${i18n().first_name} ${requiredHint} ${initialHint}</label>
+            <div class="input-group">
+                <input  size="20"  type="text" id="firstName" name="firstName" value="${firstNameValue}"  role="input" />
+            </div>
+        </div>
         
-				<p class="inline">
-				<label for="middleName">${i18n().middle_name} <span class='hint'>(${i18n().initial_okay})</span></label>
-        <input  size="20"  type="text" id="middleName" name="middleName" value="${middleNameValue}"  role="input" />
-        </p>
+		<div class="form-group">
+			<label for="middleName">${i18n().middle_name} <span class='hint'>(${i18n().initial_okay})</span></label>
+            <div class="input-group">
+                <input  size="20"  type="text" id="middleName" name="middleName" value="${middleNameValue}"  role="input" />
+            </div>
+        </div>
       
         <div id="selectedAuthor" class="acSelection">
-            <p class="inline">
-                <label>${i18n().selected_author}:&nbsp;</label>
-                <span class="acSelectionInfo" id="selectedAuthorName"></span>
+            <p>
+                <label class="show">${i18n().selected_author}:&nbsp;</label>
+                <span class="acSelectionInfo show" id="selectedAuthorName"></span>
                 <a href="${urls.base}/individual?uri=" id="personLink" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized})</a>
                 <input type="hidden" id="personUri" name="personUri" value=""  role="input" /> <!-- Field value populated by JavaScript -->
             </p>
         </div>
     </section>
     <section id="organizationFields" role="organization">
-    		<p class="inline">
-        <label for="orgName">${i18n().organization_name_capitalized} <span class='requiredHint'> *</span></label>
-        <input size="38"  type="text" id="orgName" name="orgName" value="${orgNameValue}" role="input" />
+    	<p class="inline">
+            <label for="orgName">${i18n().organization_name_capitalized} <span class='requiredHint'> *</span></label>
+            <input size="38" class="show" type="text" id="orgName" name="orgName" value="${orgNameValue}" role="input" />
         </p>
 				      
         <div id="selectedOrg" class="acSelection">
-            <p class="inline">
-                <label>${i18n().selected_organization}:&nbsp;</label>
-                <span  id="selectedOrgName"></span>
+            <p>
+                <label class="show">${i18n().selected_organization}:&nbsp;</label>
+                <span class="show" id="selectedOrgName"></span>
                 <a href="${urls.base}/individual?uri=" id="orgLink"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized})</a>
                 <input type="hidden" id="orgUri" name="orgUri" value=""  role="input" /> <!-- Field value populated by JavaScript -->
             </p>
@@ -164,7 +168,7 @@
     
         <p class="submit">
             <input type="hidden" name = "editKey" value="${editKey}" role="input" />
-            <input type="submit" id="submit" value="${i18n().add_author}" role="button" role="input" />
+            <input type="submit" id="submit" value="${i18n().add_author}" role="button" role="input" class="btn btn-primary"/>
             
             <span class="or"> ${i18n().or} </span>
             
@@ -174,7 +178,8 @@
 
         <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
 </form>
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData = {
     rankPredicate: '${rankPredicate}',
@@ -192,14 +197,14 @@ var i18nStrings = {
     authorTypeText: '${i18n().author_capitalized}',
     organizationTypeText: '${i18n().organization_capitalized}',
     helpTextSelect: '${i18n().select_an_existing}',
-    helpTextAdd: '${i18n().or_add_new_one}'
+    helptextAdd: '${i18n().or_add_new_one}'
 };
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />',
 					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />',
 					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/autocomplete.css" />',
-					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/manageDragDropList.css" />')}
+					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/addAuthorsToInformationResource.css" />')}
 
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>')}

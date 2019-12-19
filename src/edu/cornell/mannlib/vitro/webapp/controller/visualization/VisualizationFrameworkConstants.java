@@ -71,6 +71,7 @@ public class VisualizationFrameworkConstants {
 	public static final String FULL_SPARKLINE_VIS_MODE = "full";
 	public static final String COPI_VIS_MODE = "copi";
 	public static final String COAUTHOR_VIS_MODE = "coauthor";
+        public static final String AUTHOR_GEOMAP_VIS_MODE = "geomap";
 
 	/*
 	 * Vis modes for CoauthorshipRequest Handler
@@ -123,6 +124,7 @@ public class VisualizationFrameworkConstants {
 	public static final String COAUTHORSHIP_VIS = "coauthorship";
 	public static final String PERSON_LEVEL_VIS = "person_level";
 	public static final String COAUTHORSHIP_VIS_SHORT_URL = "author-network";
+        public static final String GEOMAP_VIS_SHORT_URL = "author-geomap";
 	public static final String COINVESTIGATOR_VIS_SHORT_URL = "investigator-network";
 	public static final String UTILITIES_VIS = "utilities";
 	public static final String ENTITY_COMPARISON_VIS = "entity_comparison";

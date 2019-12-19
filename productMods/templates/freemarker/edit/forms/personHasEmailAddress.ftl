@@ -25,7 +25,7 @@
 
 <#if editMode == "edit">    
         <#assign titleVerb="${i18n().edit_capitalized}">        
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${titleVerb}" + " ${i18n().email_address}">
         <#assign disabledVal="disabled">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
@@ -34,9 +34,10 @@
 </#if>
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
-
-<h2>${titleVerb}&nbsp;${i18n().email_address_for} ${editConfiguration.subjectName}</h2>
-
+<div id="manage-records-for" class="panel panel-default">
+    <div class="panel-heading">
+${titleVerb}&nbsp;${i18n().email_address_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert">
@@ -64,7 +65,7 @@
         <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
         <p class="submit">
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+            <input type="submit" id="submit" class="btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
             <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
 
@@ -73,10 +74,11 @@
     </form>
 
 </section>
+</div></div>
+
  
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
-${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',

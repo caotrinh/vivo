@@ -12,7 +12,6 @@
     <#assign sparklineContainerID = visContainerID + "_spark"> 
 </#if>
 
-<div class="staticPageBackground">
     <div id="${visContainerID}">
         <script type="text/javascript">
         
@@ -54,9 +53,9 @@
                 </#if>    
 
                 var visualizationOptions = {
-                    width: 150,
+                    width: 210,
                     height: 60,
-                    color: '3399CC',
+                    color: 'EF4135',
                     chartType: 'ls',
                     chartLabel: 'r'
                 }
@@ -82,13 +81,16 @@
                     */
                 
                     <#-- Create the vis object and draw it in the div pertaining to sparkline. -->
-                    var sparkline = new google.visualization.ImageSparkLine(providedSparklineImgTD[0]);
+                    var sparkline = new google.visualization.ImageBarChart(providedSparklineImgTD[0]);
                     sparkline.draw(sparklineDataView, {
                             width: visualizationOptions.width,
                             height: visualizationOptions.height,
+                            color: visualizationOptions.color,
                             showAxisLines: false,
                             showValueLabels: false,
-                            labelPosition: 'none'
+                            labelPosition: 'none',
+                            legend: 'none',
+                            isVertical: true,
                     });    
                     
                 } else {
@@ -152,12 +154,12 @@
                     
                                         
                     if (totalGrants === 1) {
-                        var grantDisplay = "${i18n().co_investigator}";
+                        var grantDisplay = " ${i18n().co_investigator}";
                     } else {
-                        var grantDisplay = "${i18n().co_investigators}";
+                        var grantDisplay = " ${i18n().co_investigators}";
                     }
                     
-                    $('#${sparklineContainerID} td.sparkline_number').text(totalGrants).css("font-weight", "bold").attr("class", "grey").append("<span style='color: #2485AE;'> " + grantDisplay + " <br/></span>");
+                    //$('#${sparklineContainerID} td.sparkline_number').text(totalGrants).css("font-weight", "bold").attr("class", "grey-text").append(grantDisplay);
             
                     var sparksText = '  ${i18n().within_last_10_years}';
                     
@@ -181,25 +183,25 @@
                     var totalGrants = onlyUnknownYearGrants ? unknownYearGrantCounts : renderedSparks;
                     
                     if (totalGrants === 1) {
-                        var grantDisplay = "${i18n().co_investigator}";
+                        var grantDisplay = " ${i18n().co_investigator}";
                     } else {
-                        var grantDisplay = "${i18n().co_investigators}";
+                        var grantDisplay = " ${i18n().co_investigators}";
                     }
                      
-                    $('#${sparklineContainerID} td.sparkline_number').text(totalGrants).css("font-weight", "bold").attr("class", "grey").append("<span style='color: #2485AE;'> " + grantDisplay + " <br/></span>");
             
-                    var sparksText = '  ${i18n().from} <span class="sparkline_range">${sparklineVO.earliestYearConsidered?c}' 
-                                        + ' through ${sparklineVO.latestRenderedGrantYear?c}</span>';
+                    var sparksText = '  ${i18n().from} ${sparklineVO.earliestYearConsidered?c}' 
+                                        + ' through ${sparklineVO.latestRenderedGrantYear?c}';
                                         
                     if (totalGrants !== totalGrantCount) {
                         sparksText += ' (' + totalGrantCount + ' ${i18n().total})';
                     }
                     
                     if (totalGrantCount) {
-                        sparksText += '<br /> <a href="${sparklineVO.downloadDataLink}" title="csv ${i18n().file_capitalized}">(.CSV ${i18n().file_capitalized})</a> ';
+                        sparksText += '<a href="${sparklineVO.downloadDataLink}" title="Download CSV data"><span class="glyphicon glyphicon-download-alt sparkdl"></span></a> ';
                     }
                     
                  </#if>
+                 $('#${sparklineContainerID} td.sparkline_text').text(totalGrants).attr("class", "grey-text").append( grantDisplay).append(sparksText);
 
                  if (!onlyUnknownYearGrants) {
                     $('#${sparklineContainerID} td.sparkline_text').html(sparksText).css("font-weight", "bold");
@@ -290,10 +292,9 @@
                     
                     <#include "yearToActivityCountTable.ftl">
         
-                    ${i18n().download_data_as} <a href="${sparklineVO.downloadDataLink}" title="csv ${i18n().download}">.csv</a> ${i18n().file}.
+                    ${i18n().download_data_as} <a href="${sparklineVO.downloadDataLink}" title="Download CSV data"><span class="glyphicon glyphicon-download-alt sparkdl"></span></a>.
                     <br />
                 </p>
         
             </#if>  
     </#if>
-</div>

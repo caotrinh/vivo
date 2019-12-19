@@ -16,9 +16,17 @@
     <#local linkedIndividual>
         <#if statement.advisor??>
             <#if statement.degreeLabel?? || statement.dateTimeStart?? || statement.dateTimeEnd?? >
-                <a href="${profileUrl(statement.uri("advisor"))}" title="${i18n().advisor_label}">${statement.advisorLabel!}</a>,
+                <#if statement.hideAdvisor?? && statement.hideAdvisor == "true">
+                    ${statement.advisorLabel!},
+                <#else>
+                    <a href="${profileUrl(statement.uri("advisor"))}" title="${i18n().advisor_label}">${statement.advisorLabel!}</a>,
+                </#if>
             <#else>
-                <a href="${profileUrl(statement.uri("advisor"))}" title="${i18n().advisor_label}">${statement.advisorLabel!}</a>
+                <#if statement.hideAdvisor?? && statement.hideAdvisor == "true">
+                    ${statement.advisorLabel!}
+                <#else>
+                    <a href="${profileUrl(statement.uri("advisor"))}" title="${i18n().advisor_label}">${statement.advisorLabel!}</a>
+                </#if>
             </#if>
             <#if statement.degreeLabel??>
                 ${statement.degreeAbbr!statement.degreeLabel!} 

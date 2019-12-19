@@ -3,7 +3,7 @@
 <#-- Template for adding a publication to a foaf:Persons -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain edit configuration information-->
 <#assign editMode = editConfiguration.pageData.editMode />
 
@@ -70,7 +70,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
 <#if editMode == "edit">        
         <#assign titleVerb="${i18n().edit_capitalized}">        
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${i18n().Save_changes}">
         <#assign disabledVal="disabled">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
@@ -78,8 +78,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
         <#assign disabledVal=""/>
 </#if>
 
-<h2>${titleVerb}&nbsp;${i18n().publication_entry_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().publication_entry_for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#if submissionErrors?has_content>
 
     <#if collectionDisplayValue?has_content >
@@ -302,7 +302,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
        <p class="submit">
             <input type="hidden" name = "editKey" value="${editKey}"/>
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
+            <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
        </p>
 
        <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
@@ -338,7 +338,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     </script>
 </section>
 </#if>
-
+</div>
+</div>
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
  ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
  ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
@@ -348,4 +349,5 @@ ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/sm
               '<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',             
               '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/publicationToPersonUtils.js"></script>',             
-              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

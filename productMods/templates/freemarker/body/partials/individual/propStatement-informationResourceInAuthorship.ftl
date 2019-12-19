@@ -12,14 +12,24 @@
 <#-- Use a macro to keep variable assignments local; otherwise the values carry over to the
      next statement -->
 <#macro showAuthorship statement>
-    <#if statement.author??>
-    	<#if statement.subclass?? && statement.subclass?contains("vcard")>
-        	${statement.authorName}
-    	<#else>
-        	<a href="${profileUrl(statement.uri("author"))}" title="${i18n().author_name}">${statement.authorName}</a>
-    	</#if>
+    <#if statement.author?? && statement.authorName??>
+        <i class="fa fa-user"></i>&nbsp;
+        <#if profileUrl(statement.uri("author"))?contains("/group")>
+            <span title="${i18n().author_name}">${statement.authorName}</span>
+        <#elseif statement.isHonorary?? && statement.isHonorary == "true">
+            <span title="${i18n().author_name}">${statement.authorName}</span>
+        <#elseif statement.hideAuthor?? && statement.hideAuthor == "true">
+            <span title="${i18n().author_name}">${statement.authorName} (external author)</span>
+        <#else>
+            <a href="${profileUrl(statement.uri("author"))}" title="${i18n().author_name}">${statement.authorName}</a>
+        </#if>
+    <#elseif statement.author??>
+        <i class="fa fa-user"></i>&nbsp;&nbsp;<span>${statement.authorshipLabel} (external author)</span>
     <#else>
-        <#-- This shouldn't happen, but we must provide for it -->
         <a href="${profileUrl(statement.uri("authorship"))}" title="${i18n().missing_author}">${i18n().missing_author}</a>
+        <#-- This shouldn't happen, but we must provide for it 
+        ${statement.label}
+        <a href="${profileUrl(statement.uri("authorship"))}" title="${i18n().missing_author}">${i18n().missing_author}</a>
+        -->
     </#if>
 </#macro>

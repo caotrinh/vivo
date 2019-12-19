@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#assign subjectName=""/>
 <#assign roleActivityUri="mysteryRoleActivityURI"/>
 <#assign personLabel="mysteryPersonLabel"/>
@@ -53,8 +53,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
 
-<h2>${titleVerb}&nbsp;${i18n().researcher}&nbsp;${i18n().to} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().researcher}&nbsp;${i18n().to} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if personLabelDisplayValue?has_content >
@@ -106,18 +106,19 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     
     <form id="grantHasContributor" class="customForm noIE67" action="${submitUrl}"  role="add/edit organizational training">
     <p >
-        <label for="person">${i18n().person_capitalized}: ${i18n().last_name}  ${requiredHint}<span style="padding-left:322px">${i18n().first_name}  ${requiredHint}</span></label>
-            <input class="acSelector" size="50"  type="text" acGroupName="person" id="person" name="personLabel" value="${personLabelValue}" >
-            <input type="text" size="50"  id="maskLabelBuilding" name="maskLabelBuilding" value="" style="display:none" >
-            <input  size="30"  type="text" id="firstName" name="firstName" value="${firstNameValue}" ><br />
-            <input type="hidden" id="lastName" name="lastName" value="">
-            <input class="display" type="hidden" acGroupName="person" id="personDisplay" name="personLabelDisplay" value="${personLabelDisplayValue}" >
+        <label for="person">${i18n().person_capitalized}: ${i18n().last_name}  ${requiredHint}</label>
+        <input class="acSelector show" size="50"  type="text" acGroupName="person" id="person" name="personLabel" value="${personLabelValue}" >
+        <input type="text" size="50"  id="maskLabelBuilding" name="maskLabelBuilding" value="" style="display:none" >
+        <label class="show">${i18n().first_name}  ${requiredHint}</label>
+        <input  size="30"  type="text" id="firstName" name="firstName" value="${firstNameValue}" ><br />
+        <input type="hidden" id="lastName" name="lastName" value="">
+        <input class="display" type="hidden" acGroupName="person" id="personDisplay" name="personLabelDisplay" value="${personLabelDisplayValue}" >
     </p>
         
     <div class="acSelection" acGroupName="person">
         <p class="inline">
-            <label>${i18n().selected_person}:</label>
-            <span class="acSelectionInfo"></span>
+            <label class="show">${i18n().selected_person}:</label>
+            <span class="acSelectionInfo show"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
@@ -136,15 +137,15 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
   	<#--End draw elements-->
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
     <p class="submit">
-         <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
     <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
 
 </form>
-
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData  = {
     acUrl: '${urls.base}/autocomplete?tokenize=true&stem=true',
@@ -180,6 +181,7 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/grantHasContributorUtils.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 

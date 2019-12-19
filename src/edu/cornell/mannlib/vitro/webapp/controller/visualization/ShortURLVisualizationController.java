@@ -182,6 +182,8 @@ public class ShortURLVisualizationController extends FreemarkerHttpServlet {
 			
 			parameters.put(VisualizationFrameworkConstants.VIS_MODE_KEY, 
 					   VisualizationFrameworkConstants.COPI_VIS_MODE);
+                } else if (VisualizationFrameworkConstants.GEOMAP_VIS_SHORT_URL.equalsIgnoreCase(matchedPatternGroups.get(0))) {
+                        parameters.put(VisualizationFrameworkConstants.VIS_MODE_KEY, VisualizationFrameworkConstants.AUTHOR_GEOMAP_VIS_MODE);
 		} else {
 			
 			/*

@@ -6,11 +6,11 @@
 <#assign editMode = editConfiguration.pageData.editMode />
 <#assign htmlForElements = editConfiguration.pageData.htmlForElements />
 <#assign domainUri = editConfiguration.pageData.domainUri!"" />
-
+<div class="panel panel-default">
 <#if editMode == "edit">        
         <#assign titleVerb="${i18n().edit_capitalized}">        
         <#assign disabledVal="disabled">
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${i18n().edit_date_time_value}">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
         <#assign submitButtonText="${i18n().create_date_time_value}">
@@ -34,8 +34,8 @@
         <#assign titleObject="${i18n().date_time_value_for}">
 </#if>
 
-<h2>${titleVerb} ${titleObject} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb} ${titleObject} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <form class="customForm" action ="${submitUrl}" class="customForm">
 <#--Need to draw edit elements for dates here-->
  <#if htmlForElements?keys?seq_contains("dateTimeField")>
@@ -44,13 +44,15 @@
 
     <p class="submit">
         <input type="hidden" name="editKey" value="${editKey}" />
-        <input type="submit" id="submit" value="${submitButtonText}" role="button" />
+        <input type="submit" id="submit" value="${submitButtonText}" role="button" class="btn btn-primary"/>
     
         <span class="or"> ${i18n().or} </span>
     
         <a class="cancel" href="${editConfiguration.cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
     </p>
 </form>
+</div>
+</div>
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/utils.js"></script>',

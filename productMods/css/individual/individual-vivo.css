@@ -13,11 +13,10 @@ ul#individual-tools li {
 }
 ul#individual-phone {
     clear: both;
-    list-style: circle outside url(../../images/phoneIconSmall.gif);
-    margin-left: 15px;
+    list-style: none;
 }
 ul#individual-phone li {
-    font-size: .875em;
+    font-size: 1em;
     line-height: 1.5em;
 }
 ul#individual-phone li:last-child {
@@ -44,15 +43,14 @@ ul#individual-phone li:first-child {
 }
 ul.individual-emails {
     clear: both;
-    padding-left: 0;
-    list-style: circle outside url(../../images/emailIconSmall.gif);
-    margin-left: 20px;
+    list-style: none;
+    
 }
 #additional-emails li:last-child {
     margin-bottom: 18px;
 }
 ul.individual-emails li {
-    font-size: .875em;
+    font-size: 1em;
     line-height: 1.2em;
     padding-bottom: 6px;
 }
@@ -68,6 +66,9 @@ ul#additional-emails li {
     margin-top: 10px;
 }
 /* <------ INDIVIDUAL INTRO - RIGHT SIDE CONTENT */
+#individual-info.withThumb {
+    width: 78%;
+}
 #individual-intro .individual-overview {
     margin: 0;
     display: inline;
@@ -93,9 +94,6 @@ div#activeGrantsLink {
 #individual-intro.person .individual-overview {
     width: 100%;
     float: none;
-}
-div#individual-tools-people {
-    float: right;
 }
 ul#individual-tools-people li {
     position: relative;
@@ -165,25 +163,34 @@ p.view-all-coauthors {
     width:  200px;
     text-align: left;
 }
-/* <------ INDIVIDUAL TEMPORAL GRAPH & MAP O' SCIENCE */
+/* <------ INDIVIDUAL TEMPORAL GRAPH */
 #temporal-graph {
     padding: 0 3px 20px 0;
     background-color: #fff;
 }
-#temporal-graph h3 img,
-#map-of-science h3 img {
-    padding-right: 10px;
-    vertical-align: text-top;
-}
-#map-of-science {
-    padding: 0 29px 20px 0;
-    background-color: #fff;
-}
-#map-of-science h3,
 #temporal-graph h3 {
     margin: 0;
     padding: 0;
 }
+#temporal-graph h3 img {
+    padding-right: 10px;
+    vertical-align: text-top;
+}
+
+/* <------ INDIVIDUAL MAP O' SCIENCE */
+#map-of-science {
+    padding: 0 29px 20px 0;
+    background-color: #fff;
+}
+#map-of-science h3 {
+    margin: 0;
+    padding: 0;
+}
+#map-of-science h3 img {
+    padding-right: 10px;
+    vertical-align: text-top;
+}
+
 /* <------ POSITIONS */
 ul#individual-personInPosition {
     list-style-type: circle;
@@ -197,7 +204,12 @@ ul#individual-personInPosition li:last-child {
 }
 
 /* <------ RESEARCH AREA */
-ul#individual-hasResearchArea li,
+ul#individual-hasResearchArea li {
+    float: left;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #5e6363;
+}
 ul#individual-facultyMemberships li {
     float: left;
     padding-right: 10px;
@@ -210,30 +222,24 @@ h5.qrCode {
     padding: 0;
 }
 span#qrCodeImage {
-    position: absolute;
-    top: 27px; 
-    left: 175px !important; 
-    width:180px; 
+    width:220px; 
     border: solid 2px #ccc;
     background: #fff; 
-    text-align:middle; 
+    text-align:right; 
     overflow:visible;
     z-index:1000;
+    display:block;
 }
-span#qrCodeImage img {
-    padding: 1.7em 1.7em 0 1.7em; 
-}
+
+span#qrCodeImage img { margin: 0px auto; display:block;}
 a.qrCloseLink {
+    display:block;
     float: right; 
     padding-right: 1em; 
-    margin-right: 0; 
+    margin-right: 3px;
+    margin-bottom: 5px;
     font-size: .8em;
 }/* MISCELLANEOUS------>  */
-.listDateTime {
-    padding: 0 0.4em;
-    font-size: 0.8em;
-    background: #f4f4f4;
-}
 /* <---- Manage Prop Link, individual-properties.ftl -----*/
 a.manageLinks {
     float:right;font-size:.8em;

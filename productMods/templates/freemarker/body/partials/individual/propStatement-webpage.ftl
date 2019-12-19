@@ -1,5 +1,3 @@
-<#-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
-
 <#-- Template for core:webpage.
     
      This template must be self-contained and not rely on other variables set for the individual page, because it
@@ -7,14 +5,24 @@
  -->
 
 <#assign linkText>
-    <#if statement.label?has_content>${statement.label}<#t>
+    <#if statement.anchor?has_content>${statement.anchor}<#t>
+    <#elseif statement.label?has_content>${statement.label}<#t>
     <#elseif statement.url?has_content>${statement.url}<#t>
+    </#if>    
+</#assign>
+
+<#assign linkIcon>
+    <#if statement.url?has_content>
+        <#if statement.url?contains("ro.uow.edu.au") && statement.url?contains("article")>[download]<#t>
+        <#elseif statement.url?contains("ro.uow.edu.au")>[metadata]<#t>
+        <#else><span class="hoverlight glyphicon glyphicon-link contact-item"></span><#t>
+        </#if>    
     </#if>    
 </#assign>
 
 
 <#if statement.url?has_content>
-    <a href="${statement.url}" title="${i18n().link_text}">${linkText}</a> 
+        <a href="${statement.url}" title="${linkText}"></a>&nbsp; <a href="${statement.url}" title="${linkText}">${linkText} ${linkIcon}</a> 
 <#else>
-    <a href="${profileUrl(statement.uri("link"))}" title="${i18n().link_name}">${statement.linkName}</a> (${i18n().no_url_provided})
+    <a href="${profileUrl(statement.uri("link"))}" title="link name">${statement.linkName}</a> (no url provided for link)
 </#if>

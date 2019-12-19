@@ -12,7 +12,6 @@
     <#assign sparklineContainerID = visContainerID + "_spark"> 
 </#if>
 
-<div class="staticPageBackground">
     <div id="${visContainerID}">
         <script type="text/javascript">
     
@@ -56,10 +55,10 @@
                 </#if>
                 
                 var visualizationOptions = {
-                    width: 150,
+                    width: 210,
                     height: 60,
-                    color: '3399CC',
-                    chartType: 'ls',
+                    color: 'EF4135',
+                    chartType: 'bhs',
                     chartLabel: 'r'
                 }
     
@@ -84,13 +83,17 @@
                     */
                     
                     <#-- Create the vis object and draw it in the div pertaining to sparkline. -->
-                    var sparkline = new google.visualization.ImageSparkLine(providedSparklineImgTD[0]);
+                    //var sparkline = new google.visualization.ImageSparkLine(providedSparklineImgTD[0]);
+                    var sparkline = new google.visualization.ImageBarChart(providedSparklineImgTD[0]);
                     sparkline.draw(sparklineDataView, {
                             width: visualizationOptions.width,
                             height: visualizationOptions.height,
+                            color: visualizationOptions.color,
                             showAxisLines: false,
                             showValueLabels: false,
-                            labelPosition: 'none'
+                            labelPosition: 'none',
+                            legend: 'none',
+                            isVertical: true
                     });
 
                 } else {
@@ -149,12 +152,12 @@
                                     var sparksText = "";
                                     if ( !onlyUnknownYearPublications ) {
                                     
-                                        $('#${sparklineContainerID} td.sparkline_number').text(totalPubs + " ${i18n().last_ten_full}").attr("class", "grey-text");
+                                        $('#${sparklineContainerID} td.sparkline_number').text(totalPubs + " ${i18n().last_ten_full} " + "${i18n().years}").attr("class", "grey-text");
+                                        //sparksText += "${i18n().years}";
 
-                                        sparksText += "${i18n().years}";
 
                                         if (totalPubs !== totalPublicationCount) {
-                                        //sparksText += ' (' + totalPublicationCount + ' ${i18n().total})' ; 
+                                        sparksText += ' (' + totalPublicationCount + ' ${i18n().total})' ; 
                                         }
                                         sparksText += "&nbsp;<img class='infoIcon' src='" + infoIconSrc + "' height='16px' width='16px' alt='${i18n().info_icon}' title='${i18n().numbers_based_on_publications_in_vivo}' />" ;
                                         
@@ -181,28 +184,28 @@
                     var totalPubs = onlyUnknownYearPublications ? unknownYearPublicationCounts : renderedSparks;
                           
                     if ( totalPubs == 1 ) {
-                        var pubDisplay = "${i18n().publication}";
+                        var pubDisplay = " ${i18n().publication} ";
                     } else {
-                        var pubDisplay = "${i18n().publications}";
+                        var pubDisplay = " ${i18n().publications} ";
                     }
                     
-                    $('#${sparklineContainerID} td.sparkline_number').text(totalPubs).attr("class", "grey-text").append("<span style='color: #2485AE;'> "+ pubDisplay +"<br/></span>");
+                    $('#${sparklineContainerID} td.sparkline_number').text(totalPubs).attr("class", "grey-text").append( pubDisplay +"<br/>");
             
                     var sparksText = '  ${i18n().from} <span class="sparkline_range">${sparklineVO.earliestYearConsidered?c}' 
-                                        + ' - ${sparklineVO.latestRenderedPublicationYear?c}</span>';
+                                        + ' to ${sparklineVO.latestRenderedPublicationYear?c}</span>';
 
                     if (totalPubs !== totalPublicationCount) {
                         sparksText += ' (' + totalPublicationCount + ' ${i18n().total})';
                     }
 
                     if (totalPublicationCount) {
-                        sparksText += ' <br /><a href="${sparklineVO.downloadDataLink}" title="csv ${i18n().file}">(.CSV ${i18n().file_capitalized})</a> ';                    
+                        sparksText += ' <br /><a href="${sparklineVO.downloadDataLink}" title="Download CSV Data" alt="Download CSV Data"><span class="glyphicon glyphicon-download-alt"></span></a> ';                    
                     }
                     
                                                                                 
                  </#if>
          
-                $('#${sparklineContainerID} td.sparkline_text').html(sparksText);
+                //$('#${sparklineContainerID} td.sparkline_text').html(sparksText);
 
          
             }
@@ -287,7 +290,7 @@
 
                         <#include "yearToActivityCountTable.ftl">
 
-                        ${i18n().download_data_as} <a href="${sparklineVO.downloadDataLink}" title="csv ${i18n().download_link}">.csv</a> ${i18n().file}.
+                        ${i18n().download_data_as} <a href="${sparklineVO.downloadDataLink}" title="Download CSV data"><span class="glyphicon glyphicon-download-alt"></span></a>.
                         <br />
                     </p>
 
@@ -296,4 +299,3 @@
 
 
             </#if>
-        </div>

@@ -2,30 +2,40 @@
 
 #map-of-science-response {
     background-color: #FFFFFF;
-    font: 0.9em Helvetica;
     margin: auto;
     min-height: 600px;
     overflow: hidden;
     width: 100%;
 }
 
+#exploreInfoIcon,
+#imageIconTwo,
+#searchInfoIcon,
+#imageIconOne {
+    color: #EF4135;
+}
 #map-of-science-info {
 	margin-bottom: 6px;
 	margin-top: 6px;
 }
+
+.hide-dom-on-init {
+	display: none;
+}
+
 #left-column {
 	float: left;
-	width: 260px;
+	width: 250px;
 }
 
 #right-column {
-	float: right;
-	width: 640px;
+    margin-left: 270px;
+    margin-right: 10px;
 }
 
 #map_area {
-	width: 640px; 
-	height: 480px;
+	height: 550px;
+    border: solid 1px #eee;
 }
 
 #subEntityTableArea {
@@ -42,7 +52,6 @@
 }
 
 #percent-mapped-info {
-	float:right;
 	display: none;
 	margin-top: 5px;
 }
@@ -108,7 +117,7 @@ a.clear-selected-entities {
 /* filter */
 
 .filter-option, .comparison-filter-option {
-	color: #2485AE;
+	color: #EF4135;
 	cursor: pointer;
 	/*padding-right: 5px;*/
 	text-decoration: underline;
@@ -122,7 +131,7 @@ a.clear-selected-entities {
 .filterInfoIcon, .comparisonFilterInfoIcon {
 	/*vertical-align:top;*/
 	width:15px;
-	margin-left: 9px;
+	margin-left: 4px;
 }
 
 .drillDownIcon {
@@ -161,9 +170,10 @@ a.clear-selected-entities {
 }
 
 #reset-search, #comparison-reset-search {
-    color: #2485AE;
+    color: #EF4135;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 /* table */
@@ -195,9 +205,10 @@ hr.subtle-hr {
 }
 
 #main-science-areas-table-container table {
+    background: #262a2d;
 	cellpadding: 0;
 	cellspacing: 0;
-	border: 0;
+	border: solid 3px #262a2d;;
 }
 
 #main-science-areas-table-container table tr { 
@@ -206,7 +217,11 @@ hr.subtle-hr {
 	height: 30px;
 }
 
-.datatable-table,
+.datatable-table {
+	font-size: 0.9em;
+	width: 100%;
+}
+
 .entity-datatable-table {
 	font-size: 0.9em;
 	width: 100%;
@@ -223,19 +238,7 @@ a.map-of-science-links {
     text-decoration: none;
 }
 
-#main-science-areas-table-footer {
-    margin-top: 10px;
-    text-align: center;
-    height: 25px;
-    max-width: 260px;
-    background-color: #2485AE;
-    height: 20px;
-    padding: 4px 5px 3px;
-}
-
 #download-unlocated-journal-info {
-    background-color: #2485AE;
-    height: 20px;
     margin-top: 10px;
     max-width: 260px;
     padding: 4px 5px 3px;
@@ -253,7 +256,10 @@ a.map-of-science-links {
     margin-top: 0;
 }
 
-.filterInfo, 
+.filterInfo {
+	font-size: 0.81em;
+}
+
 .paginatedtabs {
 	font-size: 0.81em;
 }
@@ -274,8 +280,7 @@ a.map-of-science-links {
 /* -------------------------------------------------------------->  */
 /* SPECIAL STYLES FOR THE error  */
 /* -------------------------------------------------------------->  */
-#error-container,
-.hide-dom-on-init {
+#error-container {
     display: none;
 }
 

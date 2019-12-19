@@ -67,7 +67,6 @@
     trailing_whitespace = !!text.match(/ $/);
     var text = text.slice(0, max_length);
     // Ensure HTML entities are encoded
-    // http://debuggable.com/posts/encode-html-entities-with-jquery:480f4dd6-13cc-4ce9-8071-4710cbdd56cb
     text = $('<div/>').text(text).html();
     return text;
   }

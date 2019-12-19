@@ -56,8 +56,10 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
-<h2>${titleVerb}&nbsp;${i18n().award_or_honor_for} ${editConfiguration.subjectName}</h2>
-
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
+${titleVerb}&nbsp;${i18n().award_or_honor_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if orgLabelDisplayValue?has_content >
@@ -101,34 +103,36 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     <form id="personHasAwardOrHonor" class="customForm noIE67" action="${submitUrl}"  role="add/edit AwardOrHonor">
     <p>
         <label for="relatedIndLabel">${i18n().award_honor_name} ${requiredHint}</label>
-            <input class="acSelector" size="50"  type="text" id="award" acGroupName="award" name="awardLabel" value="${awardLabelValue}">
+            <input class="acSelector" size="50" style="display:block;" type="text" id="award" acGroupName="award" name="awardLabel" value="${awardLabelValue}">
             <input class="display" type="hidden" id="awardDisplay" acGroupName="award" name="awardLabelDisplay" value="${awardLabelDisplayValue}">
     </p>
 
     <div class="acSelection" acGroupName="award" id="awardAcSelection">
         <p class="inline">
-            <label>${i18n().selected_award}:</label>
-            <span class="acSelectionInfo"></span>
+            <label style="display:block;">${i18n().selected_award}:</label>
+            <span style="display:block;" class="acSelectionInfo"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="awardUri" name="existingAward" value="${awardValue}" ${flagClearLabelForExisting}="true" />
     </div>
+    <hr/>
   <p>
       <label for="org">${i18n().conferred_by_capitalized}</label>
-      <input  class="acSelector" size="50" acGroupName="org" type="text" id="org" name="orgLabel" value="${orgLabelValue}" />
+      <input style="display:block;" class="acSelector" size="50" acGroupName="org" type="text" id="org" name="orgLabel" value="${orgLabelValue}" />
       <input  class="display" type="hidden" id="orgDisplay" acGroupName="org" name="orgLabelDisplay" value="${orgLabelDisplayValue}" />
   </p>
   
   <div class="acSelection" acGroupName="org" id="orgAcSelection">
       <p class="inline">
-          <label>${i18n().selected_conferred}:</label>
-          <span class="acSelectionInfo"></span>
+          <label style="display:block;">${i18n().selected_conferred}:</label>
+          <span style="display:block;" class="acSelectionInfo"></span>
           <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
           <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
       </p>
       <input class="acUriReceiver" type="hidden" id="orgUri" name="existingOrg" value="${orgValue}" ${flagClearLabelForExisting}="true"/>
   </div>
+  <hr/>
 <#if editMode == "edit">
   <div class="hidden" id="hiddenOrgLabel">
     <p class="inline">
@@ -137,27 +141,37 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     </p>
   </div>
 </#if>
-    <p>
-        <label for="description">${i18n().description}</label>
+    <div class="form-group">
+      <label for="description">${i18n().description}</label>
+      <div class="input-group">
         <input  size="50"  type="text" id="description" name="description" value="${descriptionValue}" />
-    </p>
+      </div>
+    </div>
+    <hr/>
     <#assign htmlForElements = editConfiguration.pageData.htmlForElements />
-    <p>
+    <div class="form-group">
         <label for="yearAwardedDisplay" id="yearAwarded">${i18n().year_awarded}</label>
-        <input  size="4"  type="text" id="yearAwardedDisplay" name="yearAwardedDisplay" value="${yearAwardedDisplayValue}" /> ${yearHint}
-    </p>
+        <div class="input-group">
+          <input  size="4"  type="text" id="yearAwardedDisplay" name="yearAwardedDisplay" value="${yearAwardedDisplayValue}" /> ${yearHint}
+        </div>
+    </div>
+    <hr/>
     <p>
         <h4>${i18n().years_inclusive} <span class="hint">&nbsp;${i18n().award_hint}</span></h4>
     </p>
     <#--Need to draw edit elements for dates here-->
     <#if htmlForElements?keys?seq_contains("startField")>
+      <div class="form-group">
         <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
-		${htmlForElements["startField"]} ${yearHint}
+        ${htmlForElements["startField"]} ${yearHint}
+      </div>
     </#if>
     <br/>
     <#if htmlForElements?keys?seq_contains("endField")>
-		<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
-	 	${htmlForElements["endField"]} ${yearHint}
+		  <div class="form-group">
+        <label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+        ${htmlForElements["endField"]} ${yearHint}
+      </div>
     </#if>
 	<#--End draw elements-->
 
@@ -165,7 +179,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
     <p class="submit">
-         <input type="submit" class="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" class="submit btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -220,7 +234,8 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 
-
+</div></div>

@@ -48,9 +48,9 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 </#if>
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
-
-<h2>${titleVerb}&nbsp;${i18n().administering_organization_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel panel-default">
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().administering_organization_for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if orgLabelDisplayValue?has_content >
@@ -93,7 +93,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
     <p class="submit">
-         <input type="submit" class="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+         <input type="submit" class="submit btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
          <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
      </p>
 
@@ -101,7 +101,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
 
 </form>
-
+</div>
+</div>
 
 <script type="text/javascript">
 var customFormData  = {
@@ -130,7 +131,8 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 
 

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${urls.base}/css/individual/ie7-standard-view.css" />
 <![endif]-->
 <#-- <#include "individual-setup.ftl"> -->
-<#import "individual-qrCodeGenerator.ftl" as qr>
+<#-- <#import "individual-qrCodeGenerator.ftl" as qr> -->
 <#import "lib-vivo-properties.ftl" as vp>
 <#--Number of labels present-->
 <#if !labelCount??>

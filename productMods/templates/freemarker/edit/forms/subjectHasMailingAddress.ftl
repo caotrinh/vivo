@@ -29,7 +29,7 @@
 
 <#if editMode == "edit">    
         <#assign titleVerb="${i18n().edit_capitalized}">        
-        <#assign submitButtonText="${i18n().save_changes}">
+        <#assign submitButtonText="${i18n().edit_mailing_address}">
         <#assign disabledVal="disabled">
 <#else>
         <#assign titleVerb="${i18n().create_capitalized}">        
@@ -38,9 +38,10 @@
 </#if>
 
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
-
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
 <h2>${titleVerb}&nbsp;${i18n().mailing_address_for} ${editConfiguration.subjectName}</h2>
-
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert">
@@ -70,41 +71,53 @@
     
     <form id="personHasMailingAddress" class="customForm noIE67" action="${submitUrl}"  role="add/edit mailing address">
 
-        <p>
+        <div class="form-group">
             <label for="streetAddress">${i18n().street_address} 1 ${requiredHint}</label>
-            <input  size="40"  type="text" id="streetAddressOne" name="streetAddressOne" value="" />
-        </p>
+            <div class="input-group">
+                <input  size="40"  type="text" id="streetAddressOne" name="streetAddressOne" value="" />
+            </div>
+        </div>
     
-        <p>
+        <div class="form-group">
             <label for="streetAddress">${i18n().street_address} 2</label>
-            <input  size="40"  type="text" id="streetAddressTwo" name="streetAddressTwo" value="" />
-            <input  type="hidden" id="streetAddress" name="streetAddress" value="${streetAddressValue}" />
-        </p>
+            <div class="input-group">
+                <input  size="40"  type="text" id="streetAddressTwo" name="streetAddressTwo" value="" />
+                <input  type="hidden" id="streetAddress" name="streetAddress" value="${streetAddressValue}" />
+            </div>
+        </div>
 
-        <p>
+        <div class="form-group">
             <label for="locality">${i18n().city_locality} ${requiredHint}</label>
-            <input  size="40"  type="text" id="city" name="locality" value="${localityValue}" />
-        </p>
+            <div class="input-group">
+                <input  size="40"  type="text" id="city" name="locality" value="${localityValue}" />
+            </div>
+        </div>
 
-        <p>
+        <div class="form-group">
             <label for="region" id="stateLabel">${i18n().region}</label>
-            <input  size="40"  type="text" id="state" name="region" value="${regionValue}" />
-        </p>
+            <div class="input-group">
+                <input  size="40"  type="text" id="state" name="region" value="${regionValue}" />
+            </div>
+        </div>
 
-        <p>
+        <div class="form-group">
             <label for="postalCode" id="postalCodeLabel">${i18n().postal_code} ${requiredHint}</label>
-            <input  size="20"  type="text" id="postalCode" name="postalCode" value="${postalCodeValue}" />
-        </p>
+            <div class="input-group">
+                <input  size="20"  type="text" id="postalCode" name="postalCode" value="${postalCodeValue}" />
+            </div>
+        </div>
 
-        <p>    
+        <div class="form-group">   
             <label for="country" style="margin-bottom:-4px">${i18n().country} ${requiredHint}</label>
-            <input  size="20"  type="text"  id="countryEditMode" name="country" value="${countryValue}" />
-        </p>
+            <div class="input-group">
+                <input  size="20"  type="text"  id="countryEditMode" name="country" value="${countryValue}" />
+            </div>
+        </div>
     
         <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
         <p class="submit">
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+            <input type="submit" id="submit" value="${submitButtonText}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span>
             <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
 
@@ -122,7 +135,6 @@
  
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
-${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
@@ -130,4 +142,4 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>')}
 
-
+</div></div>

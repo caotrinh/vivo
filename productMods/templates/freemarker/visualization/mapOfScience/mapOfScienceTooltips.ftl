@@ -24,13 +24,13 @@ The <b>% of activity</b> column shows what proportion of the publications were m
 
 <div id="toolTipThree" style="display:none;">
 This visualization is based on the publications we were able to 'science locate' for ${entityLabel}, and 
-therefore it may not be fully representative of the overall publication activity for ${entityLabel}.<br /><br />
+therefore it may not be fully representative of all publication activity.<br /><br />
 
-The publication coverage of this visualization can be improved by including more publication data in the VIVO 
-system, and by ensuring that each publication in the VIVO system is associated with a journal that the Map of 
+The publication coverage of this visualization can be improved by including more publication data in the UOW Scholars 
+system, and by ensuring that each publication in UOW Scholars is associated with a journal that the Map of 
 Science recognizes (based on the holdings of Thomson's ISI database and Elsevier's Scopus database). Journal 
-names containing typos or other idiosyncrasies may need to be cleaned up before they are recognized. You may 
-contact a VIVO system administrator if publication coverage is a concern.</div>
+names containing typos or other idiosyncrasies may need to be cleaned up before they are recognized. You should 
+contact the UOW Scholars helpdesk if publication coverage is a concern.</div>
 
 <div id="exploreTooltipText" style="display:none;">
 	Overlay and examine expertise profiles for a organization. Color coding by discipline.

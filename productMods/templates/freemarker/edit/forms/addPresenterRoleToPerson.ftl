@@ -5,7 +5,7 @@
 <#-- leaving this edit/add mode code in for reference in case we decide we need it -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain edit configuration information-->
 <#if editConfiguration.objectUri?has_content>
     <#assign editMode = "edit">
@@ -53,8 +53,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
-<h2>${titleVerb}&nbsp;${i18n().presentation_entry_for} ${editConfiguration.subjectName}</h2>
-
+<div class="panel-heading">${titleVerb}&nbsp;${i18n().presentation_entry_for} ${editConfiguration.subjectName}</div>
+<div class="panel-body">
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
     <#if conferenceLabelDisplayValue?has_content >
@@ -98,70 +98,81 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <section id="addPresenterRoleToPerson" role="region">        
     
     <form id="addPresenterRoleToPerson" class="customForm noIE67" action="${submitUrl}"  role="add/edit Presentation">
-    <p class="inline">    
+    <div class="form-group">
       <label for="presentationType">${i18n().presentation_type}<#if editMode != "edit"> ${requiredHint}<#else>:</#if></label>
       <#assign presentationTypeOpts = editConfiguration.pageData.presentationType />
-      <select id="typeSelector" name="presentationType" acGroupName="presentation">
-        <option value="" selected="selected">${i18n().select_one}</option>                
-        <#list presentationTypeOpts?keys as key>             
-            <option value="${key}" <#if presentationTypeValue = key>selected</#if>><#if presentationTypeOpts[key] == "Other">${i18n().presentation_capitalized}<#else>${presentationTypeOpts[key]}</#if></option>            
-        </#list>
-    </select>
-    </p>
-
+      <div class="input-group">
+          <select id="typeSelector" name="presentationType" acGroupName="presentation">
+            <option value="" selected="selected">${i18n().select_one}</option>                
+            <#list presentationTypeOpts?keys as key>             
+                <option value="${key}" <#if presentationTypeValue = key>selected</#if>><#if presentationTypeOpts[key] == "Other">${i18n().presentation_capitalized}<#else>${presentationTypeOpts[key]}</#if></option>            
+            </#list>
+          </select>
+      </div>
+    </div>
+    <hr/>
     <p>
         <label for="presentation">${i18n().presentation_capitalized} ${i18n().name_capitalized} ${requiredHint}</label>
-            <input class="acSelector" size="50"  type="text" id="presentation" acGroupName="presentation" name="presentationLabel" value="${presentationLabelValue}">
-            <input class="display" type="hidden" id="presentationDisplay" acGroupName="presentation" name="presentationLabelDisplay" value="${presentationLabelDisplayValue}">
+        <input class="acSelector" size="50" style="display:block;" type="text" id="presentation" acGroupName="presentation" name="presentationLabel" value="${presentationLabelValue}">
+        <input class="display" type="hidden" id="presentationDisplay" acGroupName="presentation" name="presentationLabelDisplay" value="${presentationLabelDisplayValue}">
     </p>
 
     <div class="acSelection" acGroupName="presentation">
         <p class="inline">
-            <label>${i18n().selected_presentation}:</label>
-            <span class="acSelectionInfo"></span>
+            <label style="display:block;">${i18n().selected_presentation}:</label>
+            <span style="display:block;" class="acSelectionInfo"></span>
             <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
             <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
         </p>
         <input class="acUriReceiver" type="hidden" id="presentationUri" name="existingPresentation" value="${existingPresentationValue}" ${flagClearLabelForExisting}="true" />
     </div>
-     
-    <p><label for="roleLabel">${i18n().role_in} ${i18n().presentation_capitalized} <span class="hint">(${i18n().presentation_hint})</span></label>
-        <input  size="50"  type="text" id="roleLabel" name="roleLabel" value="${roleLabelValue}" />
-    </p>
-  <p>
+    <hr/> 
+    <div class="form-group">
+        <label for="roleLabel">${i18n().role_in} ${i18n().presentation_capitalized} <span class="hint">(${i18n().presentation_hint})</span></label>
+        <div class="input-group">
+            <input  size="50"  type="text" id="roleLabel" name="roleLabel" value="${roleLabelValue}" />
+        </div>
+    </div>
+    <hr/>
+    <p>
       <label for="org">${i18n().presented_at}</label>
-      <input  class="acSelector" size="50" acGroupName="conference" type="text" id="conference" name="conferenceLabel" value="${conferenceLabelValue}" />
+      <input style="display:block;" class="acSelector" size="50" acGroupName="conference" type="text" id="conference" name="conferenceLabel" value="${conferenceLabelValue}" />
       <input  class="display" acGroupName="conference" type="hidden" id="conferenceDisplay" name="conferenceLabelDisplay" value="${conferenceLabelDisplayValue}" />
-  </p>
-  <div class="acSelection" acGroupName="conference">
+    </p>
+    <div class="acSelection" acGroupName="conference">
       <p class="inline">
-          <label>${i18n().selected_conference}:</label>
-          <span class="acSelectionInfo"></span>
+          <label style="display:block;">${i18n().selected_conference}:</label>
+          <span class="acSelectionInfo" style="display:block;"></span>
           <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
           <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
       </p>
       <input class="acUriReceiver" type="hidden" id="conferenceUri" name="existingConference" value="${conferenceValue}" ${flagClearLabelForExisting}="true" />
-  </div>
+    </div>
+    <hr/>
     <p>
-        <h4 class="label">${i18n().years_participating}</h4>
+        <h4>${i18n().years_participating}</h4>
     </p>
     <#--Need to draw edit elements for dates here-->
     <#assign htmlForElements = editConfiguration.pageData.htmlForElements />
     <#if htmlForElements?keys?seq_contains("startField")>
-        <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
-		${htmlForElements["startField"]} ${yearHint}
+        <div class="form-group">
+            <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
+    		${htmlForElements["startField"]} ${yearHint}
+        </div>
     </#if>
     <br/>
     <#if htmlForElements?keys?seq_contains("endField")>
-		<label class="dateTime" for="endField">${i18n().end_capitalized}</label>
-	 	${htmlForElements["endField"]} ${yearHint}
+		<div class="form-group">
+            <label class="dateTime" for="endField">${i18n().end_capitalized}</label>
+            ${htmlForElements["endField"]} ${yearHint}
+        </div>
     </#if>
 	<#--End draw elements-->
 
     <input type="hidden" id="editKey" name="editKey" value="${editKey}"/>
 
     <p class="submit">
-        <input type="submit" class="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
+        <input type="submit" class="submit btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span>
         <a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
     </p>
 
@@ -170,8 +181,8 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 </form>
 
 </section>
-
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData  = {
     acUrl: '${urls.base}/autocomplete?tokenize=true&stem=true',
@@ -200,4 +211,5 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/
              '<script type="text/javascript" src="${urls.base}/js/extensions/String.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',
              '<script type="text/javascript" src="${urls.base}/js/jquery_plugins/jquery.bgiframe.pack.js"></script>',
-             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+             '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

@@ -51,11 +51,10 @@ $(document).ready(function(){
             var dataServiceUrl = urlsBase + "/dataservice?getRandomSearchIndividualsByVClass=1&vclassId=";
             var url = dataServiceUrl + encodeURIComponent("http://vivoweb.org/ontology/core#FacultyMember");
             url += "&page=" + rowStart + "&pageSize=" + pageSize;
-
             $.getJSON(url, function(results) {
             
                 if ( results == null || results.individuals.length == 0 ) {
-                    if ( retryCount < 5 ) {
+                    if ( retryCount < 3 ) {
                         retryCount = retryCount + 1;
                         getFacultyMembers();
                     }
@@ -69,28 +68,24 @@ $(document).ready(function(){
                     var vclassName = results.vclass.name;
                     $.each(results.individuals, function(i, item) {
                         var individual = results.individuals[i];
+                        individual.shortViewHtml = individual.shortViewHtml.replace( '<h1>','');
+                        individual.shortViewHtml = individual.shortViewHtml.replace( '</h1>','');
                         individualList += individual.shortViewHtml;
                     });
                     $('div#tempSpacing').hide();
                     $('div#research-faculty-mbrs ul#facultyThumbs').append(individualList);
                 
                     $.each($('div#research-faculty-mbrs ul#facultyThumbs li.individual'), function() {
-                        if ( $(this).children('img').length == 0 ) {
+                        if ( $(this).find('img').length == 0 ) {
                             var imgHtml = "<img width='60' alt='" + i18nStrings.placeholderImage + "' src='" + urlsBase + "/images/placeholders/person.bordered.thumbnail.jpg'>";
-                            $(this).prepend(imgHtml);
+                            $(this).find('div.row').eq(0).prepend(imgHtml);
                         }
                         else { 
-                            $(this).children('img').load( function() {
+                            $(this).find('img').load( function() {
                                 adjustImageHeight($(this));
                             });
                         }
                     });
-                    var viewMore = "<ul id='viewMoreFac'><li><a href='"
-                                + urlsBase
-                                + "/people#http://vivoweb.org/ontology/core#FacultyMember' alt='" 
-                                + i18nStrings.viewAllFaculty + "'>"
-                                + i18nStrings.viewAllString + "</a></li?</ul>";
-                    $('div#research-faculty-mbrs').append(viewMore);
                 }
             });
        }
@@ -134,7 +129,7 @@ $(document).ready(function(){
                 //Check to see if this index hasn't already been employed
                 if(!indexFound) {
                 	//if this index hasn't already been employed then utilize it
-                	 html += "<li><a href='" + urlsBase + "/individual?uri=" 
+                	 html += "<li><a href='" + urlsBase + "/individual" 
                      + academicDepartments[index].uri + "'>" 
                      + academicDepartments[index].name + "</a></li>";
                 	 //add this index to the set of already used indices
@@ -146,18 +141,10 @@ $(document).ready(function(){
         }
         else {
             for ( var i=0;i<deptNbr;i++) {
-                html += "<li><a href='" + urlsBase + "/individual?uri=" 
+                html += "<li><a href='" + urlsBase + "/individual" 
                         + academicDepartments[i].uri + "'>" 
                         + academicDepartments[i].name + "</a></li>";
             }
-        }
-        if ( deptNbr > 0 ) {
-            html += "</ul><ul style='list-style:none'>"
-                    + "<li style='font-size:0.9em;text-align:right;padding: 6px 16px 0 0'><a href='" 
-                    + urlsBase 
-                    + "/organizations#http://vivoweb.org/ontology/core#AcademicDepartment' alt='" 
-                    + i18nStrings.viewAllDepartments + "'>" 
-                    + i18nStrings.viewAllString + "</a></li></ul>";
         }
         $('div#academic-depts').html(html);
     }

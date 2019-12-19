@@ -5,6 +5,7 @@ package edu.cornell.mannlib.semservices.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Concept {
 
    private String definedBy;
@@ -14,6 +15,7 @@ public class Concept {
    private String type;
    private String definition;
    private String uri;
+   private String notation;
    private String schemeURI;
    private List<String> broaderURIList;
    private List<String> narrowerURIList;
@@ -42,6 +44,15 @@ public class Concept {
     */
    public void setConceptId(String conceptId) {
       this.conceptId = conceptId;
+   }
+   
+   public String getNotation( )
+   {
+       return notation;
+   }
+   public void setNotation(String n )
+   {
+       this.notation = n;
    }
    /**
     * @return the label

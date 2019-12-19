@@ -22,11 +22,10 @@
             <#assign confirmThis = "Confirm the ID" />
             </#if>
     </#list>
-        
     <#if orcidInfo.authorizedToConfirm>
         <script>
             $(document).ready(function(){
-                $('#orcidId a.add-orcidId').replaceWith("<a class='add-orcidId' style='padding-left:20px' href='${orcidInfo.orcidUrl}'><#if orcidInfo.orcids?size == 0>Add an iD<#else>${confirmThis}</#if></a> ");
+                $('#orcidId a.add-orcidId').replaceWith("<a class='add-orcidId' style='padding-left:20px' href='${orcidInfo.orcidUrl}'><#if orcidInfo.orcids?size == 0><span class='glyphicon glyphicon-plus-sign add-btn' style='margin-right:5px;'></span>Link with ORCID <#else>${confirmThis}</#if></a> ");
             });
         </script>
     </#if>

@@ -1,8 +1,8 @@
 <#-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
 
 <table id='${tableID}'>
-    <caption>
-        ${tableCaption} <a href="${fileDownloadLink}">(.CSV ${i18n().file_capitalized})</a>
+    <caption class="sidebarTableCaption">
+        ${tableCaption} <a href="${fileDownloadLink}" alt="Download CSV data"><span class="glyphicon glyphicon-download-alt"></span></a>
     </caption>
     <thead>
         <tr>

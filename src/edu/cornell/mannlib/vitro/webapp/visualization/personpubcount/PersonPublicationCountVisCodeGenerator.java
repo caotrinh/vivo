@@ -80,10 +80,10 @@ public class PersonPublicationCountVisCodeGenerator {
 		 * in the current year seems a bit harsh, so we consider only publications from the last 10
 		 * complete years. 
 		 * */
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR) - 1;
+		// **** SCHOLDEV-540: include current year ***
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int shortSparkMinYear = currentYear 
-									- VisConstants.MINIMUM_YEARS_CONSIDERED_FOR_SPARKLINE
-									+ 1;
+									- VisConstants.MINIMUM_YEARS_CONSIDERED_FOR_SPARKLINE + 1;
 		
     	/*
     	 * This is required because when deciding the range of years over which the vis

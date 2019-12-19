@@ -13,10 +13,18 @@
 <#if egoLocalName?has_content >
     
     <#assign coauthorshipURL = '${urls.base}${shortVisualizationURLRoot}/author-network/${egoLocalName}'>
+    <#assign coAuthorVisUrl = '${urls.base}${shortVisualizationURLRoot}/author-network/${egoLocalName}'>
+    <#assign coprincipalinvestigatorURL = '${urls.base}${shortVisualizationURLRoot}/investigator-network/${egoLocalName}'>
+    <#assign mapOfScienceVisUrl = '${urls.base}${shortVisualizationURLRoot}/map-of-science/${egoLocalName}'>
+    <#assign geomapVisUrl = '${urls.base}${shortVisualizationURLRoot}/author-geomap/${egoLocalName}'>
     
 <#else>
 
     <#assign coauthorshipURL = '${urls.base}${shortVisualizationURLRoot}/author-network/?uri=${egoURI}'>
+    <#assign coauthorVisUrl = '${urls.base}${shortVisualizationURLRoot}/author-network/?uri=${egoURI}'>
+    <#assign coprincipalinvestigatorURL = '${urls.base}${shortVisualizationURLRoot}/investigator-network/?uri=${egoURI}'>
+    <#assign mapOfScienceVisUrl = '${urls.base}${shortVisualizationURLRoot}/map-of-science/?uri=${egoURI}'>
+    <#assign geomapVisUrl = '${urls.base}${shortVisualizationURLRoot}/author-geomap/?uri=${egoURI}'>
 
 </#if>
 
@@ -125,65 +133,11 @@ $(document).ready(function(){
 </script>
 
 
-<div id="body">
-    <div  class="sub_headings"><h2><a href="${egoVivoProfileURL}" title="${i18n().investigator_name}"><span id="ego_label"></span></a><br />${i18n().co_investigator_network_capitalized} </h2></div>
-            
-    <#if (numOfInvestigators?? && numOfInvestigators > 0) >
-        
-        <#if (numOfCoInvestigations?? && numOfCoInvestigations > 0) || (numOfInvestigators?? && numOfInvestigators > 0) > 
-                <div class = "graphml-file-link"><a href="${egoCoInvestigationNetworkDataFileURL}" title="${i18n().co_investigator}">(GraphML ${i18n().file_capitalized})</a></div>
-        <#else>
-
-            <#if numOfInvestigators?? && numOfInvestigators <= 0 >
-                <#assign investigatorsText = "multi-investigator" />
-            </#if>
-            
-            <span id="no_coinvestigations">${i18n().currently_no_grants_for(investigatorsText!)} 
-                <a href="${egoVivoProfileURL}" title="${i18n().investigator_name}"><span id="no_coinvestigations_person" class="investigator_name">${i18n().this_investigator}</span></a> ${i18n().in_the_vivo_db}
-            </span>                     
-        </#if>
-    
-    <#else>
-    
-        <span id="no_coinvestigations">${i18n().no_grants_for}
-            <a href="${egoVivoProfileURL}" title="${i18n().co_investigator}"><span id="no_coinvestigations_person" class="investigator_name">${i18n().this_investigator}</span></a> ${i18n().in_the_vivo_db}
-        </span>
-    
-    </#if>
-    
-    <div class = "toggle_visualization">
-        <div id="coauthorship_link_container" class="collaboratorship-link-container">
-        	<div class="collaboratorship-icon"><a href="${coauthorshipURL}" title="${i18n().co_author}"><img src="${coAuthorIcon}" alt="${i18n().co_author_icon}"/></a></div>
-            <div class="collaboratorship-link">
-                <h3><a href="${coauthorshipURL}" title="${i18n().co_author_network}">${i18n().co_author_network}</a></h3>
-            </div>
-        </div>
-    </div>
-        
-    <div style="clear:both;"></div>
-    
-            
-    <#if (numOfCoInvestigations?? && numOfCoInvestigations > 0) || (numOfInvestigators?? && numOfInvestigators > 0) >
-    
-        <div id="bodyPannel">
-            <div id="visPanel">
-                <script language="JavaScript" type="text/javascript">
-                    <!--
-                    renderCollaborationshipVisualization();
-                    //-->
-                </script>
-            </div>
-            <div id="dataPanel">
-                <h4 id ="profileTitle">${i18n().profile_capitalized}</h4>
-                    
-                <div id="data-panel-content">
-                <div id="profileImage" class="thumbnail"></div>
-            
-                <h4><span id="investigatorName" class="neutral_investigator_name">&nbsp;</span></h4>
-                
-                <em id="profileMoniker" class="moniker"></em>
-                
-                <div id="profile-links"><a href="#" id="profileUrl" title="${i18n().vivo_profile}">${i18n().vivo_profile}</a></div> 
+    <div id="individual-sidebar">
+        <div id="data-panel-content">
+            <div id="profileImage"></div>
+            <div id="sidebarStats" class="panel panel-primary">
+                <h4 id="sidebarStatsHeading" class="panel-heading">Investigator Stats</h4>
 
                 <div class="investigator_stats" id="num_works"><span class="numbers" style="width: 40px;" id="works"></span>&nbsp;&nbsp;
                 <span class="investigator_stats_text">${i18n().grant_s_capitalized}</span></div>
@@ -194,68 +148,116 @@ $(document).ready(function(){
                     <span class="numbers" style="width:40px;" id="firstGrant"></span>&nbsp;&nbsp;<span>${i18n().first_grant}</span></div>
                 <div class="investigator_stats" id="lGrant" style="visibility:hidden"><span class="numbers" style="width:40px;" id="lastGrant"></span>
                 &nbsp;&nbsp;<span>${i18n().last_grant}</span></div>
-                <div id="incomplete-data">${i18n().incomplete_grant_data_note1}<p></p><p></p>
-                <#if user.loggedIn > 
-                    ${i18n().incomplete_grant_data_note2}
-                <#else> 
-                    ${i18n().incomplete_grant_data_note3}
-                </#if>
-                </div>
-                </div>
-            </div>
-        </div>
-    </#if>
-
-
-    <#if (numOfInvestigators?? && numOfInvestigators > 0) >
-
-        <#-- Sparkline -->
-        <div id="sparkline-container">
-            
-            <#assign displayTable = false />
-            
-            <#assign sparklineVO = egoGrantSparklineVO />
-            <div id="grant-count-sparkline-include"><#include "personGrantSparklineContent.ftl"></div>
-    
-            <#assign sparklineVO = uniqueCoInvestigatorsSparklineVO />
-            <div id="coinvestigator-count-sparkline-include"><#include "coInvestigationSparklineContent.ftl"></div>
-        </div>  
-    
-
+                <div id="profile-links"><a href="#" id="profileUrl" title="${i18n().vivo_profile}">${i18n().vivo_profile}</a></div> 
+                <div id="incomplete-data" class="alert alert-warning">${i18n().incomplete_grant_data_note1}<p></p><p></p></div>
         <div class="vis_stats">
-        
-        <div class="sub_headings" id="table_heading"><h3>${i18n().tables_capitalized}</h3></div>
-            <p style="float:left;font-size:.9em">${i18n().grant_info_for_all_years}&nbsp;<img class="filterInfoIcon" width="16px" height="16px" id="imageIconThree" src="${urls.images}/iconInfo.png" alt="${i18n().info_icon}" title="${i18n().grant_sparkline_note}" /></p>
-        
             <div class="vis-tables">
-
                 <p id="grants_table_container" class="datatable">
-
                 <#assign tableID = "grant_data_table" />
                 <#assign tableCaption = "${i18n().grants_per_year}" />
                 <#assign tableActivityColumnName = "${i18n().grants_capitalized}" />
                 <#assign tableContent = egoGrantSparklineVO.yearToActivityCount />
                 <#assign fileDownloadLink = egoGrantSparklineVO.downloadDataLink />
-                
                 <#include "yearToActivityCountTable.ftl">
-
                 </p>
-                
             </div>
-            
             <#if (numOfCoInvestigations?? && numOfCoInvestigations > 0) >
-        
                 <div class="vis-tables">
-                
                 <p id="coinve_table_container" class="datatable"></p>
                 </div>
-            
             </#if>
-            
             <div style="clear:both"></div>
-        
         </div>
-        
-    </#if>
+        </div>
+        </div>
+
+    </div>
+    <div id="sparkline-container" class="viz-spacer">
+        <#-- Sparkline -->
+        <#if (numOfInvestigators?? && numOfInvestigators > 0) >
+            <#assign displayTable = false />
+            <#assign sparklineVO = egoGrantSparklineVO />
+            <div id="grant-count-sparkline-include" class="panel panel-primary">
+                <h4 class="panel-heading">Visualisations</h4>
+                <span class="glyphicon glyphicon-stats"></span>&nbsp;<span id="sparklineHeading">Grant History</span>
+                <#include "personGrantSparklineContent.ftl">
+            
+                <#assign sparklineVO = uniqueCoInvestigatorsSparklineVO />
+                <div id="coinvestigator-count-sparkline-include">
+                    <span class="glyphicon glyphicon-stats"></span>&nbsp;<span id="sparklineHeading">Co-Investigators</span> 
+                    <#include "coInvestigationSparklineContent.ftl">
+                </div>
+            
+
+            <div id="coauthorship_link_container" class="collaboratorship-link-container">
+                <a href="${coAuthorVisUrl}" title="${i18n().co_author_network}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-book"></span>&nbsp;${i18n().co_author_network}
+                    </div>
+                </a>
+            </div> 
+
+            <div id="coinvestigator_link_container" class="collaboratorship-link-container">
+                <a href="${coprincipalinvestigatorURL}" title="${i18n().co_investigator_network}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-usd"></span>&nbsp;${i18n().co_investigator_network}
+                    </div>
+                </a>
+            </div>
+
+            <div id="coauthorship_link_container" class="collaboratorship-link-container">
+                <a href="${geomapVisUrl}" title="Collaborator Map">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-globe"></span>&nbsp;Collaborator Map
+                    </div>
+                </a>
+            </div>
+
+
+            <div id="mapofscience_link_container" class="collaboratorship-link-container">
+                <a href="${mapOfScienceVisUrl}" title="${i18n().map_of_science}">
+                    <div class="collaboratorship-link">
+                        <span class="glyphicon glyphicon-search"></span>&nbsp;${i18n().map_of_science_capitalized}
+                    </div>
+                </a>
+            </div>
+
+
+            </div> <!-- end panel-primary -->
+        </#if>
+    </div>  
+    <div id="vis-container">
+        <div id="vis-headings" class="individual-details">
+            <h1 class="vcard foaf-person">
+                <span class="fn">
+                    <span id="ego_label"></span>
+                </span>
+            </h1>
+            <div class="graphml-file-link">
+            <#if (numOfCoInvestigations?? && numOfCoInvestigations > 0) || (numOfInvestigators?? && numOfInvestigators > 0) > 
+            <#else>
+                <#if numOfInvestigators?? && numOfInvestigators <= 0 >
+                    <#assign investigatorsText = "multi-investigator" />
+                </#if>
+                <span id="no_coinvestigations">${i18n().currently_no_grants_for(investigatorsText!)} 
+                    <a href="${egoVivoProfileURL}" title="${i18n().investigator_name}"><span id="no_coinvestigations_person" class="investigator_name">${i18n().this_investigator}</span></a> ${i18n().in_the_vivo_db}
+                </span>                     
+            </#if>
+                
+            </div>
+        </div>
+        <#if (numOfInvestigators?? && numOfInvestigators > 0) >
+        <#else>
+        <span id="no_coinvestigations">${i18n().no_grants_for}
+            <a href="${egoVivoProfileURL}" title="${i18n().co_investigator}"><span id="no_coinvestigations_person" class="investigator_name">${i18n().this_investigator}</span></a> ${i18n().in_the_vivo_db}
+        </span>
     
-</div>
+        </#if>
+        <div id="visPanel">
+            <script language="JavaScript" type="text/javascript">
+            <!--
+            renderCollaborationshipVisualization();
+            //-->
+            </script>
+        </div>
+    </div>

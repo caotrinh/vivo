@@ -134,5 +134,10 @@
 			<fileset dir="${testApp.source.dir}" />
 		</sync>
 	</target>
+
+	<target name="print-version">
+		<echo>Java/JVM version: ${ant.java.version}</echo>
+		<echo>Java/JVM detail version: ${java.version}</echo>
+	</target>
 	
 </project>

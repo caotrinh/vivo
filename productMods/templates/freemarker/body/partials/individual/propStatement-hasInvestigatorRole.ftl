@@ -17,8 +17,8 @@
     <span class="hideThis">&nbsp;</span>
     <script type="text/javascript" >
         $('span.hideThis').parent().parent().addClass("hideThis");
-        if ( $('h3#researchOverview').attr('class').length == 0 ) {
-            $('h3#researchOverview').addClass('hiddenGrants');
+        if ( $('h3#RO_0000053-InvestigatorRole').length > 0 && $('h3#RO_0000053-InvestigatorRole').attr('class').length == 0 ) {
+            $('h3#RO_0000053-InvestigatorRole').addClass('hiddenGrants');
         }
         $('span.hideThis').parent().remove();
     </script>
@@ -32,12 +32,25 @@
         </#if>
     </#local>
     
-    <#local awardOrAdminBy>
+    <#local awardBy>
         <#if statement.awardedByLabel??>
-            &nbsp;${i18n().awarded_by}&nbsp;<a href="${profileUrl(statement.uri("awardedBy"))}" title="${i18n().awarded_by}">${statement.awardedByLabel!}</a>
+            <div class="row cites"><div class="col-md-3"><strong>Awarded by:</strong></div><div class="col-md-9"><a href="${profileUrl(statement.uri("awardedBy"))}" title="${i18n().awarded_by}">${statement.awardedByLabel!}</a></div></div>
         <#elseif statement.adminedByLabel??>
-            &nbsp;${i18n().administered_by}&nbsp;<a href="${profileUrl(statement.uri("adminedBy"))}" title="${i18n().administered_by}">${statement.adminedByLabel!}</a>
         </#if>
+    </#local>
+
+    <#local adminBy>
+      <#if statement.adminByLabel??>
+            <div class="row cites"><div class="col-md-3"><strong>Administered by::</strong></div><div class="col-md-9"><a href="${profileUrl(statement.uri("adminedBy"))}" title="${i18n().administered_by}">${statement.adminedByLabel!}</a></div></div>
+      <#else>
+      </#if>
+    </#local>
+        
+    <#local scheme>
+      <#if statement.scheme??>
+            <div class="row cites"><div class="col-md-3"><strong>Funding Scheme:</strong></div><div class="col-md-9">${statement.scheme!}</div></div>
+      <#else>
+      </#if>
     </#local>
         
     <#local dateTime>
@@ -48,6 +61,6 @@
         </#if>
     </#local>
     
-    ${linkedIndividual} ${awardOrAdminBy} ${dateTime!} 
+    <tr><td>${dateTime!}</td><td><div>${linkedIndividual}</div><hr /><div class="citationDetails">${awardBy} ${scheme} ${adminBy}</div></td></tr>
 </#if>
 </#macro>

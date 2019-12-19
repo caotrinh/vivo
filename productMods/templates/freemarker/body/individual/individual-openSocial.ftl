@@ -5,7 +5,6 @@
 <#if openSocial??>
 	<#if openSocial.visible>
 	    <div id="openSocial">
-	        <h2>OpenSocial</h2>
 		    <#-- It would likely make sense to remove the #if logic as it is safe and -->
 		    <#-- arguably better to just have both divs in all conditions -->
 		    <#if editable>								  

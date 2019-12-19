@@ -11,8 +11,11 @@
 	<#assign submissionErrors = editSubmission.validationErrors/>
 </#if>
 
-
-<h2>${i18n().manage_concepts}</h2>
+<div class="panel panel-default">
+<div class="panel-heading">
+Manage Research Areas
+</div>
+<div class="panel-body">
     
 
 <#if submissionErrors?has_content>
@@ -43,13 +46,13 @@
     <#if (existingConcepts?size > 0)>
     	 <li class="conceptHeadings conceptsListContainer">
     	 	<div class="row">
-    	 		 <div class="column conceptLabelInfo"> 
-    	 		 	<h4>Concept (Type)</h4>
+    	 		 <div class="col-md-6 column"> 
+    	 		 	<h4>Research Area / Field / Discipline</h4>
     	 		 </div>
-    	 		 <div class="column conceptVocabSource"> 
+    	 		 <div class="col-md-5 column"> 
     	 		 	<h4>Vocabulary Source</h4>
     	 		 </div>
-    	 		 <div class="column conceptRemoval">&nbsp;
+    	 		 <div class="col-md-1 column">&nbsp;
     	 		 </div>
     	 	</div>	
     	 </li>
@@ -58,12 +61,12 @@
     <#list existingConcepts as existingConcept>
         <li class="existingConcept conceptsListContainer">
                 <div class="row">
-                   <div class="column conceptLabelInfo"> ${existingConcept.conceptLabel} 
+                   <div class="col-md-6 col-xs-4 column"> ${existingConcept.conceptLabel} 
                    	<#if existingConcept.conceptSemanticTypeLabel?has_content>
                    	 (${existingConcept.conceptSemanticTypeLabel})
                    	</#if>
                    	</div>
-                   	<div class="column conceptVocabSource">
+                   	<div class="col-md-5 col-xs-4 column">
                    	<#if existingConcept.vocabURI?has_content && existingConcept.vocabLabel?has_content>
                    		${existingConcept.vocabLabel}
                    	<#else>
@@ -71,7 +74,7 @@
                    		<#--We still want the column to be there even if no vocabulary source is present-->	
                    	</#if>
                   	</div> 
-                  	<div class="column conceptRemoval">
+                  	<div class="col-md-1 col-xs-4 column">
                   	     <a href="${urls.base}/edit/primitiveRdfEdit" class="remove" title="${i18n().remove_capitalized}">${i18n().remove_capitalized}</a>
                   	
                   	</div>
@@ -98,10 +101,11 @@
 
 <div id="showAddForm">
     
-    <input type="submit" value="${i18n().add_concept}" id="showAddFormButton" name="showAddFormButton">  ${i18n().or} 
+    <input type="submit" class="btn btn-primary" value="Add Research Area" id="showAddFormButton" name="showAddFormButton">  ${i18n().or} 
     <a class="cancel" href="${cancelUrl}&url=/individual" title="${i18n().return_to_profile}">${i18n().return_to_profile}</a>
 </div> 
     <form id="addConceptForm" class="customForm" action="${submitUrl}">
+	<div class="well">
 		<#assign checkedSource = false />
 	<h4 class="services">${i18n().external_vocabulary_services}</h4>
     <#list sources?values?sort_by("label") as thisSource>
@@ -111,8 +115,8 @@
     </#list>
     <p class="inline-search">
         <input type="text" id="searchTerm" label="Search" class="acSelector" size="35" />
-        <input type="button" class="submit concept-search" id="searchButton" name="searchButton" value="${i18n().search_service_btn}"/>&nbsp;
-    </p><span id="createOwnOne"> ${i18n().or} &nbsp;<a href="${userDefinedConceptUrl}" title="${i18n().create_own_concept}">${i18n().create_own_concept}&nbsp;</a></span>
+        <input type="button" class="submit btn btn-primary" id="searchButton" name="searchButton" value="${i18n().search_button}"/>&nbsp;
+    </p>
     <input type="hidden" id="conceptNode" name="conceptNode" value=""/> <!-- Field value populated by JavaScript -->
     <input type="hidden" id="conceptLabel" name="conceptLabel" value="" />  <!-- Field value populated by JavaScript -->
 	<input type="hidden" id="conceptSource" name="conceptSource" value="" /> <!-- Field value populated by JavaScript -->
@@ -138,20 +142,23 @@
     
     <input type="hidden" name="editKey" id="editKey" value="${editKey}"/>
     <p class="submit">
-        <input type="submit" id="submit" name="submit" value="${i18n().add_selected_concept}" />
+        <input type="submit" id="submit" class="btn btn-primary" name="submit" value="Add Selected Research Areas" />
         
     </p>
+<!--
     <div id="createOwnTwo"><br />
         <a href="${userDefinedConceptUrl}" > ${i18n().cannot_find_concept}</a>
         
     </div>	
+-->
+	</div>
         <p>
             <span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}&url=/individual" title="${i18n().return_to_profile}">${i18n().return_to_profile}</a>
         </p>
     </form>
 </div>
-
-
+<!-- end panel divs -->
+</div></div>
 
 <script type="text/javascript">
 var customFormData = {

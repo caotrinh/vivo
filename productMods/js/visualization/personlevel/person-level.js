@@ -225,14 +225,13 @@ function createTable(tableID, tableContainer, tableData) {
 	
 	table.append($('<caption>').html(collaboratorTableMetadata.tableCaption 
 										+ "<a href=\"" + collaboratorTableMetadata.tableCSVFileLink 
-										+ "\">(.CSV " + i18nStringsPersonLvl.fileCapitalized + ")</a>"));  
-
+										+ "\" alt=\"Download CSV Data\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>"));  
 	var header = $('<thead>');
 	
 	var row = $('<tr>'); 
 
 	row.append($('<th>').html(collaboratorTableMetadata.tableColumnTitle1)); 
-	row.append($('<th>').html(collaboratorTableMetadata.tableColumnTitle2 + "" + $('#ego_label').text()));  
+	row.append($('<th>').html(collaboratorTableMetadata.tableColumnTitle2 + ""));  
 
 	header.append(row);
 	

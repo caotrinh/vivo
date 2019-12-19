@@ -8,7 +8,7 @@
 <#assign sparqlForAcFilter = editConfiguration.pageData.sparqlForAcFilter />
 <#assign editMode = editConfiguration.pageData.editMode />
 <#assign propertyPublicName = editConfiguration.propertyPublicName/>
-<h2>${editConfiguration.formTitle}</h2>
+${editConfiguration.formTitle}
 
 <#--Display error messages if any-->
 <#if submissionErrors?has_content>
@@ -46,7 +46,7 @@
 	</div>
     <br />
 
-    <input type="submit" id="submit" value="${editConfiguration.submitLabel}" role="button"/>
+    <input type="submit" id="submit" value="${editConfiguration.submitLabel}" class="btn btn-primary" role="button"/>
     <span class="or"> ${i18n().or} </span>
     <a title="${i18n().cancel_title}" href="${cancelUrl}">${i18n().cancel_link}</a>
 
@@ -84,4 +84,5 @@ ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/sm
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',             
-              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithDataAutocomplete.js"></script>')}
+              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithDataAutocomplete.js"></script>',
+              '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

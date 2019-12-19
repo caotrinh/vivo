@@ -210,7 +210,7 @@ var ComparisonDataTableWidget = Class.extend({
 		/* Create csv download button */
 		var csvButton = '<hr class="subtle-hr"/><div id="main-science-areas-table-footer"><a href="' +
 						comparisonScienceMapCsvDataUrlPrefix + me.uri +
-						'" class="map-of-science-links">' + i18nStrings.saveAllAsCSV + '</a></div>';
+						'" class="btn btn-lg"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;' + i18nStrings.saveAllAsCSV + '</a></div>';
 		me.tableDiv.append(csvButton);
 	},
 	changeFilter: function(filterType) {

@@ -24,11 +24,13 @@ public class ConceptSearchServiceUtils {
     private static final String AgrovocVocabSource = "http://aims.fao.org/aos/agrovoc/agrovocScheme";
     private static final String GemetVocabSource = "http://www.eionet.europa.eu/gemet/gemetThesaurus";
     private static final String LCSHVocabSource = "http://id.loc.gov/authorities/subjects";
+    private static final String ANDSForCodeSource = "http://services.ands.org.au/vocab";
 
     //Get the class that corresponds to the appropriate search
 	public static String getConceptSearchServiceClassName(String searchServiceName) {
 		HashMap<String, String> map = getMapping();
 		if(map.containsKey(searchServiceName)) {
+                        log.debug( "Service Class: " + map.get(searchServiceName) );
 			return map.get(searchServiceName);
 		}
 		return null;
@@ -43,6 +45,7 @@ public class ConceptSearchServiceUtils {
     	map.put(AgrovocVocabSource, new VocabSourceDescription("AGROVOC", AgrovocVocabSource, "http://www.fao.org/agrovoc/", "Agricultural Vocabulary"));
     	map.put(GemetVocabSource, new VocabSourceDescription("GEMET", GemetVocabSource, "http://www.eionet.europa.eu/gemet", "GEneral Multilingual Environmental Thesaurus"));
     	map.put(LCSHVocabSource, new VocabSourceDescription("LCSH", LCSHVocabSource, "http://id.loc.gov/authorities/subjects/", "Library of Congress Subject Headings"));
+    	map.put(ANDSForCodeSource, new VocabSourceDescription("ANZSRC", ANDSForCodeSource, "http://services.ands.org.au/vocab", "ANZSRC Field of Research"));
 
     	return map;
 	}
@@ -57,6 +60,7 @@ public class ConceptSearchServiceUtils {
     	map.put(AgrovocVocabSource, "edu.cornell.mannlib.semservices.service.impl.AgrovocService");
     	map.put(GemetVocabSource, "edu.cornell.mannlib.semservices.service.impl.GemetService");
     	map.put(LCSHVocabSource, "edu.cornell.mannlib.semservices.service.impl.LCSHService");
+    	map.put(ANDSForCodeSource, "edu.cornell.mannlib.semservices.service.impl.FORService");
 
     	return map;
     }
@@ -68,10 +72,12 @@ public class ConceptSearchServiceUtils {
     	ExternalConceptService conceptServiceClass = null;
 	
 	    Object object = null;
+            log.debug( "SEM Class:  " + searchServiceClassName );
 	    try {
 	        Class classDefinition = Class.forName(searchServiceClassName);
 	        object = classDefinition.newInstance();
 	        conceptServiceClass = (ExternalConceptService) object;
+                log.debug( "Instantiated:  " + searchServiceClassName );
 	    } catch (InstantiationException e) {
 	        System.out.println(e);
 	    } catch (IllegalAccessException e) {
@@ -87,7 +93,9 @@ public class ConceptSearchServiceUtils {
 	    
 	    //Get search
 	    String searchTerm = getSearchTerm(vreq);
+            log.debug( "SEM SearchTerm:  " + searchTerm );
 	    List<Concept> conceptResults =  conceptServiceClass.getConcepts(searchTerm);
+            log.debug( "Found " + Integer.toString(conceptResults.size( )) + "results" );
 	    return conceptResults;
     }
 

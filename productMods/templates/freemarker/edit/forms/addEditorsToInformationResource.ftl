@@ -3,7 +3,7 @@
 <#-- Custom form for adding editors to information resources -->
 
 <#import "lib-vivo-form.ftl" as lvf>
-
+<div class="panel panel-default">
 <#--Retrieve certain page specific information information-->
 <#assign newRank = editConfiguration.pageData.newRank />
 <#assign existingEditorInfo = editConfiguration.pageData.existingEditorInfo />
@@ -31,8 +31,8 @@
 
 <@lvf.unsupportedBrowser urls.base/>
 
-<h2>${title}</h2>
-
+<div class="panel-heading">${title}</div>
+<div class="panel-body">
 <#if submissionErrors?has_content>
     <section id="error-alert" role="alert" class="validationError">
         <img src="${urls.images}/iconAlert.png" width="24" height="24" alert="${i18n().error_alert_icon}" />
@@ -48,7 +48,7 @@
 
 <h3>${i18n().manage_editors}</h3>
 
-<ul id="dragDropList" ${ulClass}>
+<ul id="editorships" ${ulClass}>
 
 <script type="text/javascript">
     var editorshipData = [];
@@ -67,7 +67,7 @@
 			<span class="editor">
 					<#-- This span is here to assign a width to. We can't assign directly to the a.editorName,
 					for the case when it's followed by an em tag - we want the width to apply to the whole thing. -->
-					<span class="itemName">
+					<span class="editorNameWrapper">
 							<#if (editorUri?length > 0)>
 									<span class="editorName">${editorName}</span>
 								<#else>      
@@ -91,7 +91,7 @@
 <br />
 <section id="showAddForm" role="region">
     <input type="hidden" name = "editKey" value="${editKey}" />
-    <input type="submit" id="showAddFormButton" value="${i18n().add_editor}" role="button" />
+    <input type="submit" id="showAddFormButton" value="${i18n().add_editor}" role="button" class="btn btn-primary"/>
 
     <span class="or"> ${i18n().or} </span>
     <a id="returnLink" class="cancel" href="${cancelUrl}&url=/individual" title="${i18n().cancel_title}">${i18n().return_to_publication}</a>
@@ -109,20 +109,24 @@
         <input class="acSelector" size="35"  type="text" id="lastName" name="lastName" value="${lastNameValue}" role="input" />
         </p>
 				
-				<p class="inline">
-        <label for="firstName">${i18n().first_name} ${requiredHint} ${initialHint}</label>
-        <input  size="20"  type="text" id="firstName" name="firstName" value="${firstNameValue}"  role="input" />
-        </p>
+		<div class="form-group">
+            <label for="firstName">${i18n().first_name} ${requiredHint} ${initialHint}</label>
+            <div class="input-group">
+                <input  size="20"  type="text" id="firstName" name="firstName" value="${firstNameValue}"  role="input" />
+            </div>
+        </div>
         
-				<p class="inline">
-				<label for="middleName">${i18n().middle_name} <span class='hint'>(${i18n().initial_okay})</span></label>
-        <input  size="20"  type="text" id="middleName" name="middleName" value="${middleNameValue}"  role="input" />
-        </p>
+		<div class="form-group">
+			<label for="middleName">${i18n().middle_name} <span class='hint'>(${i18n().initial_okay})</span></label>
+            <div class="input-group">
+                <input  size="20"  type="text" id="middleName" name="middleName" value="${middleNameValue}"  role="input" />
+            </div>
+        </div>
       
         <div id="selectedEditor" class="acSelection">
-            <p class="inline">
-                <label>${i18n().selected_editor}:&nbsp;</label>
-                <span class="acSelectionInfo" id="selectedEditorName"></span>
+            <p>
+                <label class="show">${i18n().selected_editor}:&nbsp;</label>
+                <span class="acSelectionInfo show" id="selectedEditorName"></span>
                 <a href="${urls.base}/individual?uri=" id="personLink" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized})</a>
                 <input type="hidden" id="personUri" name="personUri" value=""  role="input" /> <!-- Field value populated by JavaScript -->
             </p>
@@ -136,7 +140,7 @@
     
         <p class="submit">
             <input type="hidden" name = "editKey" value="${editKey}" role="input" />
-            <input type="submit" id="submit" value="${i18n().add_editor}" role="button" role="input" />
+            <input type="submit" id="submit" value="${i18n().add_editor}" role="button" role="input" class="btn btn-primary" />
             
             <span class="or"> ${i18n().or} </span>
             
@@ -146,7 +150,8 @@
 
         <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
 </form>
-
+</div>
+</div>
 <script type="text/javascript">
 var customFormData = {
     rankPredicate: '${rankPredicate}',
@@ -162,14 +167,13 @@ var i18nStrings = {
     removeEditorshipAlert: '${i18n().error_processing_editor_request}',
     editorTypeText: '${i18n().editor_capitalized}',
     helpTextSelect: '${i18n().select_an_existing}',
-    helpTextAdd: '${i18n().or_add_new_one}'
+    helptextAdd: '${i18n().or_add_new_one}'
 };
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />',
 					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />',
-					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/autocomplete.css" />',
-					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/manageDragDropList.css" />')}
+					'<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/autocomplete.css" />')}
 
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>')}

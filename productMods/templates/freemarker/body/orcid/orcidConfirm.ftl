@@ -63,8 +63,18 @@ span.completed {
     color: #9a9a9a;
     font-size: .8em;
 }
+.userGuide li{
+  list-style: none;
+  margin-left: 16px;
+}
+.userGuide a{
+  text-decoration: underline;
+}
+.userGuide i{
+  margin-right: 7px;
+}
 </style>
-
+<#if user.loggedIn>
 <#assign orcidTextOne = "add an" />
 <#assign orcidTextTwo = "Adding" />
 <#if (orcidInfo.existingOrcids?size > 0) >
@@ -74,33 +84,37 @@ span.completed {
 <#assign step2dimmed = (["START", "FAILED_AUTHENTICATE", "DENIED_AUTHENTICATE"]?seq_contains(orcidInfo.progress))?string("dimmed", "") />
 <#assign continueAppears = (["START", "GOT_PROFILE"]?seq_contains(orcidInfo.progress))/>
 
-<div>
 
 <section id="orcid-offer" role="region">
-    <h2>Do you want to ${orcidTextOne} ORCID iD?</h2>
-   
+<div class="panel panel-default">
+    <div class="panel-heading">Do you want to ${orcidTextOne} ORCID?</div>
+    <div class="panel-body">
     <div class="step">
       <#if "START" == orcidInfo.progress>
-        <h2>Step 1: ${orcidTextTwo} your ORCID iD</h2>
-        <ul>
-          <li>VIVO redirects you to ORCID's web site.</li>
+        <h2>Step 1: ${orcidTextTwo} your ORCID ID</h2>
+        <ol>
+          <li>UOW Scholars will redirect you to ORCID's web site.</li>
           <li>You log in to your ORCID account.
             <ul class="inner"><li>If you don't have an account, you can create one.</li></ul>
             </li>
-          <li>You tell ORCID that VIVO may read your ORCID record. (one-time permission)</li>
-          <li>VIVO reads your ORCID record.</li>
-          <li>VIVO notes that your ORCID iD is confirmed.</li>
+          <li>You tell ORCID that UOW Scholars may read your ORCID record. (one-time permission)</li>
+          <li>UOW Scholars reads your ORCID record.</li>
+          <li>UOW Scholars notes that your ORCID iD is confirmed.</li>
+        </ol>
+        <ul class="userGuide">
+          <li><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;Please see further details 
+          <a href="http://uow.libguides.com/ORCID" target="_blank">here</a></li>
         </ul>
       <#elseif "DENIED_AUTHENTICATE" == orcidInfo.progress>
-        <h2>Step 1: ${orcidTextTwo} your ORCID iD</h2>
-        <p>You denied VIVO's request to read your ORCID record.</p>
+        <h2>Step 1: ${orcidTextTwo} your ORCID</h2>
+        <p>You denied UOW Scholars' request to read your ORCID record.</p>
         <p>Confirmation can't continue.</p>
       <#elseif "FAILED_AUTHENTICATE" == orcidInfo.progress>
-        <h2>Step 1: ${orcidTextTwo} your ORCID iD</h2>
-        <p>VIVO failed to read your ORCID record.</p>
+        <h2>Step 1: ${orcidTextTwo} your ORCID</h2>
+        <p>UOW Scholars failed to read your ORCID record.</p>
         <p>Confirmation can't continue.</p>
       <#else>
-        <h2>Step 1: ${orcidTextTwo} your ORCID iD <span class="completed">(step completed)</span></h2>
+        <h2>Step 1: ${orcidTextTwo} your ORCID <span class="completed">(step completed)</span></h2>
         <p>Your ORCID iD is confirmed as ${orcidInfo.orcid}</p>
         <p><a href="${orcidInfo.orcidUri}" target="_blank">View your ORCID record.</a></p>
       </#if>
@@ -108,27 +122,28 @@ span.completed {
     
     <div class="step ${step2dimmed}">
       <#if "ID_ALREADY_PRESENT" == orcidInfo.progress>
-        <h2>Step 2 (recommended): Linking your ORCID record to VIVO <span class="completed">(step completed)</span></h2>
-        <p>Your ORCID record already includes a link to VIVO.</p>
+        <h2>Step 2 (recommended): Linking your ORCID record to UOW Scholars <span class="completed">(step completed)</span></h2>
+        <p>Your ORCID record already includes a link to UOW Scholars.</p>
       <#elseif "DENIED_ID" == orcidInfo.progress>
-        <h2>Step 2 (recommended): Linking your ORCID record to VIVO</h2>
-        <p>You denied VIVO's request to add an External ID to your ORCID record.</p>
+        <h2>Step 2 (recommended): Linking your ORCID record to UOW Scholars</h2>
+        <p>You denied UOW Scholars' request to add an External ID to your ORCID record.</p>
         <p>Linking can't continue.</p>
       <#elseif "FAILED_ID" == orcidInfo.progress>
-        <h2>Step 2 (recommended): Linking your ORCID record to VIVO</h2>
-        <p>VIVO failed to add an External ID to your ORCID record.</p>
+        <h2>Step 2 (recommended): Linking your ORCID record to UOW Scholars</h2>
+        <p>UOW Scholars failed to add an External ID to your ORCID record.</p>
         <p>Linking can't continue.</p>
       <#elseif "ADDED_ID" == orcidInfo.progress>
-        <h2>Step 2 (recommended): Linking your ORCID record to VIVO <span class="completed">(step completed)</span></h2>
-        <p>Your ORCID record is linked to VIVO</p>
+        <h2>Step 2 (recommended): Linking your ORCID record to UOW Scholars <span class="completed">(step completed)</span></h2>
+        <p>Your ORCID record is linked to UOW Scholars</p>
         <p><a href="${orcidInfo.orcidUri}" target="_blank">View your ORCID record.</a></p>
       <#else>
-        <h2>Step 2 (recommended): Linking your ORCID record to VIVO</h2>
-        <ul>
-          <li>VIVO redirects you to ORCID's web site</li>
-          <li>You tell ORCID that VIVO may add an "external ID" to your ORCID record. (one-time permission)</li>
-          <li>VIVO adds the external ID.</li>
-        </ul>
+        <h2>Step 2 (recommended): Linking your ORCID record to UOW Scholars</h2>
+        <ol>
+          <li>UOW Scholars redirects you to ORCID's web site</li>
+          <li>You tell ORCID that UOW Scholars may add a person identifier to your ORCID record. (one-time permission)</li>
+          <li>UOW Scholars adds the person identifier</li>
+          <li>Please review the <a href="https://support.orcid.org/knowledgebase/articles/124518-orcid-visibility-settings" target="_blank">visibility settings</a> for the new person identifier on ORCID web site</li>
+        </ol>
       </#if>
     </div>
     
@@ -136,13 +151,18 @@ span.completed {
       <form method="GET" action="${orcidInfo.progressUrl}">
         <p>
           <#if continueAppears>
-            <input type="submit" name="submit" value="Continue <#if "START" == orcidInfo.progress>Step 1<#else>Step 2</#if>" class="submit"/>
+            <input type="submit" name="submit" value="Continue <#if "START" == orcidInfo.progress>Step 1<#else>Step 2</#if>" class="btn btn-primary"/>
             or 
           </#if>
-          <a class="cancel" href="${orcidInfo.profilePage}">Return to your VIVO profile page</a>
+          <a class="cancel" href="${orcidInfo.profilePage!}">Return to your UOW Scholars' profile page</a>
         </p>
       </form>
     </div>
-</section>
-
+    </div>
 </div>
+</section>
+<#else>
+  <div class="panel panel-default">
+    Please login to complete the process of adding the orcid ID
+  </div>
+</#if>

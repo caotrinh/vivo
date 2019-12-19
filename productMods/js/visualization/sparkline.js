@@ -5,7 +5,7 @@
 var visualization = {
 	renderCoAuthor: function(url) {
 	
-		var containerIdCoAuthor = 'vis_container_coauthor',
+		var containerIdCoAuthor = 'vis_container_coauthor_inner',
 		containerCoAuthor = $('#' + containerIdCoAuthor);
 			
         $.ajax({
@@ -19,8 +19,8 @@ var visualization = {
             dataType: 'html',
             success:function(data){
             	if ($.trim(data) != "") {
-            		containerCoAuthor.html(data);
     				containerCoAuthor.children("#pub_count_short_sparkline_vis");
+            		containerCoAuthor.html(data);
             	} 
 				
             }

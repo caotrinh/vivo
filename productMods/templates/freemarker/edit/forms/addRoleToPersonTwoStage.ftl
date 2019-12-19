@@ -77,8 +77,11 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 <#assign requiredHint = "<span class='requiredHint'> *</span>" />
 <#assign yearHint     = "<span class='hint'>(${i18n().year_hint_format})</span>" />
 
-<h2>${titleVerb}&nbsp;${roleDescriptor} ${i18n().entry_for} ${editConfiguration.subjectName}</h2>
+<div id="manage-records-for" class="panel panel-default">
+<div class="panel-heading">
 
+${titleVerb}&nbsp;${roleDescriptor} ${i18n().entry_for} ${editConfiguration.subjectName}
+</div><div class="panel-body">
 <#--Display error messages if any-->
 <#if activityLabelDisplayValue?has_content >
     <#assign activityLabelValue = activityLabelDisplayValue />
@@ -128,7 +131,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     
     <form id="add${roleDescriptor?capitalize}RoleToPersonTwoStage" class="customForm noIE67" action="${submitUrl}"  role="add/edit grant role">
 
-       <p class="inline">
+      <div class="form-group">
         <label for="typeSelector">${typeSelectorLabel?capitalize}<#if editMode != "edit"> ${requiredHint}<#else>:</#if></label>
         <#--Code below allows for selection of first 'select one' option if no activity type selected-->
         <#if activityTypeValue?has_content>
@@ -140,48 +143,57 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
        		<#assign roleActivityTypeKeys = roleActivityTypeSelect?keys />
 
         <#if editMode != "edit" || ( editMode == "edit" && roleActivityVClass == "organizations") >
-            <select id="typeSelector" name="roleActivityType" acGroupName="activity">
-                <#list roleActivityTypeKeys as key>
-                    <option value="${key}"<#if selectedActivityType = key>selected</#if>>${roleActivityTypeSelect[key]}</option>
-                </#list>
-            </select>
+            <div class="input-group">
+                <select id="typeSelector" name="roleActivityType" acGroupName="activity">
+                    <#list roleActivityTypeKeys as key>
+                        <option value="${key}"<#if selectedActivityType = key>selected</#if>>${roleActivityTypeSelect[key]}</option>
+                    </#list>
+                </select>
+            </div>
         <#else>
-           <#list roleActivityTypeKeys as key>             
-               <#if selectedActivityType = key >
-                 <span class="readOnly" id="typeSelectorSpan">${roleActivityTypeSelect[key]}</span> 
-                 <input type="hidden" id="typeSelectorInput" name="roleActivityType" acGroupName="activity" value="${activityTypeValue}" >
-               </#if>           
-           </#list>
+            <div class="input-group">
+               <#list roleActivityTypeKeys as key>             
+                   <#if selectedActivityType = key >
+                     <span class="readOnly" id="typeSelectorSpan">${roleActivityTypeSelect[key]}</span> 
+                     <input type="hidden" id="typeSelectorInput" name="roleActivityType" acGroupName="activity" value="${activityTypeValue}" >
+                   </#if>           
+               </#list>
+           </div>
         </#if>
-       </p>
+      </div>
+      <hr />
        
        
 <#--   <div class="fullViewOnly"> -->
             <p>
                 <label for="activity">${genericLabel?capitalize} ${i18n().name_capitalized} ${requiredHint}</label>
-                <input class="acSelector" size="50"  type="text" id="activity" name="activityLabel"  acGroupName="activity" value="${activityLabelValue}" />
-                <input class="display" type="hidden" id="activityDisplay" acGroupName="activity" name="activityLabelDisplay" value="${activityLabelDisplayValue}">
+                <input class="acSelector" size="50" style="display:block;" type="text" id="activity" name="activityLabel"  acGroupName="activity" value="${activityLabelValue}" />
+                <input class="display" type="hidden" id="activityDisplay" acGroupName="activity" name="activityLabelDisplay" value="${activityLabelDisplayValue}">                
             </p>
-            
+            <div class="acSelection" acGroupName="activity">
+                <label style="display:block;"></label>
+                <span style="display:block;" class="acSelectionInfo"></span>
+                <a href="/vivo/individual?uri=" class="verifyMatch" title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
+                <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
+
+                </p>
+                <input class="acUriReceiver" type="hidden" id="roleActivityUri" name="existingRoleActivity"  value="${existingRoleActivityValue}" ${flagClearLabelForExisting}="true" />
+                <!-- Field value populated by JavaScript -->
+            </div>
+            <hr/>
             <input type="hidden" id="roleToActivityPredicate" name="roleToActivityPredicate" value="" />
             <!--Populated or modified by JavaScript based on type of activity, type returned from AJAX request-->
 
-            <div class="acSelection" acGroupName="activity">
-                <p class="inline">
-                    <label></label>
-                    <span class="acSelectionInfo"></span>
-                    <a href="/vivo/individual?uri=" class="verifyMatch" title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
-                    <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
 
-                    </p>
-                    <input class="acUriReceiver" type="hidden" id="roleActivityUri" name="existingRoleActivity"  value="${existingRoleActivityValue}" ${flagClearLabelForExisting}="true" />
-                    <!-- Field value populated by JavaScript -->
-            </div>
 
             <#if showRoleLabelField = true>
-            <p><label for="roleLabel">${i18n().role_in} ${genericLabel?capitalize} ${roleExamples}</label>
-                <input  size="50"  type="text" id="roleLabel" name="roleLabel" value="${roleLabel}" />
-            </p>
+            <div class="form-group">
+                <label for="roleLabel">${i18n().role_in} ${genericLabel?capitalize} ${roleExamples}</label>
+                <div class="input-group">
+                    <input  size="50"  type="text" id="roleLabel" name="roleLabel" value="${roleLabel}" />
+                </div>
+            </div>
+            <hr/>
         	</#if>
         	
             <#if numDateFields == 1 >
@@ -191,26 +203,31 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
                		${htmlForElements["startField"]} ${yearHint}
                </#if>
             <#else>
-                <h4 class="label">${i18n().years_participating} </h4>
+                <h4>${i18n().years_participating} </h4>
+                
                 <#if htmlForElements?keys?seq_contains("startField")>
+                    <div class="form-group">
                 	    <label class="dateTime" for="startField">${i18n().start_capitalized}</label>
                		    ${htmlForElements["startField"]} ${yearHint}
+                    </div>
                </#if>
                <p></p>
                <#if htmlForElements?keys?seq_contains("endField")>
+                    <div class="form-group">
                		    <label class="dateTime" for="endField">${i18n().end_capitalized}</label>
                		    ${htmlForElements["endField"]} ${yearHint}
+                    </div>
                </#if>
+               <hr/>
             </#if>
 <#--        </div> -->
         <p class="submit">
             <input type="hidden" id="editKey" name="editKey" value="${editKey}" />
-            <input type="submit" id="submit" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
+            <input type="submit" id="submit" class="btn btn-primary" value="${submitButtonText}"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}" title="${i18n().cancel_title}">${i18n().cancel_link}</a>
         </p>
 
         <p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
     </form>
-
 <#--Specifying form-specific script and adding stylesheets and scripts-->    
     
  <script type="text/javascript">
@@ -234,11 +251,12 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" />')}
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customForm.css" />')}
-${stylesheets.add('<link rel="stylesheet" href="${urls.base}/templates/freemarker/edit/forms/css/customFormWithAutocomplete.css" />')}
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>')}
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>')}
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>')}
-${scripts.add('<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+${scripts.add('<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}
 
 </section>   
+</div></div>

@@ -5,8 +5,8 @@ var collaboratorTableMetadata = {
 	tableID: "coauthorships_table",
 	tableContainer: "coauth_table_container",
 	tableCaption: i18nStringsCoauthorship.coAuthorsString + " ",
-	tableColumnTitle1: i18nStringsCoauthorship.authorString,
-	tableColumnTitle2: i18nStringsCoauthorship.publicationsWith + " <br />",
+	tableColumnTitle1: "Co-Author",
+	tableColumnTitle2: "Publications",
 	tableCSVFileLink: egoCoAuthorsListDataFileURL,
 	jsonNumberWorksProperty: "number_of_authored_works" 
 };

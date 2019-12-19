@@ -6,13 +6,9 @@
 </#if>
 
 <#assign sparqlForAcFilter = editConfiguration.pageData.sparqlForAcFilter />
-
-<#--This flag is for clearing the label field on submission for an existing object being selected from autocomplete.
-Set this flag on the input acUriReceiver where you would like this behavior to occur. -->
-<#assign flagClearLabelForExisting = "flagClearLabelForExisting" />
-
-<h2>${i18n().create_own_concept_all_caps}</h2>
-
+<div class="panel panel-default">
+<div class="panel-heading">${i18n().create_own_concept_all_caps}</div>
+<div class="panel-body">
 <@lvf.unsupportedBrowser urls.base /> 
 
 <form id="addUserDefinedConceptForm" class="customForm noIE67" action = "${submitUrl}" method="post">
@@ -30,7 +26,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
                         <a href="" class="verifyMatch"  title="${i18n().verify_match_capitalized}">(${i18n().verify_match_capitalized}</a> ${i18n().or} 
                         <a href="#" class="changeSelection" id="changeSelection" title="${i18n().change_selection}">${i18n().change_selection})</a>
 		            </p>
-		            <input class="acUriReceiver" type="hidden" id="conceptNode" name="conceptNode" value="" ${flagClearLabelForExisting}="true"/>
+		            <input class="acUriReceiver" type="hidden" id="conceptNode" name="conceptNode" value="" />
         </div>
 
     <br />
@@ -39,13 +35,14 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
     
 		<p class="submit">
 				<input type="hidden" name = "editKey" value="${editKey}"/>
-				<input type="submit" id="submit" value="${i18n().create_concept}"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}">${i18n().return_to_manage_concepts}</a>
+				<input type="submit" id="submit" value="${i18n().create_concept}" class="btn btn-primary"/><span class="or"> ${i18n().or} </span><a class="cancel" href="${cancelUrl}">${i18n().return_to_manage_concepts}</a>
 		</p>
 		
 		<p id="requiredLegend" class="requiredHint">* ${i18n().required_fields}</p>
     
 </form>
-
+</div>
+</div>
 <#assign sparqlQueryUrl = "${urls.base}/ajax/sparqlQuery" >
 
     <script type="text/javascript">
@@ -57,9 +54,7 @@ Set this flag on the input acUriReceiver where you would like this behavior to o
         editMode: 'add',
         typeName: 'Concept',
         defaultTypeName: 'concept', // used in repair mode to generate button text
-        baseHref: '${urls.base}/individual?uri=',
-        limitToConceptClasses:["http://www.w3.org/2004/02/skos/core#Concept"],
-        flagClearLabelForExisting: '${flagClearLabelForExisting}'
+        baseHref: '${urls.base}/individual?uri='
     };
     var i18nStrings = {
         selectAnExisting: '${i18n().select_an_existing}',
@@ -76,4 +71,5 @@ ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/js/jquery-ui/css/sm
  ${scripts.add('<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/customFormUtils.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/browserUtils.js"></script>',             
-              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>')}
+              '<script type="text/javascript" src="${urls.base}/templates/freemarker/edit/forms/js/customFormWithAutocomplete.js"></script>',
+             '<script type="text/javascript" src="${urls.base}/js/customFormWithAutoComplete_patch.js"></script>')}

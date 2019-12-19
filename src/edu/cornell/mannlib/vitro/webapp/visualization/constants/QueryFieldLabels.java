@@ -41,6 +41,14 @@ public class QueryFieldLabels {
 	 * */
 	public static final String AUTHOR_URL = "authPersonLit";
 	public static final String AUTHOR_LABEL = "authorLabelLit";
+        
+        /**
+         * Location related field Labels
+         */
+        public static final String LOCATION_NAME = "name";
+        public static final String LOCATION_URI = "location";
+        public static final String LOCATION_COUNT = "count";
+        public static final String GRANT_COUNT = "gCount";
 	
 	/*
 	 * Co-Author related field labels

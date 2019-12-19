@@ -15,19 +15,20 @@
          an rdfs:label. So check to see if there's an advisee first. If not, just display the label.  -->
     <#local linkedIndividual>
         <#if statement.advisee??>
-            <#if statement.degreeLabel?? || statement.dateTimeStart?? || statement.dateTimeEnd?? >
-                <a href="${profileUrl(statement.uri("advisee"))}" title="${i18n().advisee_label}">${statement.adviseeLabel!}</a>,
-            <#else>
-                <a href="${profileUrl(statement.uri("advisee"))}" title="${i18n().advisee_label}">${statement.adviseeLabel!}</a>
-            </#if>
-            <#if statement.degreeLabel??>
-                ${statement.degreeAbbr!statement.degreeLabel!} 
-                <#if statement.dateTimeStart?? || statement.dateTimeEnd?? >&nbsp;${i18n().candidate},<#else>&nbsp;${i18n().candidate}</#if>
-            </#if>
-        <#elseif statement.advisingRelLabel??>
-            <a href="${profileUrl(statement.uri("advisingRel"))}" title="${i18n().advisingRel_label}">${statement.advisingRelLabel!statement.localName}</a>
+            ${statement.adviseeLabel!}
         </#if>
     </#local>
 
-    ${linkedIndividual}    <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    <#local degreeInformation>
+        <#if statement.degreeLabel??>
+            ${statement.degreeAbbr!statement.degreeLabel!}
+        </#if>
+    </#local>
+
+    <#local projectTitle>
+        <#if statement.advisingRelLabel??>
+            ${statement.advisingRelLabel!statement.localName}
+        </#if>
+    </#local>
+    <td>${degreeInformation}</td><td>${projectTitle}</td><td>${linkedIndividual}</td>
  </#macro>

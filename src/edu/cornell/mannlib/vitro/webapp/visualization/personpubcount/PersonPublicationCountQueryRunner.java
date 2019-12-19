@@ -5,6 +5,15 @@ package edu.cornell.mannlib.vitro.webapp.visualization.personpubcount;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFService;
+import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
+import edu.cornell.mannlib.vitro.webapp.rdfservice.ResultSetConsumer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.jena.iri.IRI;
@@ -41,91 +50,66 @@ public class PersonPublicationCountQueryRunner implements QueryRunner<Set<Activi
 	protected static final Syntax SYNTAX = Syntax.syntaxARQ;
 
 	private String personURI;
-	private Dataset dataset;
+	private RDFService rdfService;
 
-	private Individual author; 
+	private String authorName;
 
-	public Individual getAuthor() {
-		return author;
+	public String getAuthorName() {
+		return authorName;
 	}
 
 	private Log log;
 
-	private static final String SPARQL_QUERY_COMMON_SELECT_CLAUSE = "" 
-		+ "SELECT (str(?authorLabel) as ?" + QueryFieldLabels.AUTHOR_LABEL + ") \n" 
-		+ "		(str(?document) as ?" + QueryFieldLabels.DOCUMENT_URL + ") \n"
-		+ "		(str(?publicationDate) as ?" + QueryFieldLabels.DOCUMENT_PUBLICATION_DATE + ")\n";
-
-	private static final String SPARQL_QUERY_COMMON_WHERE_CLAUSE = "" 
-			+ "?document rdfs:label ?documentLabel .\n" 
-			+ "OPTIONAL {  ?document core:dateTimeValue ?dateTimeValue . \n" 
-			+ "				?dateTimeValue core:dateTime ?publicationDate } .\n";
-	
 	public PersonPublicationCountQueryRunner(String personURI,
-			Dataset dataset, Log log) {
+			RDFService rdfService, Log log) {
 
 		this.personURI = personURI;
-		this.dataset = dataset;
+		this.rdfService = rdfService;
 		this.log = log;
 
 	}
 
-	private Set<Activity> createJavaValueObjects(ResultSet resultSet) {
-		Set<Activity> authorDocuments = new HashSet<Activity>();
-		
-		while (resultSet.hasNext()) {
-			QuerySolution solution = resultSet.nextSolution();
+	private String getSparqlConstruct(String queryURI) {
+		String sparqlQuery = QueryConstants.getSparqlPrefixQuery()
+				+ "CONSTRUCT \n"
+				+ "{\n"
+				+ "    <" + queryURI + "> rdfs:label ?authorName .\n"
+				+ "    <" + queryURI + "> core:authorOf ?document .\n"
+				+ "    ?document core:publicationDate ?publicationDate .\n"
+				+ "}\n"
+				+ "WHERE"
+				+ "{\n"
+				+ "    {\n"
+				+ "    <" + queryURI + "> rdf:type foaf:Person ;\n"
+				+ "                       rdfs:label ?authorName ;  \n"
+				+ "                       core:relatedBy ?authorshipNode .  \n"
+				+ "    ?authorshipNode rdf:type core:Authorship ; \n"
+				+ "                    core:relates ?document . \n"
+				+ "	   ?document rdf:type bibo:Document ; \n"
+				+ "              rdfs:label ?documentLabel .\n"
+				+ "    } UNION {\n"
+				+ "    <" + queryURI + "> rdf:type foaf:Person ;\n"
+				+ "                       core:relatedBy ?authorshipNode .  \n"
+				+ "    ?authorshipNode rdf:type core:Authorship ;"
+				+ "                    core:relates ?document . \n"
+				+ "	   ?document rdf:type bibo:Document . \n"
+				+ "    ?document core:dateTimeValue ?dateTimeValue . \n"
+				+ "    ?dateTimeValue core:dateTime ?publicationDate .\n"
+				+ "    }\n"
+				+ "}\n";
 
-			Activity biboDocument = new Activity(
-											solution.get(QueryFieldLabels.DOCUMENT_URL)
-												.toString());
+		log.debug(sparqlQuery);
 
-			RDFNode publicationDateNode = solution.get(QueryFieldLabels.DOCUMENT_PUBLICATION_DATE);
-			if (publicationDateNode != null) {
-				biboDocument.setActivityDate(publicationDateNode.toString());
-			}
-
-			/*
-			 * Since we are getting publication count for just one author at a time we need
-			 * to create only one "Individual" instance. We test against the null for "author" to
-			 * make sure that it has not already been instantiated. 
-			 * */
-			RDFNode authorURLNode = solution.get(QueryFieldLabels.AUTHOR_URL);
-			if (authorURLNode != null && author == null) {
-				author = new Individual(authorURLNode.toString());
-				RDFNode authorLabelNode = solution.get(QueryFieldLabels.AUTHOR_LABEL);
-				if (authorLabelNode != null) {
-					author.setIndividualLabel(authorLabelNode.toString());
-				}
-			}
-
-			authorDocuments.add(biboDocument);
-		}
-		return authorDocuments;
+		return sparqlQuery;
 	}
-
-	private ResultSet executeQuery(String queryURI,
-            Dataset dataset) {
-
-        QueryExecution queryExecution = null;
-        Query query = QueryFactory.create(getSparqlQuery(queryURI), SYNTAX);
-        queryExecution = QueryExecutionFactory.create(query, dataset);
-        return queryExecution.execSelect();
-    }
 
 	private String getSparqlQuery(String queryURI) {
 
 		String sparqlQuery = QueryConstants.getSparqlPrefixQuery()
-							+ SPARQL_QUERY_COMMON_SELECT_CLAUSE
-							+ "(str(<" + queryURI + ">) as ?authPersonLit)\n "
+							+ "SELECT ?document ?publicationDate\n"
 							+ "WHERE { \n"
-							+ "<" + queryURI + "> rdf:type foaf:Person ;\n" 
-							+ 					" rdfs:label ?authorLabel \n;" 
-							+ 					" core:relatedBy ?authorshipNode .  \n" 
-							+ "	?authorshipNode rdf:type core:Authorship ;" 
-							+ 					" core:relates ?document . \n"
-							+ "	?document rdf:type bibo:Document . \n" 
-							+  SPARQL_QUERY_COMMON_WHERE_CLAUSE
+							+ "    <" + queryURI + "> core:authorOf ?document . \n"
+							+ "	   OPTIONAL { ?document core:publicationDate ?publicationDate . } .\n"
 							+ "}\n";
 
 		log.debug(sparqlQuery);
@@ -154,10 +138,45 @@ public class PersonPublicationCountQueryRunner implements QueryRunner<Set<Activi
         	throw new MalformedQueryParametersException("URL parameter is either null or empty.");
         }
 
-		ResultSet resultSet	= executeQuery(this.personURI,
-										   this.dataset);
+		PersonPublicationConsumer consumer = new PersonPublicationConsumer();
+		try {
+			Model model = ModelFactory.createDefaultModel();
+			rdfService.sparqlConstructQuery(getSparqlConstruct(this.personURI), model);
 
-		return createJavaValueObjects(resultSet);
+			Query q = QueryFactory.create(getSparqlQuery(this.personURI));
+			QueryExecution qe = QueryExecutionFactory.create(q, model);
+			try {
+				consumer.processResultSet(qe.execSelect());
+
+				Statement authorLabel = model.getProperty(ResourceFactory.createResource(this.personURI), RDFS.label);
+				authorName = authorLabel.getObject().asLiteral().getString();
+			} finally {
+				qe.close();
+			}
+		} catch (RDFServiceException r) {
+			throw new RuntimeException(r);
+		}
+
+		return consumer.getAuthorDocuments();
 	}
 
+	private static class PersonPublicationConsumer extends ResultSetConsumer {
+		Set<Activity> authorDocuments = new HashSet<Activity>();
+
+		@Override
+		protected void processQuerySolution(QuerySolution qs) {
+			Activity biboDocument = new Activity(qs.get("document").asResource().getURI());
+
+			RDFNode publicationDateNode = qs.get("publicationDate");
+			if (publicationDateNode != null) {
+				biboDocument.setActivityDate(publicationDateNode.asLiteral().getString());
+			}
+
+			authorDocuments.add(biboDocument);
+		}
+
+		public Set<Activity> getAuthorDocuments() {
+			return authorDocuments;
+		}
+	}
 }

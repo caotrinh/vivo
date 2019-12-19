@@ -125,5 +125,21 @@
     <rdf:Description rdf:about="http://vivoweb.org/ontology/core#scopusId">
         <display:listViewConfigFile rdf:datatype="http://www.w3.org/2001/XMLSchema#string">listViewConfig-scopusId.xml</display:listViewConfigFile>
     </rdf:Description>
-        
+
+    <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#accession">
+        <display:listViewConfigFile rdf:datatype="http://www.w3.org/2001/XMLSchema#string">listViewConfig-accession.xml</display:listViewConfigFile>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="http://purl.org/ontology/bibo/doi">
+        <display:listViewConfigFile rdf:datatype="http://www.w3.org/2001/XMLSchema#string">listViewConfig-doi.xml</display:listViewConfigFile>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="http://purl.org/spar/c4o/hasGlobalCitationFrequency">
+        <display:listViewConfigFile rdf:datatype="http://www.w3.org/2001/XMLSchema#string">listViewConfig-citations.xml</display:listViewConfigFile>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="http://uowvivo.uow.edu.au/ontology/uowvivo#toppub">
+        <display:listViewConfigFile rdf:datatype="http://www.w3.org/2001/XMLSchema#string">listViewConfig-toppub.xml</display:listViewConfigFile>
+    </rdf:Description>
+
 </rdf:RDF>
